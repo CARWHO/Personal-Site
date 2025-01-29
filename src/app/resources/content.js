@@ -169,8 +169,34 @@ const blog = {
 
 const work = {
   label: "Work",
-  title: "My Projects",
-  description: `Engineering and AI projects by ${person.name}`,
+  title: "My Work",
+  description: `Engineering projects and work experience by ${person.name}`,
+  sections: [
+    {
+      company: "Dawn Aerospace",
+      description: "Working on spacecraft propulsion systems and CubeSat development",
+      logo: "/images/companies/dawnlogo.png",
+      projects: []
+    },
+    {
+      company: "KORA",
+      description: "Building an AI-powered education platform",
+      logo: "/images/companies/kora.png",
+      projects: []
+    },
+    {
+      company: "Wellington City Council",
+      description: "Wind loading analysis and CFD simulations for public safety",
+      logo: "/images/companies/wcc.png",
+      projects: []
+    },
+    {
+      company: "Halo Vision",
+      description: "Developing advanced motorcycle navigation systems",
+      logo: "/images/companies/hv.png",
+      projects: []
+    }
+  ]
 };
 
 const gallery = {

@@ -1,6 +1,4 @@
-import { getPosts } from "@/app/utils/utils";
-import { Column } from "@/once-ui/components";
-import { Projects } from "@/components/work/Projects";
+import { Column, Heading, Text, Flex } from "@/once-ui/components";
 import { baseURL } from "@/app/resources";
 import { person, work } from "@/app/resources/content";
 
@@ -34,10 +32,8 @@ export async function generateMetadata() {
 }
 
 export default function Work() {
-  let allProjects = getPosts(["src", "app", "work", "projects"]);
-
   return (
-    <Column maxWidth="m">
+    <Column maxWidth="m" gap="xl">
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -47,23 +43,42 @@ export default function Work() {
             "@type": "CollectionPage",
             headline: work.title,
             description: work.description,
-            url: `https://${baseURL}/projects`,
-            image: `${baseURL}/og?title=Design%20Projects`,
+            url: `https://${baseURL}/work`,
             author: {
               "@type": "Person",
               name: person.name,
-            },
-            hasPart: allProjects.map((project) => ({
-              "@type": "CreativeWork",
-              headline: project.metadata.title,
-              description: project.metadata.summary,
-              url: `https://${baseURL}/projects/${project.slug}`,
-              image: `${baseURL}/${project.metadata.image}`,
-            })),
+            }
           }),
         }}
       />
-      <Projects />
+      
+      <Column gap="m">
+        <Heading variant="display-strong-l">{work.title}</Heading>
+        <Text variant="heading-default-m" onBackground="neutral-weak">
+          {work.description}
+        </Text>
+      </Column>
+
+      {work.sections.map((section, index) => (
+        <Column key={section.company} gap="m">
+          <Flex vertical="center" gap="12">
+            <img
+              src={section.logo}
+              alt={`${section.company} logo`}
+              style={{
+                width: '32px',
+                height: '32px',
+                objectFit: 'cover',
+                borderRadius: '4px'
+              }}
+            />
+            <Heading variant="display-strong-m">{section.company}</Heading>
+          </Flex>
+          <Text variant="body-default-l" onBackground="neutral-weak">
+            {section.description}
+          </Text>
+        </Column>
+      ))}
     </Column>
   );
 }
