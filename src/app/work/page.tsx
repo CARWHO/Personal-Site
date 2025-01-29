@@ -1,4 +1,5 @@
-import { Column, Heading, Text, Flex } from "@/once-ui/components";
+import { Column, Heading, Text, Flex, Button } from "@/once-ui/components";
+import styles from "./work.module.scss";
 import { baseURL } from "@/app/resources";
 import { person, work } from "@/app/resources/content";
 
@@ -61,22 +62,35 @@ export default function Work() {
 
       {work.sections.map((section, index) => (
         <Column key={section.company} gap="m">
-          <Flex vertical="center" gap="12">
-            <img
-              src={section.logo}
-              alt={`${section.company} logo`}
-              style={{
-                width: '32px',
-                height: '32px',
-                objectFit: 'cover',
-                borderRadius: '4px'
-              }}
-            />
-            <Heading variant="display-strong-m">{section.company}</Heading>
-          </Flex>
-          <Text variant="body-default-l" onBackground="neutral-weak">
-            {section.description}
-          </Text>
+          <details className="work-section">
+            <summary>
+              <Flex vertical="center" gap="12">
+                <img
+                  src={section.logo}
+                  alt={`${section.company} logo`}
+                  style={{
+                    width: '38px',
+                    height: '38px',
+                    objectFit: 'cover',
+                    borderRadius: '4px'
+                  }}
+                />
+                <Heading variant="display-strong-m">{section.company}</Heading>
+              </Flex>
+            </summary>
+            <Column paddingLeft="50" paddingTop="m" gap="m">
+              <Text variant="body-default-l" onBackground="neutral-weak">
+                {section.summary}
+              </Text>
+              <Button 
+                href={section.fullReportLink}
+                variant="secondary"
+                size="s"
+              >
+                Full Report
+              </Button>
+            </Column>
+          </details>
         </Column>
       ))}
     </Column>

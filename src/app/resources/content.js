@@ -175,26 +175,30 @@ const work = {
     {
       company: "Dawn Aerospace",
       description: "Working on spacecraft propulsion systems and CubeSat development",
+      summary: "Leading the development of next-generation CubeSat propulsion systems, focusing on integration of hardware and software components for optimal performance and reliability.",
       logo: "/images/companies/dawnlogo.png",
-      projects: []
+      fullReportLink: "/work/dawn-aerospace"
     },
     {
       company: "KORA",
       description: "Building an AI-powered education platform",
+      summary: "Founded and developed an innovative education platform that leverages AI to create personalized learning experiences for students and institutions.",
       logo: "/images/companies/kora.png",
-      projects: []
+      fullReportLink: "/work/kora"
     },
     {
       company: "Wellington City Council",
       description: "Wind loading analysis and CFD simulations for public safety",
+      summary: "Conducted comprehensive wind loading analysis using CFD simulations to ensure public safety during large-scale events and infrastructure projects.",
       logo: "/images/companies/wcc.png",
-      projects: []
+      fullReportLink: "/work/wellington-city-council"
     },
     {
       company: "Halo Vision",
       description: "Developing advanced motorcycle navigation systems",
+      summary: "Founded and led the development of an innovative motorcycle navigation system, including hardware design, embedded systems, and mobile app integration.",
       logo: "/images/companies/hv.png",
-      projects: []
+      fullReportLink: "/work/halo-vision"
     }
   ]
 };

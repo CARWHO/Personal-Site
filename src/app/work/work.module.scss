@@ -1,0 +1,14 @@
+.work-section {
+  summary {
+    cursor: pointer;
+    list-style: none;
+    
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  &[open] summary {
+    margin-bottom: var(--static-space-4);
+  }
+}
