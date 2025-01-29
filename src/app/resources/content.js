@@ -129,4 +129,15 @@ const work = {
   description: `Engineering and AI projects by ${person.name}`,
 };
 
-export { person, social, home, about, studies, contact, work };
+const studies = {
+  title: "Education",
+  display: true,
+  institutions: [
+    {
+      name: "University of Canterbury",
+      description: <>Third-year Electrical Engineering undergraduate.</>,
+    },
+  ],
+};
+
+export { person, social, home, about, contact, work };
