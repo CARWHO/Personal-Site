@@ -1,0 +1,74 @@
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+
+const handler = NextAuth({
+  providers: [
+    CredentialsProvider({
+      name: "Password",
+      credentials: {
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials) {
+        if (credentials?.password === process.env.DAWN_AEROSPACE_PASSWORD) {
+          return { id: "1", name: "Protected User" };
+        }
+        return null;
+      }
+    })
+  ],
+  pages: {
+    signIn: '/work/dawn-aerospace/login',
+  }
+});
+
+export { handler as GET, handler as POST };
+import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
+
+export default withAuth(
+  function middleware(req) {
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: ({ req, token }) => {
+        if (req.nextUrl.pathname.startsWith("/work/dawn-aerospace") && !req.nextUrl.pathname.includes("/login")) {
+          return token !== null;
+        }
+        return true;
+      },
+    },
+  }
+);
+
+export const config = {
+  matcher: ["/work/dawn-aerospace/:path*"]
+};
+'use client';
+import { Column, Heading, Text, Button } from "@/once-ui/components";
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+
+export default function Login() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/work/dawn-aerospace";
+
+  return (
+    <Column maxWidth="xs" gap="xl" horizontal="center">
+      <Column gap="m">
+        <Heading variant="display-strong-l">Protected Content</Heading>
+        <Text variant="heading-default-m" onBackground="neutral-weak">
+          This page contains confidential information
+        </Text>
+      </Column>
+      
+      <Button 
+        onClick={() => signIn("credentials", { callbackUrl })}
+        variant="primary"
+        size="m"
+      >
+        Enter Password
+      </Button>
+    </Column>
+  );
+}
