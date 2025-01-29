@@ -6,7 +6,7 @@ const person = {
   get name() {
     return `${this.firstName} ${this.lastName}`;
   },
-  role: "Embedded Systems Engineer & AI Developer",
+  role: "Electrical Engineer",
   avatar: "/images/avatar.jpg",
   location: "Pacific/Auckland", // Expecting the IANA time zone identifier
   languages: ["English"], // optional
@@ -50,12 +50,11 @@ const home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
   description: `Portfolio website showcasing my work as an ${person.role}`,
-  headline: <>Embedded Systems Engineer and AI Developer</>,
+  headline: <>Electrical Engineer</>,
   subline: (
     <>
-      I'm Kahu, an engineer passionate about AI, embedded systems, and
-      software development. I work on CubeSat technology and AI-powered
-      education tools.
+      I'm Kahu, an electrical engineer at Dawn Aerospace, where I work on spacecraft propulsion 
+      development with a focus on CubeSats. I specialize in both software and hardware development.
     </>
   ),
 };
@@ -93,26 +92,10 @@ const about = {
       {
         company: "Dawn Aerospace",
         timeframe: "2023 - Present",
-        role: "Embedded Systems Engineer (Intern)",
+        role: "Spacecraft Propulsion Development Intern",
         achievements: [
-          <>Worked on CubeSat communication and telemetry systems.</>,
-          <>Developed embedded software solutions for space applications.</>,
-        ],
-        images: [],
-      },
-      {
-        company: "KORA",
-        timeframe: "2024 - Present",
-        role: "Founder & AI Developer",
-        achievements: [
-          <>
-            Built an AI-powered education platform to help students practice
-            coding and generate personalized flashcards.
-          </>,
-          <>
-            Integrated large language models (LLMs) to generate high-quality
-            practice problems.
-          </>,
+          <>Development of CubeSat propulsion systems</>,
+          <>Hardware and software integration for spacecraft applications</>,
         ],
         images: [],
       },
@@ -134,18 +117,13 @@ const about = {
     title: "Technical Skills",
     skills: [
       {
-        title: "Embedded Systems",
-        description: <>Developing firmware and low-level software for embedded devices.</>,
+        title: "Hardware Development",
+        description: <>Design and development of electrical systems for spacecraft applications.</>,
         images: [],
       },
       {
-        title: "AI & Machine Learning",
-        description: <>Building AI models for education and automation.</>,
-        images: [],
-      },
-      {
-        title: "Full-Stack Development",
-        description: <>Experience with Next.js, Node.js, and Supabase.</>,
+        title: "Software Development",
+        description: <>Integration of hardware and software systems for space applications.</>,
         images: [],
       },
     ],
