@@ -1,50 +1,68 @@
 import { InlineCode } from "@/once-ui/components";
 
 const person = {
-  firstName: "Daniel",
+  firstName: "Kahu",
   lastName: "Hutton",
   get name() {
     return `${this.firstName} ${this.lastName}`;
   },
-  role: "Electrical Engineering Student & AI Developer",
+  role: "Embedded Systems Engineer & AI Developer",
   avatar: "/images/avatar.jpg",
-  location: "Pacific/Auckland",
+  location: "Pacific/Auckland", // Expecting the IANA time zone identifier
+  languages: ["English"], // optional
+};
+
+const newsletter = {
+  display: true,
+  title: <>Subscribe to {person.firstName}'s Newsletter</>,
+  description: (
+    <>
+      I occasionally write about embedded systems, AI, and share insights on
+      technology and innovation.
+    </>
+  ),
 };
 
 const social = [
   {
     name: "GitHub",
     icon: "github",
-    link: "https://github.com/kahuHutton",
+    link: "https://github.com/carwho",
   },
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/in/kahuHutton/",
+    link: "https://www.linkedin.com/in/kahuhutton/",
+  },
+  {
+    name: "X",
+    icon: "x",
+    link: "",
   },
   {
     name: "Email",
     icon: "email",
-    link: "mailto:example@gmail.com",
+    link: "kahuhutton.business@gmail.com",
   },
 ];
 
 const home = {
   label: "Home",
-  title: `Welcome!`,
-  description: `Portfolio website for ${person.name}`,
-  headline: <>Welcome!</>,
+  title: `${person.name}'s Portfolio`,
+  description: `Portfolio website showcasing my work as an ${person.role}`,
+  headline: <>Embedded Systems Engineer and AI Developer</>,
   subline: (
     <>
-      I am a third-year electrical engineering undergraduate at the University
-      of Canterbury. I also really enjoy racing mountain bikes!
+      I'm Kahu, an engineer passionate about AI, embedded systems, and
+      software development. I work on CubeSat technology and AI-powered
+      education tools.
     </>
   ),
 };
 
 const about = {
   label: "About",
-  title: "About Me",
+  title: "About me",
   description: `Meet ${person.name}, ${person.role} from ${person.location}`,
   tableOfContent: {
     display: true,
@@ -53,13 +71,18 @@ const about = {
   avatar: {
     display: true,
   },
+  calendar: {
+    display: true,
+    link: "https://cal.com",
+  },
   intro: {
     display: true,
-    title: "Electrical Engineering Student",
+    title: "Introduction",
     description: (
       <>
-        I am a third-year electrical engineering undergraduate at the
-        University of Canterbury. I also really enjoy racing mountain bikes!
+        Kahu is an embedded systems engineer and AI developer currently
+        working with CubeSats. He also builds AI-powered tools to help students
+        learn more efficiently.
       </>
     ),
   },
@@ -70,57 +93,68 @@ const about = {
       {
         company: "Dawn Aerospace",
         timeframe: "2023 - Present",
-        role: "Embedded Systems Engineer Intern",
+        role: "Embedded Systems Engineer (Intern)",
         achievements: [
-          <>
-            Currently interning as an embedded systems software engineer,
-            focusing on satellite propulsion systems.
-          </>,
+          <>Worked on CubeSat communication and telemetry systems.</>,
+          <>Developed embedded software solutions for space applications.</>,
         ],
         images: [],
       },
       {
         company: "KORA",
         timeframe: "2024 - Present",
-        role: "Founder",
+        role: "Founder & AI Developer",
         achievements: [
           <>
-            Developed a generative academic AI aimed at supporting students and
-            educators by automating grading and creating study resources.
+            Built an AI-powered education platform to help students practice
+            coding and generate personalized flashcards.
           </>,
           <>
-            KORA strives to enhance the educational experience through
-            innovative technology.
+            Integrated large language models (LLMs) to generate high-quality
+            practice problems.
           </>,
         ],
         images: [],
       },
     ],
   },
+  studies: {
+    display: true,
+    title: "Studies",
+    institutions: [
+      {
+        name: "University of Canterbury",
+        description: <>Further studies in space technology and software engineering.</>,
+      },
+    ],
+  },
+  technical: {
+    display: true,
+    title: "Technical Skills",
+    skills: [
+      {
+        title: "Embedded Systems",
+        description: <>Developing firmware and low-level software for embedded devices.</>,
+        images: [],
+      },
+      {
+        title: "AI & Machine Learning",
+        description: <>Building AI models for education and automation.</>,
+        images: [],
+      },
+      {
+        title: "Full-Stack Development",
+        description: <>Experience with Next.js, Node.js, and Supabase.</>,
+        images: [],
+      },
+    ],
+  },
 };
 
-const studies = {
-  display: true,
-  title: "Education",
-  institutions: [
-    {
-      name: "University of Canterbury",
-      description: <>Third-year Electrical Engineering undergraduate.</>,
-    },
-  ],
-};
-
-const contact = {
-  label: "Contact",
-  title: "Get in Touch",
-  description: (
-    <>
-      For more information about KORA, feel free to contact us via{" "}
-      <a href="mailto:example@gmail.com">email</a>. You can also learn more on
-      our <a href="https://kora-edu.com">website</a> or visit our{" "}
-      <a href="https://github.com/kahuHutton">GitHub</a> page.
-    </>
-  ),
+const blog = {
+  label: "Blog",
+  title: "Writing about AI, Embedded Systems, and Technology...",
+  description: `Read what ${person.name} has been up to recently.`,
 };
 
 const work = {
@@ -129,15 +163,22 @@ const work = {
   description: `Engineering and AI projects by ${person.name}`,
 };
 
-const studies = {
-  title: "Education",
-  display: true,
-  institutions: [
+const gallery = {
+  label: "Gallery",
+  title: "My Photo Gallery",
+  description: `A collection of my projects and experiences`,
+  images: [
     {
-      name: "University of Canterbury",
-      description: <>Third-year Electrical Engineering undergraduate.</>,
+      src: "/images/gallery/project-01.jpg",
+      alt: "Project Image",
+      orientation: "horizontal",
+    },
+    {
+      src: "/images/gallery/project-02.jpg",
+      alt: "Project Image",
+      orientation: "vertical",
     },
   ],
 };
 
-export { person, social, home, about, contact, work };
+export { person, social, newsletter, home, about, blog, work, gallery };
