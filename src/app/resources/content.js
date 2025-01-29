@@ -53,7 +53,7 @@ const home = {
   headline: <>Kahu Hutton</>,
   subline: (
     <>
-      I'm an Electrical Engineer, founder of KORA, and currently interning at Dawn Aerospace, messing around with spacecraft propulsion and CubeSats
+      I'm an Electrical Engineer, founder of KORA, and currently interning at Dawn Aerospace, messing around with spacecraft propulsion and CubeSats.
       I tinker with both hardware and software—basically, if it flies or runs code, I’m into it. 🚀
     </>
   ),
