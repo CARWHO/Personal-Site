@@ -50,11 +50,11 @@ const home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
   description: `Portfolio website showcasing my work as an ${person.role}`,
-  headline: <>Electrical Engineer</>,
+  headline: <>Kahu Hutton</>,
   subline: (
     <>
-      I'm Kahu, an Electrical Engineer at Dawn Aerospace, where I work on spacecraft propulsion 
-      development with a focus on CubeSats. I specialize in both software and hardware development.
+      I'm an Electrical Engineer, founder of KORA, and currently interning at Dawn Aerospace, messing around with spacecraft propulsion and CubeSats
+      I tinker with both hardware and software—basically, if it flies or runs code, I’m into it. 🚀
     </>
   ),
 };
@@ -102,11 +102,10 @@ const about = {
       {
         company: "KORA",
         timeframe: "2024 - Present",
-        role: "Founder",
+        role: "Founder, Developer",
         logo: "/images/companies/kora.png",
         achievements: [
-          <>Built an AI-powered education platform for institutes and students</>,
-          <>Developed interactive learning tools powered by AI for practice problem generation</>,
+          <>AI-powered education platform for institutes and students</>,
         ],
         images: [],
       },
@@ -116,7 +115,7 @@ const about = {
         role: "CFD Engineer (Wind Loading)",
         logo: "/images/companies/wcc.png",
         achievements: [
-          <>Conducted wind loading simulations for public events</>,
+          <>Conducted wind loading simulations for public event safety</>,
           <>Analyzed Computational Fluid Dynamics (CFD) models for structural safety assessments</>,
         ],
         images: [],
@@ -127,8 +126,8 @@ const about = {
         role: "Founder",
         logo: "/images/companies/hv.png",
         achievements: [
-          <>Developed an advanced motorcycle safety system</>,
-          <>Integrated computer vision to enhance rider awareness and accident prevention</>,
+          <>Developed an advanced motorcycle navigation system</>,
+          <>Embedded system design, software, PCB manufacturing, APP design</>,
         ],
         images: [],
       },
