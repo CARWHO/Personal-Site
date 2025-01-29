@@ -92,7 +92,6 @@ const about = {
         company: "Dawn Aerospace",
         timeframe: "2024 - Present",
         role: "Spacecraft Propulsion Development Intern",
-        logo: "/images/companies/dawnlogo.png",
         achievements: [
           <>Development of CubeSat propulsion systems</>,
           <>Hardware and software integration for spacecraft applications</>,
@@ -103,7 +102,6 @@ const about = {
         company: "KORA",
         timeframe: "2024 - Present",
         role: "Founder, Developer",
-        logo: "/images/companies/kora.png",
         achievements: [
           <>AI-powered education platform for institutes and students</>,
         ],
@@ -113,7 +111,6 @@ const about = {
         company: "Wellington City Council",
         timeframe: "2024",
         role: "CFD Engineer (Wind Loading)",
-        logo: "/images/companies/wcc.png",
         achievements: [
           <>Conducted wind loading simulations for public event safety</>,
           <>Analyzed Computational Fluid Dynamics (CFD) models for structural safety assessments</>,
@@ -124,7 +121,6 @@ const about = {
         company: "Halo Vision",
         timeframe: "2023",
         role: "Founder",
-        logo: "/images/companies/hv.png",
         achievements: [
           <>Developed an advanced motorcycle navigation system</>,
           <>Embedded system design, software, PCB manufacturing, APP design</>,

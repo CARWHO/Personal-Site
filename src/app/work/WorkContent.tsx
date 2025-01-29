@@ -65,23 +65,7 @@ export default function WorkContent() {
               aria-controls={`${section.company}-content`}
               id={`${section.company}-header`}
             >
-              <Flex vertical="center" gap="12">
-                <img
-                  src={section.logo}
-                  alt={`${section.company} logo`}
-                  style={{
-                    width: section.company === "Dawn Aerospace" || section.company === "KORA" 
-                      ? '46px' 
-                      : '38px',
-                    height: section.company === "Dawn Aerospace" || section.company === "KORA" 
-                      ? '46px' 
-                      : '38px',
-                    objectFit: 'cover',
-                    borderRadius: '4px'
-                  }}
-                />
-                <Heading variant="display-strong-m">{section.company}</Heading>
-              </Flex>
+              <Heading variant="display-strong-m">{section.company}</Heading>
             </AccordionSummary>
             <AccordionDetails>
               <Column gap="m">
