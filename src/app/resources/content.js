@@ -27,12 +27,12 @@ const social = [
   {
     name: "GitHub",
     icon: "github",
-    link: "https://github.com/carwho",
+    link: "https://github.com/kahuHutton",
   },
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/in/kahuhutton/",
+    link: "https://www.linkedin.com/in/kahuHutton/",
   },
   {
     name: "X",
@@ -42,7 +42,7 @@ const social = [
   {
     name: "Email",
     icon: "email",
-    link: "kahuhutton.business@gmail.com",
+    link: "mailto:example@gmail.com",
   },
 ];
 
@@ -122,6 +122,7 @@ const about = {
     display: true,
     title: "Studies",
     institutions: [
+
       {
         name: "University of Canterbury",
         description: <>Further studies in space technology and software engineering.</>,
