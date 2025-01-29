@@ -6,7 +6,7 @@ const person = {
   get name() {
     return `${this.firstName} ${this.lastName}`;
   },
-  role: "Electrical Engineer",
+  role: "Electrical Engineering Student at UC",
   avatar: "/images/avatar.jpg",
   location: "Pacific/Auckland", // Expecting the IANA time zone identifier
   languages: ["English"], // optional
@@ -53,7 +53,7 @@ const home = {
   headline: <>Electrical Engineer</>,
   subline: (
     <>
-      I'm Kahu, an electrical engineer at Dawn Aerospace, where I work on spacecraft propulsion 
+      I'm Kahu, an Electrical Engineer at Dawn Aerospace, where I work on spacecraft propulsion 
       development with a focus on CubeSats. I specialize in both software and hardware development.
     </>
   ),
@@ -79,8 +79,8 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        I'm an electrical engineer specializing in spacecraft propulsion systems at Dawn Aerospace. 
-        My work involves both hardware and software development for CubeSat applications.
+        I'm currently interning at Dawn Aerospace, where I work on spacecraft propulsion systems. 
+        My role involves developing both hardware and software for CubeSat applications, focusing on integration and performance optimization.
       </>
     ),
   },
@@ -90,11 +90,41 @@ const about = {
     experiences: [
       {
         company: "Dawn Aerospace",
-        timeframe: "2023 - Present",
+        timeframe: "2024 - Present",
         role: "Spacecraft Propulsion Development Intern",
         achievements: [
           <>Development of CubeSat propulsion systems</>,
           <>Hardware and software integration for spacecraft applications</>,
+        ],
+        images: [],
+      },
+      {
+        company: "KORA",
+        timeframe: "2024 - Present",
+        role: "Founder",
+        achievements: [
+          <>Built an AI-powered education platform for institutes and students</>,
+          <>Developed interactive learning tools powered by AI for practice problem generation</>,
+        ],
+        images: [],
+      },
+      {
+        company: "Wellington City Council",
+        timeframe: "2024",
+        role: "CFD Engineer (Wind Loading)",
+        achievements: [
+          <>Conducted wind loading simulations for public events</>,
+          <>Analyzed Computational Fluid Dynamics (CFD) models for structural safety assessments</>,
+        ],
+        images: [],
+      },
+      {
+        company: "Halo Vision",
+        timeframe: "2023",
+        role: "Founder",
+        achievements: [
+          <>Developed an advanced motorcycle safety system</>,
+          <>Integrated computer vision to enhance rider awareness and accident prevention</>,
         ],
         images: [],
       },
@@ -104,10 +134,9 @@ const about = {
     display: true,
     title: "Studies",
     institutions: [
-
       {
         name: "University of Canterbury",
-        description: <>Further studies in space technology and software engineering.</>,
+        description: <>Further studies in Electrical Engineering (Graduating 2026)</>,
       },
     ],
   },
