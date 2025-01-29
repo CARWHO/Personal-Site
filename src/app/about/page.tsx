@@ -214,7 +214,7 @@ export default function About() {
                     <Text variant="body-default-s" onBackground="brand-weak" marginBottom="m">
                       {experience.role}
                     </Text>
-                    <Column as="ul" gap="4">
+                    <Column as="ul" gap="0">
                       {experience.achievements.map((achievement: JSX.Element, index: number) => (
                         <Text
                           as="li"
