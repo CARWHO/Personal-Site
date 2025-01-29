@@ -1,4 +1,7 @@
 import { Column, Heading, Text, Flex, Button } from "@/once-ui/components";
+import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import styles from "./work.module.scss";
 import { baseURL } from "@/app/resources";
 import { person, work } from "@/app/resources/content";
@@ -32,6 +35,47 @@ export async function generateMetadata() {
   };
 }
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#10B981', // emerald-500
+    },
+  },
+  components: {
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'transparent',
+          boxShadow: 'none',
+          '&:before': {
+            display: 'none',
+          },
+        },
+      },
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          '& .MuiAccordionSummary-expandIconWrapper': {
+            color: '#10B981',
+          },
+        },
+        content: {
+          margin: 0,
+        },
+      },
+    },
+    MuiAccordionDetails: {
+      styleOverrides: {
+        root: {
+          padding: '8px 0 16px 50px',
+        },
+      },
+    },
+  },
+});
+
 export default function Work() {
   return (
     <Column maxWidth="m" gap="xl">
@@ -60,38 +104,49 @@ export default function Work() {
         </Text>
       </Column>
 
-      {work.sections.map((section, index) => (
-        <Column key={section.company} gap="m">
-          <details className="work-section">
-            <summary>
+      <ThemeProvider theme={theme}>
+        {work.sections.map((section, index) => (
+          <Accordion key={section.company} className={styles.workAccordion}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls={`${section.company}-content`}
+              id={`${section.company}-header`}
+            >
               <Flex vertical="center" gap="12">
                 <img
                   src={section.logo}
                   alt={`${section.company} logo`}
                   style={{
-                    width: '38px',
-                    height: '38px',
+                    width: section.company === "Dawn Aerospace" || section.company === "KORA" 
+                      ? '46px' 
+                      : '38px',
+                    height: section.company === "Dawn Aerospace" || section.company === "KORA" 
+                      ? '46px' 
+                      : '38px',
                     objectFit: 'cover',
                     borderRadius: '4px'
                   }}
                 />
                 <Heading variant="display-strong-m">{section.company}</Heading>
               </Flex>
-            </summary>
-            <Column paddingLeft="50" paddingTop="m" gap="m">
-              <Text variant="body-default-l" onBackground="neutral-weak">
-                {section.summary}
-              </Text>
-              <Button 
-                href={section.fullReportLink}
-                variant="secondary"
-                size="s"
-              >
-                Full Report
-              </Button>
-            </Column>
-          </details>
-        </Column>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Column gap="m">
+                <Text variant="body-default-l" onBackground="neutral-weak">
+                  {section.summary}
+                </Text>
+                <Button 
+                  href={section.fullReportLink}
+                  variant="secondary"
+                  size="s"
+                >
+                  Full Report
+                </Button>
+              </Column>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+      </ThemeProvider>
       ))}
     </Column>
   );

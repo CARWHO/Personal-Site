@@ -1,14 +1,23 @@
-.work-section {
-  summary {
-    cursor: pointer;
-    list-style: none;
-    
-    &::-webkit-details-marker {
-      display: none;
-    }
+.workAccordion {
+  border: none !important;
+  background: transparent !important;
+  
+  &:before {
+    display: none !important;
   }
 
-  &[open] summary {
-    margin-bottom: var(--static-space-4);
+  :global {
+    .MuiAccordionSummary-root {
+      min-height: unset !important;
+      padding: 0 !important;
+    }
+
+    .MuiAccordionSummary-content {
+      margin: 0 !important;
+    }
+
+    .MuiAccordionDetails-root {
+      padding: 16px 0 24px 50px !important;
+    }
   }
 }
