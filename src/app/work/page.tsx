@@ -1,3 +1,4 @@
+'use client';
 import { Column, Heading, Text, Flex, Button } from "@/once-ui/components";
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -147,7 +148,6 @@ export default function Work() {
           </Accordion>
         ))}
       </ThemeProvider>
-      ))}
     </Column>
   );
 }
