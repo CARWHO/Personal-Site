@@ -79,9 +79,8 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        Kahu is an embedded systems engineer and AI developer currently
-        working with CubeSats. He also builds AI-powered tools to help students
-        learn more efficiently.
+        I'm an electrical engineer specializing in spacecraft propulsion systems at Dawn Aerospace. 
+        My work involves both hardware and software development for CubeSat applications.
       </>
     ),
   },
