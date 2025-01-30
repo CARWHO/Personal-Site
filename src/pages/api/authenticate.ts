@@ -4,12 +4,13 @@ import * as cookie from "cookie";
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { password } = req.body;
-    const correctPassword = 'test';
+    const correctPassword = process.env.DAWN_AEROSPACE_PASSWORD;
     
     console.log('Authentication attempt:', {
       providedPassword: password,
-      correctPassword,
-      matches: password === correctPassword
+      correctPassword: correctPassword || 'undefined',
+      matches: password === correctPassword,
+      envVars: process.env
     });
 
     if (password === correctPassword) {
