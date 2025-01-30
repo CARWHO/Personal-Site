@@ -1,4 +1,5 @@
 import { baseURL } from "@/app/resources";
+import { Column } from "@/once-ui/components"; // Update this path if necessary
 import { person, work } from "@/app/resources/content";
 import WorkContent from './WorkContent';
 export { generateMetadata } from './metadata';
