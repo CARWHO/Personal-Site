@@ -1,14 +1,6 @@
 "use client";
 import { Column, Heading, Text, Flex, Button } from "@/once-ui/components";
-import {
-  ThemeProvider,
-  createTheme,
-  Card,
-  CardContent,
-  CardActions,
-  CardMedia,
-  Grid,
-} from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material";
 import styles from "./work.module.scss";
 import { work } from "@/app/resources/content";
 

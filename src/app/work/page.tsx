@@ -1,8 +1,18 @@
 import { baseURL } from "@/app/resources";
-import { Column } from "@/once-ui/components"; // Update this path if necessary
+import { Column } from "@/once-ui/components";
 import { person, work } from "@/app/resources/content";
-import WorkContent from './WorkContent';
-export { generateMetadata } from './metadata';
+import WorkContent from "./WorkContent";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: work.title,
+  description: work.description,
+  openGraph: {
+    title: work.title,
+    description: work.description,
+    url: `https://${baseURL}/work`,
+  },
+};
 
 export default function Work() {
   return (
