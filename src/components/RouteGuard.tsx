@@ -61,10 +61,18 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
   }, [pathname]);
 
   const handlePasswordSubmit = async () => {
+    console.log('Attempting authentication with password:', password);
     const response = await fetch("/api/authenticate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password }),
+    });
+
+    const data = await response.json();
+    console.log('Authentication response:', {
+      status: response.status,
+      ok: response.ok,
+      data
     });
 
     if (response.ok) {
