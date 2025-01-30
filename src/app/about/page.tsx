@@ -211,7 +211,9 @@ export default function About() {
                     <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="4">
                       <Button 
                         href={`/work/${experience.company.toLowerCase().replace(/\s+/g, '-')}`}
-                        variant="tertiary"
+                        variant="secondary"
+                        size="m"
+                        arrowIcon
                       >
                         <Text id={experience.company} variant="heading-strong-l">
                           {experience.company}
