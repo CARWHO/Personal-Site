@@ -1,5 +1,5 @@
 'use client';
-import { Column, Heading, Text, SmartImage } from "@/once-ui/components";
+import { Column, Heading, Text, SmartImage, Input } from "@/once-ui/components";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
