@@ -18,65 +18,70 @@ import { work } from "@/app/resources/content";
  */
 const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
-      main: "#6366F1", // Indigo
+      main: '#FFFFFF',
+      contrastText: '#000000',
     },
     secondary: {
-      main: "#10B981", // Emerald
+      main: '#6366F1',
     },
+    background: {
+      default: '#0a0a0a',
+      paper: '#0a0a0a',
+    },
+    text: {
+      primary: '#FFFFFF',
+      secondary: '#A1A1AA',
+    },
+  },
+  typography: {
+    fontFamily: 'Inter, sans-serif',
   },
 });
 
 export default function WorkContent() {
   return (
     <ThemeProvider theme={theme}>
-      <Column maxWidth="l" gap="xl" className={styles.workContainer}>
-        {/* Page Title and Description */}
-        <Column gap="m" align="start">
-          <Heading variant="display-strong-l">{work.title}</Heading>
-          <Text variant="heading-default-m" onBackground="neutral-weak">
+      <Column maxWidth="l" gap="xl" paddingTop="xl" background="solid">
+        {/* Page Header */}
+        <Column gap="s" align="start">
+          <Heading variant="display-strong-xl" color="brand-strong">
+            {work.title}
+          </Heading>
+          <Text variant="heading-default-l" onBackground="neutral-weak">
             {work.description}
           </Text>
         </Column>
 
-        {/* Grid of Cards */}
-        <Grid container spacing={4}>
+        {/* Projects List */}
+        <Column gap="3xl">
           {work.sections.map((section, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card elevation={3} className={styles.workCard}>
-                {/* Company Logo (or representative image) */}
-                <CardMedia
-                  component="img"
-                  height="180"
-                  image={section.logo}
-                  alt={`${section.company} logo`}
-                  className={styles.workCardMedia}
-                />
-
-                {/* Card Content with Company Name and Summary */}
-                <CardContent>
-                  <Heading variant="display-strong-s" as="h3">
-                    {section.company}
-                  </Heading>
-                  <Text variant="body-default-m" onBackground="neutral-weak">
-                    {section.summary}
-                  </Text>
-                </CardContent>
-
-                {/* Card Actions */}
-                <CardActions>
-                  <Button
-                    href={section.fullReportLink}
-                    variant="primary"
-                    size="s"
-                  >
-                    Full Report
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
+            <Flex key={index} gap="xl" align="start" className={styles.projectItem}>
+              {/* Project Number */}
+              <Text variant="display-strong-m" onBackground="neutral-weak">
+                {String(index + 1).padStart(2, '0')}
+              </Text>
+              
+              {/* Project Details */}
+              <Column gap="m">
+                <Heading variant="display-strong-m">{section.company}</Heading>
+                <Text variant="body-default-l" onBackground="neutral-weak">
+                  {section.summary}
+                </Text>
+                <Button 
+                  href={section.fullReportLink}
+                  variant="tertiary"
+                  size="s"
+                  suffixIcon="arrowRight"
+                  className={styles.projectLink}
+                >
+                  View Case Study
+                </Button>
+              </Column>
+            </Flex>
           ))}
-        </Grid>
+        </Column>
       </Column>
     </ThemeProvider>
   );

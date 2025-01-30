@@ -5,7 +5,7 @@ export { generateMetadata } from './metadata';
 
 export default function Work() {
   return (
-    <>
+    <Column background="solid" fill>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -24,6 +24,6 @@ export default function Work() {
         }}
       />
       <WorkContent />
-    </>
+    </Column>
   );
 }
