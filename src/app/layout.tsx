@@ -89,9 +89,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         tertiary ? tertiary.variable : "",
         code.variable,
       )}
+      suppressHydrationWarning
     >
       <ToastProvider>
-        <Column style={{ minHeight: "100vh" }} as="body" fillWidth margin="0" padding="0">
+        <Column style={{ minHeight: "100vh" }} as="body" fillWidth margin="0" padding="0" suppressHydrationWarning>
           <Background
             mask={{
               cursor: effects.mask.cursor,
