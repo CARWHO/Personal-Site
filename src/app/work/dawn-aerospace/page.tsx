@@ -1,7 +1,27 @@
 'use client';
 import { Column, Heading, Text, SmartImage } from "@/once-ui/components";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function DawnAerospace() {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const response = await fetch("/api/check-auth");
+      if (!response.ok) {
+        router.push("/work");
+      } else {
+        setIsAuthenticated(true);
+      }
+    };
+    checkAuth();
+  }, [router]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
   return (
     <Column maxWidth="m" gap="xl">
       <Column gap="m">
