@@ -7,13 +7,13 @@ import ForceGraph3D from "react-force-graph-3d";
 import { Column } from "@/once-ui/components";
 import * as THREE from "three";
 
-// Define our graph node/link types.
+// Graph node and link types.
 interface GraphNode {
   id: string;
   type: "major" | "skill";
   project?: string;
   color: number;
-  // These will be set by the simulation.
+  // Positions set by the simulation.
   x?: number;
   y?: number;
   z?: number;
@@ -24,7 +24,7 @@ interface GraphLink {
   target: string;
 }
 
-// Utility: lighten a hex color.
+// Utility to lighten a color.
 const lightenColor = (color: number, percent: number): number => {
   const r = (color >> 16) & 0xff;
   const g = (color >> 8) & 0xff;
@@ -35,7 +35,7 @@ const lightenColor = (color: number, percent: number): number => {
   return (newR << 16) + (newG << 8) + newB;
 };
 
-// Define our project data with tags.
+// Project data (with tags).
 const majorProjects = [
   { 
     id: "Halo Vision", 
@@ -75,15 +75,15 @@ const majorProjects = [
   }
 ];
 
-// Build graph data (nodes and links).
+// Build the graph: add project nodes and skill nodes, plus links.
 const generateGraphData = () => {
   const graphNodes: GraphNode[] = [];
   const graphLinks: GraphLink[] = [];
   const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-  const skillNodesPerProject = 10; // Each project gets 10 skill nodes
+  const skillNodesPerProject = 10;
 
-  // Add project nodes.
-  majorProjects.forEach((project) => {
+  // Add major project nodes.
+  majorProjects.forEach(project => {
     graphNodes.push({
       id: project.id,
       type: "major",
@@ -94,10 +94,7 @@ const generateGraphData = () => {
   // Add skill nodes.
   majorProjects.forEach((project, projectIndex) => {
     project.skills.forEach((skill, skillIndex) => {
-      // Temporary positions (simulation will override these).
-      const y = 1 - (skillIndex / (skillNodesPerProject - 1)) * 2;
-      const theta = goldenAngle * (projectIndex * skillNodesPerProject + skillIndex);
-      // (We don’t use these values directly; they simply seed positions.)
+      // These positions are temporary; the force simulation will override them.
       const skillNode: GraphNode = {
         id: skill,
         type: "skill",
@@ -112,7 +109,7 @@ const generateGraphData = () => {
     });
   });
 
-  // Interlink projects.
+  // Link major projects together.
   majorProjects.forEach((project1, i) => {
     majorProjects.slice(i + 1).forEach(project2 => {
       graphLinks.push({
@@ -122,7 +119,7 @@ const generateGraphData = () => {
     });
   });
 
-  // Create some random cross-links among skill nodes.
+  // Create some cross-links between skill nodes.
   const skillNodes = graphNodes.filter(node => node.type === "skill");
   for (let i = 0; i < skillNodes.length; i += 5) {
     const randomSkillIndex = Math.floor(Math.random() * skillNodes.length);
@@ -180,7 +177,7 @@ const PortfolioGraph: React.FC = () => {
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
   const graphData = useMemo(() => generateGraphData(), []);
 
-  // When the user types a query, find a matching node.
+  // Search handler: update query and determine matching node.
   const handleSearch = (query: string) => {
     const lowerQuery = query.toLowerCase();
     setSearchQuery(lowerQuery);
@@ -188,7 +185,6 @@ const PortfolioGraph: React.FC = () => {
       setHighlightedNodeId(null);
       return;
     }
-    // Check against project tags or node id.
     const matchingNodes = graphData.nodes.filter(node => {
       const project = majorProjects.find(p => p.id === node.id);
       return (
@@ -201,56 +197,57 @@ const PortfolioGraph: React.FC = () => {
     }
   };
 
-  // Camera movement logic when a node is highlighted
+  // When a node is highlighted, rotate the camera by π/4 and focus on it.
   useEffect(() => {
     if (highlightedNodeId && graphRef.current) {
       const node = graphData.nodes.find(n => n.id === highlightedNodeId);
       if (node && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
         const camera = graphRef.current.camera();
+        const currentCamPos = new THREE.Vector3().copy(camera.position);
         const nodePos = new THREE.Vector3(node.x, node.y, node.z);
-        
-        // Calculate a position that's rotated at least π/4 around the node
-        const radius = 200; // Distance from node
-        const currentAngle = Math.atan2(camera.position.z - node.z, camera.position.x - node.x);
-        const targetAngle = currentAngle + Math.PI/2; // Rotate 90 degrees
-        
-        const newCamPos = new THREE.Vector3(
-          nodePos.x + radius * Math.cos(targetAngle),
-          nodePos.y + radius * 0.5, // Slightly above the node
-          nodePos.z + radius * Math.sin(targetAngle)
-        );
-
-        // Temporarily disable controls
-        const controls = graphRef.current.controls();
-        if (controls) {
-          controls.enabled = false;
-          controls.minDistance = radius;
-          controls.maxDistance = radius;
+        let currentDir = currentCamPos.clone().sub(nodePos);
+        if (currentDir.length() === 0) currentDir.set(0, 0, 1);
+        currentDir.normalize();
+        // Rotate the direction by π/4 (45°) around the up-axis.
+        let up = new THREE.Vector3(0, 1, 0);
+        if (Math.abs(currentDir.dot(up)) > 0.99) {
+          up.set(1, 0, 0);
         }
-
-        // Animate camera movement
-        graphRef.current.cameraPosition(
-          newCamPos,
-          nodePos, // Look at the node
-          2000 // Animation duration
-        );
-
-        // Re-enable controls after animation
+        const rotatedDir = currentDir.clone().applyAxisAngle(up, Math.PI / 4);
+        const desiredDistance = 150;
+        const newCamPos = nodePos.clone().add(rotatedDir.multiplyScalar(desiredDistance));
+        const controls = graphRef.current.controls();
+        if (controls) controls.enabled = false;
+        graphRef.current.cameraPosition(newCamPos, nodePos, 2000);
         setTimeout(() => {
-          if (controls) {
-            controls.enabled = true;
-            controls.target.copy(nodePos);
-          }
+          if (controls) controls.enabled = true;
         }, 2100);
       }
     }
   }, [highlightedNodeId, graphData.nodes]);
 
+  // When nothing is searched, move the camera farther away.
+  useEffect(() => {
+    if (!searchQuery && graphRef.current) {
+      // Set a default far-away camera position.
+      const defaultCamPos = new THREE.Vector3(1000, 600, 1000);
+      const target = new THREE.Vector3(0, 0, 0);
+      const controls = graphRef.current.controls();
+      if (controls) controls.enabled = false;
+      graphRef.current.cameraPosition(defaultCamPos, target, 2000);
+      setTimeout(() => {
+        if (controls) controls.enabled = true;
+      }, 2100);
+    }
+  }, [searchQuery]);
+
+  // Initial camera and controls setup.
   useEffect(() => {
     const initGraph = () => {
       if (graphRef.current) {
         const camera = graphRef.current.camera();
-        camera.position.set(500, 250, 500);
+        // Here you might set an initial position; note the effect above will move it if nothing is searched.
+        camera.position.set(1000, 600, 1000);
         camera.lookAt(0, 0, 0);
         const controls = graphRef.current.controls();
         if (controls) {
@@ -274,10 +271,9 @@ const PortfolioGraph: React.FC = () => {
     setTimeout(initGraph, 100);
   }, []);
 
-  // Create a custom object for each node.
+  // Render each node; if a search is active, non-highlighted nodes appear muted.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
-    // If a search is active, render non-highlighted nodes in muted grey.
     const effectiveColor = highlightedNodeId
       ? (node.id === highlightedNodeId ? 0xffffff : 0x444444)
       : node.color;
@@ -286,10 +282,11 @@ const PortfolioGraph: React.FC = () => {
     const material = new THREE.MeshBasicMaterial({ color: effectiveColor });
     const sphere = new THREE.Mesh(geometry, material);
     group.add(sphere);
-    // Set text color accordingly.
+    
     const effectiveTextColor = highlightedNodeId
       ? (node.id === highlightedNodeId ? "rgba(255,255,255,1)" : "rgba(150,150,150,1)")
       : (node.type === "major" ? "rgba(255,255,255,1)" : "rgba(200,200,200,1)");
+    
     let sprite: THREE.Sprite;
     if (node.type === "major") {
       sprite = makeTextSprite(
