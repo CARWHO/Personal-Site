@@ -8,6 +8,11 @@ import { baseURL, routes } from "@/app/resources";
 import { home, about, person, newsletter } from "@/app/resources/content";
 import { Mailchimp } from "@/components";
 import { Posts } from "@/components/blog/Posts";
+import dynamic from 'next/dynamic';
+
+const PortfolioGraph = dynamic(() => import('@/components/portfolio/PortfolioGraph'), {
+  ssr: false
+});
 
 export default function HomeContent() {
 
@@ -47,6 +52,9 @@ export default function HomeContent() {
               {home.subline}
             </Text>
           </RevealFx>
+        </Column>
+        <Column fillWidth>
+          <PortfolioGraph />
         </Column>
       </Column>
     </Column>
