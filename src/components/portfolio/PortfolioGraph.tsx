@@ -150,34 +150,25 @@ const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const graphData = useMemo(() => generateGraphData(), []);
 
-  // Set initial camera position.
   useEffect(() => {
     if (graphRef.current) {
+      // Set initial camera position
+      const distance = 300;
       graphRef.current.cameraPosition(
-        { x: 0, y: 0, z: 10000 }, // Camera position.
-        { x: 0, y: 0, z: 0 },   // Look-at position.
-        2000                   // Animation duration (ms).
+        { x: distance, y: distance/2, z: distance },
+        { x: 0, y: 0, z: 0 },
+        0
       );
-    }
-  }, []);
 
-  useEffect(() => {
-    if (graphRef.current) {
+      // Configure controls
       const controls = graphRef.current.controls();
       if (controls) {
-        // Disable zooming
         controls.enableZoom = false;
-        controls.minDistance = 10000;
-        controls.maxDistance = 10000;
-        
-        // Limit rotation
-        controls.minPolarAngle = Math.PI / 4; // 45 degrees
-        controls.maxPolarAngle = Math.PI * 3/4; // 135 degrees
-        
-        // Disable panning
+        controls.minDistance = distance;
+        controls.maxDistance = distance;
+        controls.minPolarAngle = Math.PI / 4;
+        controls.maxPolarAngle = Math.PI * 3/4;
         controls.enablePan = false;
-        
-        // Only allow left click rotation
         controls.mouseButtons = {
           LEFT: THREE.MOUSE.ROTATE,
           MIDDLE: null,
