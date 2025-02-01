@@ -36,7 +36,7 @@ const lightenColor = (color: number, percent: number): number => {
 };
 
 // --- Project Data ---
-// (Only major projects are considered for filtering/panning.)
+// Only major projects are used for filtering and focusing.
 const majorProjects = [
   { 
     id: "Halo Vision", 
@@ -175,11 +175,12 @@ const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const [searchQuery, setSearchQuery] = useState("");
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
-  // Increment this counter on Enter to trigger camera movement.
+  // focusCounter increments each time the user presses Enter.
   const [focusCounter, setFocusCounter] = useState(0);
   const graphData = useMemo(() => generateGraphData(), []);
 
-  // Search handler: only update the highlighted node as the user types.
+  // --- Search Handler ---
+  // As the user types, update the highlighted node (but do not move the camera).
   const handleSearch = (query: string) => {
     const lowerQuery = query.toLowerCase();
     setSearchQuery(lowerQuery);
@@ -201,49 +202,29 @@ const PortfolioGraph: React.FC = () => {
     }
   };
 
-  // When Enter is pressed, increment the focus counter.
+  // --- Focus Trigger ---
+  // When the user presses Enter, increment the focus counter.
   const handleSearchSubmit = () => {
     if (highlightedNodeId) {
       setFocusCounter(prev => prev + 1);
     }
   };
 
-  // Move the camera only when the user presses Enter.
+  // --- Camera Focusing via centerAt ---
+  // Instead of custom offset math, use the built-in centerAt method
+  // to smoothly pan the camera so that the highlighted node is centered.
   useEffect(() => {
     if (focusCounter > 0 && highlightedNodeId && graphRef.current) {
       const node = graphData.nodes.find(n => n.id === highlightedNodeId);
       if (node && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
-        const camera = graphRef.current.camera();
-        const nodePos = new THREE.Vector3(node.x, node.y, node.z);
-
-        // Calculate new camera position with fixed distance and angle
-        const distance = 500; // Keep consistent distance
-        const currentAngle = Math.atan2(camera.position.z, camera.position.x);
-        const newAngle = currentAngle + Math.PI / 2;
-
-        const newCamPos = new THREE.Vector3(
-          nodePos.x + distance * Math.cos(newAngle),
-          camera.position.y, // Maintain current height
-          nodePos.z + distance * Math.sin(newAngle)
-        );
-
-        const controls = graphRef.current.controls();
-        if (controls) {
-          controls.enabled = false;
-          controls.target.copy(nodePos);
-        }
-        // Animate the camera movement.
-        graphRef.current.cameraPosition(newCamPos, nodePos, 2000);
-        setTimeout(() => {
-          if (controls) controls.enabled = true;
-        }, 2100);
+        // Call centerAt to pan the camera without changing the distance.
+        // Note: centerAt(x, y, z, ms) smoothly pans the camera so that (x,y,z) is at the center.
+        graphRef.current.centerAt(node.x, node.y, node.z, 2000);
       }
     }
-    // We depend solely on focusCounter so that changes from typing (which update highlightedNodeId)
-    // don’t trigger camera movement.
   }, [focusCounter]);
 
-  // Initial camera and controls setup.
+  // --- Initial Camera and Controls Setup ---
   useEffect(() => {
     const initGraph = () => {
       if (graphRef.current) {
@@ -272,11 +253,14 @@ const PortfolioGraph: React.FC = () => {
     setTimeout(initGraph, 100);
   }, []);
 
-  // Render each node. Non-highlighted nodes are muted when a search is active.
+  // --- Node Rendering ---
+  // Render nodes with muted color if not highlighted.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
     const effectiveColor = highlightedNodeId
-      ? (node.id === highlightedNodeId ? 0xffffff : 0x444444)
+      ? node.id === highlightedNodeId
+        ? 0xffffff
+        : 0x444444
       : node.color;
     const sphereRadius = node.type === "major" ? 15 : 5;
     const geometry = new THREE.SphereGeometry(sphereRadius, 16, 16);
@@ -285,8 +269,12 @@ const PortfolioGraph: React.FC = () => {
     group.add(sphere);
 
     const effectiveTextColor = highlightedNodeId
-      ? (node.id === highlightedNodeId ? "rgba(255,255,255,1)" : "rgba(150,150,150,1)")
-      : (node.type === "major" ? "rgba(255,255,255,1)" : "rgba(200,200,200,1)");
+      ? node.id === highlightedNodeId
+        ? "rgba(255,255,255,1)"
+        : "rgba(150,150,150,1)"
+      : node.type === "major"
+      ? "rgba(255,255,255,1)"
+      : "rgba(200,200,200,1)";
 
     let sprite: THREE.Sprite;
     if (node.type === "major") {
