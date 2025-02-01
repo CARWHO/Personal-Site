@@ -177,10 +177,13 @@ const PortfolioGraph: React.FC = () => {
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
   const graphData = useMemo(() => generateGraphData(), []);
 
+  const [shouldFocus, setShouldFocus] = useState(false);
+
   // Search handler: update query and determine matching node.
   const handleSearch = (query: string) => {
     const lowerQuery = query.toLowerCase();
     setSearchQuery(lowerQuery);
+    setShouldFocus(false);
     if (!lowerQuery) {
       setHighlightedNodeId(null);
       return;
@@ -197,9 +200,14 @@ const PortfolioGraph: React.FC = () => {
     }
   };
 
-  // Handle camera movement when a node is highlighted
+  // Handle search submission (Enter pressed)
+  const handleSearchSubmit = () => {
+    setShouldFocus(true);
+  };
+
+  // Handle camera movement when a node is highlighted and focus is requested
   useEffect(() => {
-    if (highlightedNodeId && graphRef.current) {
+    if (highlightedNodeId && shouldFocus && graphRef.current) {
       const node = graphData.nodes.find(n => n.id === highlightedNodeId);
       if (node && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
         const camera = graphRef.current.camera();
@@ -344,7 +352,11 @@ const PortfolioGraph: React.FC = () => {
       className="portfolio-graph"
       style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}
     >
-      <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
+      <SearchBar 
+        searchQuery={searchQuery} 
+        onSearchChange={handleSearch}
+        onSubmit={handleSearchSubmit}
+      />
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}

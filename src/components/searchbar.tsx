@@ -6,7 +6,17 @@ interface SearchBarProps {
   onSearchChange: (newQuery: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange }) => {
+const SearchBar: React.FC<SearchBarProps & { onSubmit?: () => void }> = ({ 
+  searchQuery, 
+  onSearchChange,
+  onSubmit 
+}) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && onSubmit) {
+      onSubmit();
+    }
+  };
+
   return (
     <div
       className="search-bar"
@@ -27,6 +37,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange }) =>
         placeholder="Search projects or skills..."
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
+        onKeyDown={handleKeyDown}
         style={{
           width: "100%",
           padding: "8px",
