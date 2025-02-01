@@ -150,23 +150,19 @@ const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const graphData = useMemo(() => generateGraphData(), []);
 
-  // Delay updating the camera to ensure everything is initialized.
   useEffect(() => {
-    const initCamera = () => {
+    const initGraph = () => {
       if (graphRef.current) {
         const camera = graphRef.current.camera();
-        // Set a much larger initial position
-        camera.position.set(0, 0, 5000);
+        // Set a much larger initial distance
+        camera.position.set(2000, 1000, 2000);
         camera.lookAt(0, 0, 0);
-        camera.far = 10000;
-        camera.updateProjectionMatrix();
-
-        // Configure controls
+        
         const controls = graphRef.current.controls();
         if (controls) {
           controls.enableZoom = false;
-          controls.minDistance = 5000;
-          controls.maxDistance = 5000;
+          controls.minDistance = 2000;
+          controls.maxDistance = 2000;
           controls.minPolarAngle = Math.PI / 4;
           controls.maxPolarAngle = Math.PI * 3/4;
           controls.enablePan = false;
@@ -182,11 +178,10 @@ const PortfolioGraph: React.FC = () => {
     };
 
     // Initial setup
-    initCamera();
+    initGraph();
     
     // Also run after a short delay to ensure it takes effect
-    const timeoutId = setTimeout(initCamera, 100);
-    return () => clearTimeout(timeoutId);
+    setTimeout(initGraph, 100);
   }, []);
 
   // Create a custom 3D object for each node that includes a sphere and a text annotation.
@@ -194,7 +189,7 @@ const PortfolioGraph: React.FC = () => {
     const group = new THREE.Group();
 
     // Create the node sphere.
-    const sphereRadius = node.type === "major" ? 6 : 2;
+    const sphereRadius = node.type === "major" ? 30 : 10;
     const geometry = new THREE.SphereGeometry(sphereRadius, 16, 16);
     const material = new THREE.MeshBasicMaterial({ color: node.color });
     const sphere = new THREE.Mesh(geometry, material);
@@ -239,7 +234,7 @@ const PortfolioGraph: React.FC = () => {
   };
 
   return (
-    <Column className="portfolio-graph" style={{ height: "1200px", width: "100%" }}>
+    <Column className="portfolio-graph" style={{ height: "800px", width: "100%", transform: "scale(0.5)" }}>
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
