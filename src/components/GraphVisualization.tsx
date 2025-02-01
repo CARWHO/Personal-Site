@@ -1,8 +1,13 @@
 // src/components/GraphVisualization.tsx
-import React, { useRef, useMemo } from "react";
-import ForceGraph3D from "react-force-graph-3d";
+import React, { useRef, useMemo, useEffect } from "react";
+import dynamic from 'next/dynamic';
 import * as THREE from "three";
 import styles from "../styles/graph.module.scss";
+
+const ForceGraph3D = dynamic(() => import('react-force-graph-3d'), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
 
 interface ProjectNode {
   id: number;
