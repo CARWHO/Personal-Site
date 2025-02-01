@@ -1,7 +1,8 @@
 // src/components/portfolio/PortfolioGraph.tsx
 "use client";
 
-import React, { useEffect, useRef, useMemo } from "react";
+import React, { useEffect, useRef, useMemo, useState } from "react";
+import SearchBar from "@/components/searchbar";
 import ForceGraph3D from "react-force-graph-3d";
 import { Column } from "@/once-ui/components";
 import * as THREE from "three";
@@ -35,24 +36,28 @@ const majorProjects = [
   { 
     id: "Halo Vision", 
     color: 0xffffff,
+    tags: ["Embedded Systems", "Hardware", "Safety"],
     skills: ["PCB Design", "Embedded C++", "Mobile App Dev", "3D Modeling", "CFD Analysis", 
              "Bluetooth LE", "Battery Management", "UI/UX Design", "Arduino", "Safety Systems"]
   },
   { 
     id: "KORA", 
     color: 0xffffff,
+    tags: ["AI", "Education", "Software"],
     skills: ["React Native", "Python", "OpenAI API", "AWS", "Database Design", 
              "User Authentication", "API Development", "ML/AI", "Node.js", "Redux"]
   },
   { 
     id: "Dawn Aerospace", 
     color: 0xffffff,
+    tags: ["Aerospace", "Software", "Hardware"],
     skills: ["Satellite Comms", "Python Testing", "Hardware Integration", "Git", "CI/CD", 
              "Embedded Linux", "RF Systems", "Technical Documentation", "C++", "System Architecture"]
   },
   { 
     id: "Wellington City Council", 
     color: 0xffffff,
+    tags: ["Engineering", "Analysis", "Safety"],
     skills: ["ANSYS Fluent", "Technical Writing", "CAD", "Data Analysis", "Risk Assessment", 
              "Project Management", "MATLAB", "Safety Standards", "Statistical Analysis", "AutoCAD"]
   }
@@ -178,7 +183,28 @@ function makeTextSprite(message: string, parameters: any) {
 
 const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
+  const [searchQuery, setSearchQuery] = useState("");
   const graphData = useMemo(() => generateGraphData(), []);
+  
+  const handleSearch = (query: string) => {
+    setSearchQuery(query.toLowerCase());
+    
+    if (graphRef.current) {
+      const matchingNodes = graphData.nodes.filter(node => {
+        const project = majorProjects.find(p => p.id === node.id);
+        return project?.tags?.some(tag => tag.toLowerCase().includes(query.toLowerCase())) ||
+               node.id.toLowerCase().includes(query.toLowerCase());
+      });
+
+      if (matchingNodes.length > 0 && query) {
+        const node = matchingNodes[0];
+        graphRef.current.centerAt(0, 0, 1000);
+        graphRef.current.zoomToFit(400, 250, (n: any) => 
+          matchingNodes.some(match => match.id === n.id)
+        );
+      }
+    }
+  };
 
   useEffect(() => {
     const initGraph = () => {
@@ -265,6 +291,7 @@ const PortfolioGraph: React.FC = () => {
 
   return (
     <Column className="portfolio-graph" style={{ height: "800px", width: "800px" }}>
+      <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
