@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect, useRef, useMemo, useState } from "react";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/searchbar";
 import ForceGraph3D from "react-force-graph-3d";
 import { Column } from "@/once-ui/components";
 import * as THREE from "three";
