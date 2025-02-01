@@ -197,14 +197,50 @@ const PortfolioGraph: React.FC = () => {
       });
 
       if (matchingNodes.length > 0 && query) {
-        // Focus camera on matching nodes
         const matchNode = matchingNodes[0];
-        const distance = 500;
-        const position = graphRef.current.camera().position;
-        position.x = distance;
-        position.y = distance/2;
-        position.z = distance;
-        graphRef.current.camera().lookAt(0, 0, 0);
+        
+        // Get the matched node's position
+        const nodePosition = graphRef.current.scene().getObjectByName(matchNode.id)?.position;
+        if (nodePosition) {
+          // Animate camera to focus on the matched node
+          const distance = 200; // Closer distance for focusing
+          const camera = graphRef.current.camera();
+          
+          // Calculate new camera position relative to the node
+          const newPosition = {
+            x: nodePosition.x + distance,
+            y: nodePosition.y + distance/2,
+            z: nodePosition.z + distance
+          };
+          
+          // Smoothly move camera to new position
+          const startPosition = { ...camera.position };
+          const duration = 1000; // 1 second animation
+          const startTime = Date.now();
+          
+          const animateCamera = () => {
+            const currentTime = Date.now();
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Ease function for smooth animation
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            
+            camera.position.set(
+              startPosition.x + (newPosition.x - startPosition.x) * easeProgress,
+              startPosition.y + (newPosition.y - startPosition.y) * easeProgress,
+              startPosition.z + (newPosition.z - startPosition.z) * easeProgress
+            );
+            
+            camera.lookAt(nodePosition);
+            
+            if (progress < 1) {
+              requestAnimationFrame(animateCamera);
+            }
+          };
+          
+          animateCamera();
+        }
         
         // Highlight matching nodes
         graphData.nodes.forEach((node: any) => {
