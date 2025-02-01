@@ -4,7 +4,7 @@
 import React, { useEffect, useRef, useMemo, useState } from "react";
 import SearchBar from "@/components/searchbar";
 import ForceGraph3D from "react-force-graph-3d";
-import { Column } from "@/once-ui/components";
+import { Column, Flex } from "@/once-ui/components";
 import * as THREE from "three";
 
 // ----- Graph Types -----
@@ -346,9 +346,10 @@ const PortfolioGraph: React.FC = () => {
   };
 
   return (
-    <Column
+    <Flex
       className="portfolio-graph"
-      style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}
+      direction="column"
+      style={{ height: "800px", width: "800px" }}
     >
       <SearchBar
         searchQuery={searchQuery}
@@ -369,7 +370,7 @@ const PortfolioGraph: React.FC = () => {
         enableNodeDrag={true}
         enableNavigationControls={true}
       />
-    </Column>
+    </Flex>
   );
 };
 
