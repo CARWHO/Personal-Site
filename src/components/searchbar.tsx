@@ -6,12 +6,19 @@ interface SearchBarProps {
   onSearchChange: (newQuery: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({
-  searchQuery,
-  onSearchChange,
-}) => {
+const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange }) => {
   return (
-    <div className="search-bar" style={{ marginBottom: "10px" }}>
+    <div
+      className="search-bar"
+      style={{
+        width: "100%",
+        padding: "10px",
+        marginBottom: "10px",
+        backgroundColor: "#222", // Dark background
+        borderRadius: "5px",
+        boxShadow: "0 2px 5px rgba(0,0,0,0.5)",
+      }}
+    >
       <input
         type="text"
         placeholder="Search projects or skills..."
@@ -22,6 +29,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
           padding: "8px",
           fontSize: "16px",
           boxSizing: "border-box",
+          backgroundColor: "#333", // Slightly lighter than container
+          color: "#fff",
+          border: "none",
+          outline: "none",
+          borderRadius: "4px",
         }}
       />
     </div>

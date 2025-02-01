@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect, useRef, useMemo, useState } from "react";
-import SearchBar from "@/components/searchbar";
+import SearchBar from "@/components/SearchBar";
 import ForceGraph3D from "react-force-graph-3d";
 import { Column } from "@/once-ui/components";
 import * as THREE from "three";
@@ -13,6 +13,10 @@ interface GraphNode {
   type: "major" | "skill";
   project?: string; // For a skill node, indicates its parent project.
   color: number;
+  // These properties will be set by the force simulation:
+  x?: number;
+  y?: number;
+  z?: number;
 }
 
 interface GraphLink {
@@ -31,35 +35,45 @@ const lightenColor = (color: number, percent: number): number => {
   return (newR << 16) + (newG << 8) + newB;
 };
 
-// Define nicer pastel colours for major projects.
+// Define project data with tags.  
+// For KORA, we only include the "AI" tag.  
+// For Halo Vision, we include "Embedded system design".
 const majorProjects = [
   { 
     id: "Halo Vision", 
     color: 0xffffff,
-    tags: ["Embedded Systems", "Hardware", "Safety"],
-    skills: ["PCB Design", "Embedded C++", "Mobile App Dev", "3D Modeling", "CFD Analysis", 
-             "Bluetooth LE", "Battery Management", "UI/UX Design", "Arduino", "Safety Systems"]
+    tags: ["Embedded system design"],
+    skills: [
+      "PCB Design", "Embedded C++", "Mobile App Dev", "3D Modeling", "CFD Analysis", 
+      "Bluetooth LE", "Battery Management", "UI/UX Design", "Arduino", "Safety Systems"
+    ]
   },
   { 
     id: "KORA", 
     color: 0xffffff,
-    tags: ["AI", "Education", "Software"],
-    skills: ["React Native", "Python", "OpenAI API", "AWS", "Database Design", 
-             "User Authentication", "API Development", "ML/AI", "Node.js", "Redux"]
+    tags: ["AI"],
+    skills: [
+      "React Native", "Python", "OpenAI API", "AWS", "Database Design", 
+      "User Authentication", "API Development", "ML/AI", "Node.js", "Redux"
+    ]
   },
   { 
     id: "Dawn Aerospace", 
     color: 0xffffff,
     tags: ["Aerospace", "Software", "Hardware"],
-    skills: ["Satellite Comms", "Python Testing", "Hardware Integration", "Git", "CI/CD", 
-             "Embedded Linux", "RF Systems", "Technical Documentation", "C++", "System Architecture"]
+    skills: [
+      "Satellite Comms", "Python Testing", "Hardware Integration", "Git", "CI/CD", 
+      "Embedded Linux", "RF Systems", "Technical Documentation", "C++", "System Architecture"
+    ]
   },
   { 
     id: "Wellington City Council", 
     color: 0xffffff,
     tags: ["Engineering", "Analysis", "Safety"],
-    skills: ["ANSYS Fluent", "Technical Writing", "CAD", "Data Analysis", "Risk Assessment", 
-             "Project Management", "MATLAB", "Safety Standards", "Statistical Analysis", "AutoCAD"]
+    skills: [
+      "ANSYS Fluent", "Technical Writing", "CAD", "Data Analysis", "Risk Assessment", 
+      "Project Management", "MATLAB", "Safety Standards", "Statistical Analysis", "AutoCAD"
+    ]
   }
 ];
 
@@ -79,9 +93,10 @@ const generateGraphData = () => {
     });
   });
 
-  // Add skill nodes for each project
+  // Add skill nodes for each project.
   majorProjects.forEach((project, projectIndex) => {
     project.skills.forEach((skill, skillIndex) => {
+      // These positions are temporary. The simulation will override them.
       const y = 1 - (skillIndex / (skillNodesPerProject - 1)) * 2;
       const radius = Math.sqrt(1 - y * y);
       const theta = goldenAngle * (projectIndex * skillNodesPerProject + skillIndex);
@@ -102,7 +117,7 @@ const generateGraphData = () => {
     });
   });
 
-  // Create a more connected web by linking major projects
+  // Create a connected web by linking major projects.
   majorProjects.forEach((project1, i) => {
     majorProjects.slice(i + 1).forEach(project2 => {
       graphLinks.push({
@@ -112,9 +127,9 @@ const generateGraphData = () => {
     });
   });
 
-  // Add some cross-links between skills of different projects
+  // Add some cross-links between skills of different projects.
   const skillNodes = graphNodes.filter(node => node.type === "skill");
-  for (let i = 0; i < skillNodes.length; i += 5) { // Link every 5th skill node
+  for (let i = 0; i < skillNodes.length; i += 5) { // Link every 5th skill node.
     const randomSkillIndex = Math.floor(Math.random() * skillNodes.length);
     if (i !== randomSkillIndex) {
       graphLinks.push({
@@ -127,7 +142,7 @@ const generateGraphData = () => {
   return { nodes: graphNodes, links: graphLinks };
 };
 
-// Helper function to create a text sprite as an annotation.
+// Helper function to create a text sprite annotation.
 function makeTextSprite(message: string, parameters: any) {
   parameters = parameters || {};
   const fontface = parameters.fontface || "Arial";
@@ -138,20 +153,20 @@ function makeTextSprite(message: string, parameters: any) {
   const backgroundColor =
     parameters.backgroundColor || { r: 0, g: 0, b: 0, a: 0.0 };
 
-  // Create a canvas and get context.
+  // Create a canvas and context.
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d")!;
   context.font = `${fontsize}px ${fontface}`;
 
-  // Measure text size.
+  // Measure text.
   const metrics = context.measureText(message);
   const textWidth = metrics.width;
 
-  // Set canvas size accounting for border.
+  // Set canvas dimensions.
   canvas.width = textWidth + borderThickness * 2;
   canvas.height = fontsize * 1.4 + borderThickness * 2;
 
-  // Reset font after resizing.
+  // Reset font.
   context.font = `${fontsize}px ${fontface}`;
 
   // Draw background.
@@ -169,13 +184,13 @@ function makeTextSprite(message: string, parameters: any) {
   context.textBaseline = "middle";
   context.fillText(message, canvas.width / 2, canvas.height / 2);
 
-  // Create texture from canvas.
+  // Create texture.
   const texture = new THREE.CanvasTexture(canvas);
   texture.needsUpdate = true;
   const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true });
   const sprite = new THREE.Sprite(spriteMaterial);
 
-  // Scale sprite based on canvas dimensions.
+  // Scale sprite.
   const scaleFactor = parameters.scaleFactor || 0.25;
   sprite.scale.set(canvas.width * scaleFactor, canvas.height * scaleFactor, 1);
   return sprite;
@@ -185,72 +200,40 @@ const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const [searchQuery, setSearchQuery] = useState("");
   const graphData = useMemo(() => generateGraphData(), []);
-  
+
+  // When a search is performed, find matching nodes (by tag or id) and move the camera.
   const handleSearch = (query: string) => {
-    setSearchQuery(query.toLowerCase());
+    const lowerQuery = query.toLowerCase();
+    setSearchQuery(lowerQuery);
     
-    if (graphRef.current) {
+    if (graphRef.current && lowerQuery) {
+      // Find nodes that match either a project tag or the node id.
       const matchingNodes = graphData.nodes.filter(node => {
         const project = majorProjects.find(p => p.id === node.id);
-        return project?.tags?.some(tag => tag.toLowerCase().includes(query.toLowerCase())) ||
-               node.id.toLowerCase().includes(query.toLowerCase());
+        return (
+          project?.tags?.some(tag => tag.toLowerCase().includes(lowerQuery)) ||
+          node.id.toLowerCase().includes(lowerQuery)
+        );
       });
-
-      if (matchingNodes.length > 0 && query) {
-        const matchNode = matchingNodes[0];
-        
-        // Get the matched node's position
-        const nodePosition = graphRef.current.scene().getObjectByName(matchNode.id)?.position;
-        if (nodePosition) {
-          // Animate camera to focus on the matched node
-          const distance = 200; // Closer distance for focusing
-          const camera = graphRef.current.camera();
-          
-          // Calculate new camera position relative to the node
-          const newPosition = {
-            x: nodePosition.x + distance,
-            y: nodePosition.y + distance/2,
-            z: nodePosition.z + distance
+      
+      if (matchingNodes.length > 0) {
+        const node = matchingNodes[0];
+        // Make sure the simulation has assigned a position.
+        if (node.x !== undefined && node.y !== undefined && node.z !== undefined) {
+          // Define an offset so the camera is not exactly at the node.
+          const offset = 50;
+          const newCamPos = {
+            x: node.x,
+            y: node.y,
+            z: node.z + offset
           };
-          
-          // Smoothly move camera to new position
-          const startPosition = { ...camera.position };
-          const duration = 1000; // 1 second animation
-          const startTime = Date.now();
-          
-          const animateCamera = () => {
-            const currentTime = Date.now();
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            // Ease function for smooth animation
-            const easeProgress = 1 - Math.pow(1 - progress, 3);
-            
-            camera.position.set(
-              startPosition.x + (newPosition.x - startPosition.x) * easeProgress,
-              startPosition.y + (newPosition.y - startPosition.y) * easeProgress,
-              startPosition.z + (newPosition.z - startPosition.z) * easeProgress
-            );
-            
-            camera.lookAt(nodePosition);
-            
-            if (progress < 1) {
-              requestAnimationFrame(animateCamera);
-            }
-          };
-          
-          animateCamera();
+          // Animate the camera moving to newCamPos, looking at the node.
+          graphRef.current.cameraPosition(
+            newCamPos,
+            { x: node.x, y: node.y, z: node.z },
+            2000 // duration in ms
+          );
         }
-        
-        // Highlight matching nodes
-        graphData.nodes.forEach((node: any) => {
-          node.color = matchingNodes.some(match => match.id === node.id) 
-            ? 0xffffff  // White for matching nodes
-            : 0x666666; // Dark gray for non-matching nodes
-        });
-        
-        // Force a re-render
-        graphRef.current.refresh();
       }
     }
   };
@@ -259,7 +242,7 @@ const PortfolioGraph: React.FC = () => {
     const initGraph = () => {
       if (graphRef.current) {
         const camera = graphRef.current.camera();
-        // Set a much larger initial distance
+        // Set an initial camera position.
         camera.position.set(500, 250, 500);
         camera.lookAt(0, 0, 0);
         
@@ -269,7 +252,7 @@ const PortfolioGraph: React.FC = () => {
           controls.minDistance = 500;
           controls.maxDistance = 500;
           controls.minPolarAngle = Math.PI / 4;
-          controls.maxPolarAngle = Math.PI * 3/4;
+          controls.maxPolarAngle = Math.PI * 3 / 4;
           controls.enablePan = true;
           controls.rotateSpeed = 0.5;
           controls.mouseButtons = {
@@ -282,14 +265,13 @@ const PortfolioGraph: React.FC = () => {
       }
     };
 
-    // Initial setup
+    // Initial setup.
     initGraph();
-    
-    // Also run after a short delay to ensure it takes effect
+    // Run a second time after a short delay to be sure.
     setTimeout(initGraph, 100);
   }, []);
 
-  // Create a custom 3D object for each node that includes a sphere and a text annotation.
+  // Create a custom 3D object for each node with a sphere and text label.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
 
@@ -315,7 +297,7 @@ const PortfolioGraph: React.FC = () => {
           scaleFactor: 0.5,
         }
       );
-      // Position the label above the major node.
+      // Position label above the node.
       sprite.position.set(0, sphereRadius + 15, 0);
     } else {
       sprite = makeTextSprite(
@@ -330,7 +312,7 @@ const PortfolioGraph: React.FC = () => {
           scaleFactor: 0.3,
         }
       );
-      // Position the label slightly above the skill node.
+      // Position label slightly above the skill node.
       sprite.position.set(0, sphereRadius + 8, 0);
     }
     group.add(sprite);
@@ -339,7 +321,8 @@ const PortfolioGraph: React.FC = () => {
   };
 
   return (
-    <Column className="portfolio-graph" style={{ height: "800px", width: "800px" }}>
+    // The Column here is used as a flex container. The SearchBar is now on top.
+    <Column className="portfolio-graph" style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}>
       <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
       <ForceGraph3D
         ref={graphRef}
@@ -352,7 +335,7 @@ const PortfolioGraph: React.FC = () => {
         backgroundColor="rgba(0,0,0,0)"
         controlType="orbit"
         enableNodeDrag={true}
-        enableNavigationControls={true} // Enable built-in navigation controls
+        enableNavigationControls={true} // Enable built-in navigation controls.
       />
     </Column>
   );
