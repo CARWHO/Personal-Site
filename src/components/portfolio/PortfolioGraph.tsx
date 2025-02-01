@@ -32,10 +32,30 @@ const lightenColor = (color: number, percent: number): number => {
 
 // Define nicer pastel colours for major projects.
 const majorProjects = [
-  { id: "Halo Vision", color: 0xff69b4 }, // pastel pink
-  { id: "KORA", color: 0x3cb371 },         // medium sea green
-  { id: "Dawn Aerospace", color: 0x4169e1 }, // royal blue
-  { id: "Wellington City Council", color: 0xffa07a }, // light salmon
+  { 
+    id: "Halo Vision", 
+    color: 0xffffff,
+    skills: ["PCB Design", "Embedded C++", "Mobile App Dev", "3D Modeling", "CFD Analysis", 
+             "Bluetooth LE", "Battery Management", "UI/UX Design", "Arduino", "Safety Systems"]
+  },
+  { 
+    id: "KORA", 
+    color: 0xffffff,
+    skills: ["React Native", "Python", "OpenAI API", "AWS", "Database Design", 
+             "User Authentication", "API Development", "ML/AI", "Node.js", "Redux"]
+  },
+  { 
+    id: "Dawn Aerospace", 
+    color: 0xffffff,
+    skills: ["Satellite Comms", "Python Testing", "Hardware Integration", "Git", "CI/CD", 
+             "Embedded Linux", "RF Systems", "Technical Documentation", "C++", "System Architecture"]
+  },
+  { 
+    id: "Wellington City Council", 
+    color: 0xffffff,
+    skills: ["ANSYS Fluent", "Technical Writing", "CAD", "Data Analysis", "Risk Assessment", 
+             "Project Management", "MATLAB", "Safety Standards", "Statistical Analysis", "AutoCAD"]
+  }
 ];
 
 // Build the graph data with major nodes and skill nodes.
@@ -43,7 +63,7 @@ const generateGraphData = () => {
   const graphNodes: GraphNode[] = [];
   const graphLinks: GraphLink[] = [];
   const goldenAngle = Math.PI * (3 - Math.sqrt(5)); // For even spherical distribution.
-  const totalSkillNodes = 100; // Total number of skill nodes.
+  const skillNodesPerProject = 10; // Number of skill nodes per project
 
   // Add major project nodes.
   majorProjects.forEach((project) => {
@@ -54,22 +74,19 @@ const generateGraphData = () => {
     });
   });
 
-  // Distribute skill nodes around the sphere.
-  for (let i = 0; i < totalSkillNodes; i++) {
-    const y = 1 - (i / (totalSkillNodes - 1)) * 2; // y goes from 1 to -1.
-    const radius = Math.sqrt(1 - y * y);
-    const theta = goldenAngle * i;
+  // Add skill nodes for each project
+  majorProjects.forEach((project, projectIndex) => {
+    project.skills.forEach((skill, skillIndex) => {
+      const y = 1 - (skillIndex / (skillNodesPerProject - 1)) * 2;
+      const radius = Math.sqrt(1 - y * y);
+      const theta = goldenAngle * (projectIndex * skillNodesPerProject + skillIndex);
 
-    // Assign a random project to this skill node for clustering purposes.
-    const assignedProject =
-      majorProjects[Math.floor(Math.random() * majorProjects.length)];
-
-    const skillNode: GraphNode = {
-      id: `Skill ${i}`,
-      type: "skill",
-      project: assignedProject.id,
-      color: lightenColor(assignedProject.color, 0.5), // Lighter version of the project's color.
-    };
+      const skillNode: GraphNode = {
+        id: skill,
+        type: "skill",
+        project: project.id,
+        color: 0xcccccc, // Light gray for all skill nodes
+      };
     graphNodes.push(skillNode);
 
     // Link the skill node to its assigned major project.
@@ -253,7 +270,7 @@ const PortfolioGraph: React.FC = () => {
         nodeLabel={() => ""} // Disable default hover labels.
         nodeThreeObject={nodeThreeObject}
         linkWidth={2}
-        linkColor={() => "#ffffff"}
+        linkColor={() => "#666666"}
         linkOpacity={0.5}
         backgroundColor="rgba(0,0,0,0)"
         controlType="orbit"
