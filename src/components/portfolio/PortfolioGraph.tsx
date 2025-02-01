@@ -219,7 +219,7 @@ const PortfolioGraph: React.FC = () => {
     const group = new THREE.Group();
 
     // Create the node sphere.
-    const sphereRadius = node.type === "major" ? 30 : 10;
+    const sphereRadius = node.type === "major" ? 15 : 5;
     const geometry = new THREE.SphereGeometry(sphereRadius, 16, 16);
     const material = new THREE.MeshBasicMaterial({ color: node.color });
     const sphere = new THREE.Mesh(geometry, material);
@@ -241,7 +241,7 @@ const PortfolioGraph: React.FC = () => {
         }
       );
       // Position the label above the major node.
-      sprite.position.set(0, sphereRadius + 8, 0);
+      sprite.position.set(0, sphereRadius + 15, 0);
     } else {
       sprite = makeTextSprite(
         `${node.id} (Skill)`,
@@ -256,7 +256,7 @@ const PortfolioGraph: React.FC = () => {
         }
       );
       // Position the label slightly above the skill node.
-      sprite.position.set(0, sphereRadius + 4, 0);
+      sprite.position.set(0, sphereRadius + 8, 0);
     }
     group.add(sprite);
 
