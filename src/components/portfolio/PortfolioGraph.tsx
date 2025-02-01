@@ -168,9 +168,9 @@ const PortfolioGraph: React.FC = () => {
           controls.enablePan = true;
           controls.rotateSpeed = 0.5;
           controls.mouseButtons = {
-            // LEFT: THREE.MOUSE.ROTATE,
-            // MIDDLE: null,
-            // RIGHT: null
+            LEFT: THREE.MOUSE.ROTATE,
+            MIDDLE: THREE.MOUSE.PAN,
+            RIGHT: THREE.MOUSE.PAN
           };
           controls.update();
         }
@@ -245,7 +245,7 @@ const PortfolioGraph: React.FC = () => {
         backgroundColor="rgba(0,0,0,0)"
         controlType="orbit"
         enableNodeDrag={false}
-        enableNavigationControls={false} // Disable built-in navigation controls.
+        enableNavigationControls={true} // Enable built-in navigation controls
       />
     </Column>
   );
