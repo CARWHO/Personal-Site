@@ -154,7 +154,7 @@ const PortfolioGraph: React.FC = () => {
   useEffect(() => {
     if (graphRef.current) {
       graphRef.current.cameraPosition(
-        { x: 0, y: 0, z: 300 }, // Camera position.
+        { x: 0, y: 0, z: 900 }, // Camera position.
         { x: 0, y: 0, z: 0 },   // Look-at position.
         2000                   // Animation duration (ms).
       );
@@ -167,8 +167,8 @@ const PortfolioGraph: React.FC = () => {
       if (controls) {
         // Disable zooming
         controls.enableZoom = false;
-        controls.minDistance = 200;
-        controls.maxDistance = 200;
+        controls.minDistance = 600;
+        controls.maxDistance = 600;
         
         // Limit rotation
         controls.minPolarAngle = Math.PI / 4; // 45 degrees
