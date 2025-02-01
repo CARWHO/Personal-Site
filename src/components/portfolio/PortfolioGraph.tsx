@@ -1,23 +1,17 @@
 // src/components/portfolio/PortfolioGraph.tsx
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useMemo } from "react";
 import ForceGraph3D from "react-force-graph-3d";
 import { Column } from "@/once-ui/components";
 import * as THREE from "three";
 
-// -------------------------------------------------------------------------
-// Data Structures
-// -------------------------------------------------------------------------
+// Define the structure for our graph nodes and links.
 interface GraphNode {
   id: string;
   type: "major" | "skill";
-  project?: string; // defined for skill nodes
+  project?: string; // For a skill node, indicates its parent project.
   color: number;
-  // Fixed positions on the sphere:
-  fx: number;
-  fy: number;
-  fz: number;
 }
 
 interface GraphLink {
@@ -25,179 +19,203 @@ interface GraphLink {
   target: string;
 }
 
-// -------------------------------------------------------------------------
-// Configuration
-// -------------------------------------------------------------------------
-const SPHERE_RADIUS = 100;
+// Helper function to lighten a hex color by a percentage (0 to 1)
+const lightenColor = (color: number, percent: number): number => {
+  const r = (color >> 16) & 0xff;
+  const g = (color >> 8) & 0xff;
+  const b = color & 0xff;
+  const newR = Math.min(255, Math.floor(r + (255 - r) * percent));
+  const newG = Math.min(255, Math.floor(g + (255 - g) * percent));
+  const newB = Math.min(255, Math.floor(b + (255 - b) * percent));
+  return (newR << 16) + (newG << 8) + newB;
+};
 
-// Instead of placing the four major nodes at extreme, separate positions,
-// we assign each one spherical coordinates in the same band (for example,
-// all with φ = 60°) but with different azimuthal angles (θ) so that they lie
-// on one continuous region of the sphere.
+// Define nicer pastel colours for major projects.
 const majorProjects = [
-  {
-    id: "halo vision",
-    color: 0xff1493, // deep pink
-    phi: Math.PI / 3,       // 60° from the positive z‑axis
-    theta: Math.PI / 4,     // 45° azimuth
-  },
-  {
-    id: "kora",
-    color: 0x00ff00, // green
-    phi: Math.PI / 3,       
-    theta: (3 * Math.PI) / 4,  // 135°
-  },
-  {
-    id: "dawn aerospace",
-    color: 0x0000ff, // blue
-    phi: Math.PI / 3,       
-    theta: (5 * Math.PI) / 4,  // 225°
-  },
-  {
-    id: "wellington city council",
-    color: 0xffa500, // orange
-    phi: Math.PI / 3,       
-    theta: (7 * Math.PI) / 4,  // 315°
-  },
+  { id: "Halo Vision", color: 0xff69b4 }, // pastel pink
+  { id: "KORA", color: 0x3cb371 }, // medium sea green
+  { id: "Dawn Aerospace", color: 0x4169e1 }, // royal blue
+  { id: "Wellington City Council", color: 0xffa07a }, // light salmon
 ];
 
-// For each major project, we will generate a set of nearby “skill” nodes.
-// (They are placed by offsetting the major node’s spherical position slightly.)
-const SKILL_COUNT_PER_PROJECT = 10;
-// Maximum angular offset (in radians) for a child node relative to its major node.
-const MAX_ANGLE_OFFSET = 0.1; // roughly 6°
-
-
-// -------------------------------------------------------------------------
-// Helper Functions
-// -------------------------------------------------------------------------
-/**
- * Convert spherical coordinates (φ, θ) with a given radius to Cartesian coordinates.
- */
-function sphericalToCartesian(phi: number, theta: number, radius: number): THREE.Vector3 {
-  const x = radius * Math.sin(phi) * Math.cos(theta);
-  const y = radius * Math.sin(phi) * Math.sin(theta);
-  const z = radius * Math.cos(phi);
-  return new THREE.Vector3(x, y, z);
-}
-
-/**
- * Given a vector on the sphere (the position of a major node),
- * return two orthonormal tangent vectors spanning the tangent plane at that point.
- */
-function getTangentBasis(v: THREE.Vector3): { u: THREE.Vector3; v: THREE.Vector3 } {
-  // Choose an arbitrary vector not parallel to v.
-  const arbitrary = Math.abs(v.x) < 0.9 ? new THREE.Vector3(1, 0, 0) : new THREE.Vector3(0, 1, 0);
-  const u = new THREE.Vector3().crossVectors(v, arbitrary).normalize();
-  const w = new THREE.Vector3().crossVectors(v, u).normalize();
-  return { u, v: w };
-}
-
-/**
- * Given a major node’s position on the sphere, return a new position for a
- * child (skill) node. The new position is computed by applying a small random
- * displacement (in the tangent plane) and then re‑projecting the result onto the sphere.
- */
-function getChildPosition(majorPos: THREE.Vector3): THREE.Vector3 {
-  const { u, v } = getTangentBasis(majorPos);
-  const angleOffset = Math.random() * MAX_ANGLE_OFFSET;
-  const theta = Math.random() * 2 * Math.PI;
-  // For small angles, the displacement (arc length) ≈ radius * angle.
-  const displacement = new THREE.Vector3()
-    .addScaledVector(u, Math.cos(theta) * angleOffset * SPHERE_RADIUS)
-    .addScaledVector(v, Math.sin(theta) * angleOffset * SPHERE_RADIUS);
-  // Add the displacement and then project back onto the sphere.
-  return new THREE.Vector3().addVectors(majorPos, displacement).normalize().multiplyScalar(SPHERE_RADIUS);
-}
-
-/**
- * Generate the graph data:
- * - Four major nodes (the projects) are placed on the same spherical band.
- * - For each major node, several nearby skill nodes are generated (also on the sphere).
- * - Each skill node is linked to its major node.
- */
+// Build the graph data with major nodes and skill nodes.
 const generateGraphData = () => {
-  const nodes: GraphNode[] = [];
-  const links: GraphLink[] = [];
+  const graphNodes: GraphNode[] = [];
+  const graphLinks: GraphLink[] = [];
+  const goldenAngle = Math.PI * (3 - Math.sqrt(5)); // For even spherical distribution.
+  const totalSkillNodes = 100; // Total number of skill nodes.
 
-  // Create major nodes.
-  majorProjects.forEach((proj) => {
-    const pos = sphericalToCartesian(proj.phi, proj.theta, SPHERE_RADIUS);
-    nodes.push({
-      id: proj.id,
+  // Add major project nodes.
+  majorProjects.forEach((project) => {
+    graphNodes.push({
+      id: project.id,
       type: "major",
-      color: proj.color,
-      fx: pos.x,
-      fy: pos.y,
-      fz: pos.z,
+      color: project.color,
     });
-
-    // Generate skill (child) nodes near this major node.
-    for (let i = 0; i < SKILL_COUNT_PER_PROJECT; i++) {
-      const childPos = getChildPosition(pos);
-      const childId = `${proj.id}-skill-${i}`;
-      nodes.push({
-        id: childId,
-        type: "skill",
-        project: proj.id,
-        color: proj.color,
-        fx: childPos.x,
-        fy: childPos.y,
-        fz: childPos.z,
-      });
-      // Link the skill node to its parent (major) node.
-      links.push({
-        source: proj.id,
-        target: childId,
-      });
-    }
   });
 
-  // Optionally, you can also link the major nodes together.
+  // Distribute skill nodes around the sphere.
+  for (let i = 0; i < totalSkillNodes; i++) {
+    const y = 1 - (i / (totalSkillNodes - 1)) * 2; // y goes from 1 to -1.
+    const radius = Math.sqrt(1 - y * y);
+    const theta = goldenAngle * i;
+
+    // Assign a random project to this skill node for clustering purposes.
+    const assignedProject =
+      majorProjects[Math.floor(Math.random() * majorProjects.length)];
+
+    const skillNode: GraphNode = {
+      id: `Skill ${i}`,
+      type: "skill",
+      project: assignedProject.id,
+      color: lightenColor(assignedProject.color, 0.5), // Lighter version of the project's color.
+    };
+    graphNodes.push(skillNode);
+
+    // Link the skill node to its assigned major project.
+    graphLinks.push({
+      source: assignedProject.id,
+      target: skillNode.id,
+    });
+  }
+
+  // Optionally, create links between major projects.
   for (let i = 0; i < majorProjects.length; i++) {
     for (let j = i + 1; j < majorProjects.length; j++) {
-      links.push({
+      graphLinks.push({
         source: majorProjects[i].id,
         target: majorProjects[j].id,
       });
     }
   }
 
-  return { nodes, links };
+  return { nodes: graphNodes, links: graphLinks };
 };
 
-// -------------------------------------------------------------------------
-// React Component
-// -------------------------------------------------------------------------
+// Helper function to create a text sprite as an annotation.
+function makeTextSprite(message: string, parameters: any) {
+  parameters = parameters || {};
+  const fontface = parameters.fontface || "Arial";
+  const fontsize = parameters.fontsize || 18;
+  const textColor = parameters.textColor || "rgba(255, 255, 255, 1.0)";
+  const borderThickness = parameters.borderThickness || 2;
+  const borderColor = parameters.borderColor || { r: 0, g: 0, b: 0, a: 1.0 };
+  const backgroundColor =
+    parameters.backgroundColor || { r: 0, g: 0, b: 0, a: 0.0 };
+
+  // Create a canvas and get context.
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d")!;
+  context.font = `${fontsize}px ${fontface}`;
+
+  // Measure text size.
+  const metrics = context.measureText(message);
+  const textWidth = metrics.width;
+
+  // Set canvas size accounting for border.
+  canvas.width = textWidth + borderThickness * 2;
+  canvas.height = fontsize * 1.4 + borderThickness * 2;
+
+  // Reset font after resizing.
+  context.font = `${fontsize}px ${fontface}`;
+
+  // Draw background.
+  context.fillStyle = `rgba(${backgroundColor.r},${backgroundColor.g},${backgroundColor.b},${backgroundColor.a})`;
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Draw border.
+  context.strokeStyle = `rgba(${borderColor.r},${borderColor.g},${borderColor.b},${borderColor.a})`;
+  context.lineWidth = borderThickness;
+  context.strokeRect(0, 0, canvas.width, canvas.height);
+
+  // Draw text (centered).
+  context.fillStyle = textColor;
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillText(message, canvas.width / 2, canvas.height / 2);
+
+  // Create texture from canvas.
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.needsUpdate = true;
+  const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true });
+  const sprite = new THREE.Sprite(spriteMaterial);
+
+  // Scale sprite based on canvas dimensions.
+  const scaleFactor = parameters.scaleFactor || 0.25;
+  sprite.scale.set(canvas.width * scaleFactor, canvas.height * scaleFactor, 1);
+  return sprite;
+}
+
 const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
-  const graphData = generateGraphData();
+  const graphData = useMemo(() => generateGraphData(), []);
 
-  // Position the camera so that the entire sphere is in view.
+  // Position the camera so that the entire sphere is visible.
   useEffect(() => {
     if (graphRef.current) {
       graphRef.current.cameraPosition(
-        { x: SPHERE_RADIUS * 1.5, y: SPHERE_RADIUS, z: SPHERE_RADIUS },
-        { x: 0, y: 0, z: 0 },
-        2000
+        { x: 0, y: 0, z: 300 }, // Camera position.
+        { x: 0, y: 0, z: 0 },   // Look-at position.
+        2000                   // Animation duration (ms).
       );
     }
   }, []);
 
-  // Render nodes as spheres: larger for major nodes and smaller for skills.
+  // Create a custom 3D object for each node that includes a sphere and a text annotation.
   const nodeThreeObject = (node: GraphNode) => {
-    const radius = node.type === "major" ? 4 : 1.5;
-    const geometry = new THREE.SphereGeometry(radius, 16, 16);
+    const group = new THREE.Group();
+
+    // Create the node sphere.
+    const sphereRadius = node.type === "major" ? 6 : 2;
+    const geometry = new THREE.SphereGeometry(sphereRadius, 16, 16);
     const material = new THREE.MeshBasicMaterial({ color: node.color });
-    return new THREE.Mesh(geometry, material);
+    const sphere = new THREE.Mesh(geometry, material);
+    group.add(sphere);
+
+    // Create the text annotation.
+    let sprite: THREE.Sprite;
+    if (node.type === "major") {
+      sprite = makeTextSprite(
+        `${node.id} (Project)`,
+        {
+          fontsize: 24,
+          fontface: "Arial",
+          textColor: "rgba(255,255,255,1)",
+          borderThickness: 2,
+          borderColor: { r: 50, g: 50, b: 50, a: 1 },
+          backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
+          scaleFactor: 0.5,
+        }
+      );
+      // Position the label above the major node.
+      sprite.position.set(0, sphereRadius + 8, 0);
+    } else {
+      sprite = makeTextSprite(
+        `${node.id} (Skill)`,
+        {
+          fontsize: 12,
+          fontface: "Arial",
+          textColor: "rgba(200,200,200,1)",
+          borderThickness: 1,
+          borderColor: { r: 50, g: 50, b: 50, a: 1 },
+          backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
+          scaleFactor: 0.3,
+        }
+      );
+      // Position the label slightly above the skill node.
+      sprite.position.set(0, sphereRadius + 4, 0);
+    }
+    group.add(sprite);
+
+    return group;
   };
 
   return (
-    <Column className="portfolio-graph" style={{ height: "400px", width: "100%", marginTop: "-50px" }}>
+    <Column className="portfolio-graph" style={{ height: "600px", width: "100%" }}>
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
-        nodeLabel={(node: GraphNode) => node.id}
+        nodeLabel={() => ""} // Disable default hover labels.
         nodeThreeObject={nodeThreeObject}
         linkWidth={1}
         linkColor={() => "#ffffff"}
