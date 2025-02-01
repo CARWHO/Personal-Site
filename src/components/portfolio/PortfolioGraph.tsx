@@ -153,9 +153,9 @@ const PortfolioGraph: React.FC = () => {
   useEffect(() => {
     if (graphRef.current) {
       // Set initial camera position
-      const distance = 300;
+      const distance = 600;
       graphRef.current.cameraPosition(
-        { x: distance, y: distance/2, z: distance },
+        { x: distance, y: distance/3, z: distance },
         { x: 0, y: 0, z: 0 },
         0
       );
@@ -166,6 +166,7 @@ const PortfolioGraph: React.FC = () => {
         controls.enableZoom = false;
         controls.minDistance = distance;
         controls.maxDistance = distance;
+        controls.rotateSpeed = 0.5; // Slow down rotation speed
         controls.minPolarAngle = Math.PI / 4;
         controls.maxPolarAngle = Math.PI * 3/4;
         controls.enablePan = false;
@@ -228,7 +229,7 @@ const PortfolioGraph: React.FC = () => {
   };
 
   return (
-    <Column className="portfolio-graph" style={{ height: "600px", width: "100%" }}>
+    <Column className="portfolio-graph" style={{ height: "800px", width: "100%" }}>
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
