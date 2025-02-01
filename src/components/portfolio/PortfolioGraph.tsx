@@ -92,8 +92,8 @@ const generateGraphData = () => {
   });
 
   // Add skill nodes.
-  majorProjects.forEach((project) => {
-    project.skills.forEach((skill) => {
+  majorProjects.forEach((project, projectIndex) => {
+    project.skills.forEach((skill, skillIndex) => {
       // These positions are temporary; the force simulation will override them.
       const skillNode: GraphNode = {
         id: skill,
@@ -174,25 +174,17 @@ function makeTextSprite(message: string, parameters: any) {
 const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const [searchQuery, setSearchQuery] = useState("");
-  const [stableSearchQuery, setStableSearchQuery] = useState(searchQuery);
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
   const graphData = useMemo(() => generateGraphData(), []);
 
-  // Debounce the search query so animations only fire after a pause.
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setStableSearchQuery(searchQuery);
-    }, 500); // 500ms debounce delay
-    return () => clearTimeout(handler);
-  }, [searchQuery]);
-
-  // Update highlighted node based on the debounced query.
-  useEffect(() => {
-    if (!stableSearchQuery) {
+  // Search handler: update query and determine matching node.
+  const handleSearch = (query: string) => {
+    const lowerQuery = query.toLowerCase();
+    setSearchQuery(lowerQuery);
+    if (!lowerQuery) {
       setHighlightedNodeId(null);
       return;
     }
-    const lowerQuery = stableSearchQuery.toLowerCase();
     const matchingNodes = graphData.nodes.filter(node => {
       const project = majorProjects.find(p => p.id === node.id);
       return (
@@ -203,9 +195,9 @@ const PortfolioGraph: React.FC = () => {
     if (matchingNodes.length > 0) {
       setHighlightedNodeId(matchingNodes[0].id);
     }
-  }, [stableSearchQuery, graphData.nodes]);
+  };
 
-  // When a node is highlighted, animate the camera to focus on it.
+  // Handle camera movement when a node is highlighted
   useEffect(() => {
     if (highlightedNodeId && graphRef.current) {
       const node = graphData.nodes.find(n => n.id === highlightedNodeId);
@@ -213,10 +205,9 @@ const PortfolioGraph: React.FC = () => {
         const camera = graphRef.current.camera();
         const nodePos = new THREE.Vector3(node.x, node.y, node.z);
         
-        // Here we calculate a new camera position relative to the node.
-        // We'll use a fixed distance and an angle offset.
+        // Calculate new camera position
         const distance = 200;
-        const angle = Math.PI / 4; // 45°
+        const angle = Math.PI / 4; // 45 degrees
         const heightOffset = distance * 0.5;
         
         const newCamPos = new THREE.Vector3(
@@ -224,10 +215,19 @@ const PortfolioGraph: React.FC = () => {
           nodePos.y + heightOffset,
           nodePos.z + distance * Math.sin(angle)
         );
-  
+
+        // Disable controls during transition
         const controls = graphRef.current.controls();
         if (controls) controls.enabled = false;
-        graphRef.current.cameraPosition(newCamPos, nodePos, 3000);
+
+        // Smooth camera transition
+        graphRef.current.cameraPosition(
+          newCamPos,
+          nodePos,
+          3000 // Longer duration for smoother movement
+        );
+
+        // Re-enable controls after animation
         setTimeout(() => {
           if (controls) {
             controls.enabled = true;
@@ -238,25 +238,33 @@ const PortfolioGraph: React.FC = () => {
     }
   }, [highlightedNodeId, graphData.nodes]);
 
-  // When nothing is searched (debounced), smoothly animate the camera to a default far-away view.
+  // Smoothly handle camera transitions based on search state
   useEffect(() => {
-    if (!stableSearchQuery && graphRef.current) {
-      const defaultCamPos = new THREE.Vector3(1000, 600, 1000);
-      const target = new THREE.Vector3(0, 0, 0);
+    if (graphRef.current) {
       const controls = graphRef.current.controls();
       if (controls) controls.enabled = false;
-      graphRef.current.cameraPosition(defaultCamPos, target, 3000);
+
+      // Only move camera if we're not already animating
+      if (!highlightedNodeId && !searchQuery) {
+        // Return to default view
+        const defaultCamPos = new THREE.Vector3(1000, 600, 1000);
+        const target = new THREE.Vector3(0, 0, 0);
+        graphRef.current.cameraPosition(defaultCamPos, target, 3000);
+      }
+
+      // Re-enable controls after animation
       setTimeout(() => {
         if (controls) controls.enabled = true;
       }, 3100);
     }
-  }, [stableSearchQuery]);
+  }, [searchQuery, highlightedNodeId, graphRef]);
 
   // Initial camera and controls setup.
   useEffect(() => {
     const initGraph = () => {
       if (graphRef.current) {
         const camera = graphRef.current.camera();
+        // Here you might set an initial position; note the effect above will move it if nothing is searched.
         camera.position.set(1000, 600, 1000);
         camera.lookAt(0, 0, 0);
         const controls = graphRef.current.controls();
@@ -281,7 +289,7 @@ const PortfolioGraph: React.FC = () => {
     setTimeout(initGraph, 100);
   }, []);
 
-  // Render each node. When a search is active, non-highlighted nodes appear muted.
+  // Render each node; if a search is active, non-highlighted nodes appear muted.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
     const effectiveColor = highlightedNodeId
@@ -336,7 +344,7 @@ const PortfolioGraph: React.FC = () => {
       className="portfolio-graph"
       style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}
     >
-      <SearchBar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+      <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
