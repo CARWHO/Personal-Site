@@ -95,7 +95,7 @@ const generateGraphData = () => {
 // Helper function to create a text sprite as an annotation.
 function makeTextSprite(message: string, parameters: any) {
   parameters = parameters || {};
-  const fontface = parameters.fontface || "Arial";
+  const fontface = parameters.fontface || "Inter";
   const fontsize = parameters.fontsize || 18;
   const textColor = parameters.textColor || "rgba(255, 255, 255, 1.0)";
   const borderThickness = parameters.borderThickness || 2;
@@ -179,7 +179,7 @@ const PortfolioGraph: React.FC = () => {
         `${node.id} (Project)`,
         {
           fontsize: 24,
-          fontface: "Arial",
+          fontface: "Inter",
           textColor: "rgba(255,255,255,1)",
           borderThickness: 2,
           borderColor: { r: 50, g: 50, b: 50, a: 1 },
@@ -194,7 +194,7 @@ const PortfolioGraph: React.FC = () => {
         `${node.id} (Skill)`,
         {
           fontsize: 12,
-          fontface: "Arial",
+          fontface: "Inter",
           textColor: "rgba(200,200,200,1)",
           borderThickness: 1,
           borderColor: { r: 50, g: 50, b: 50, a: 1 },
