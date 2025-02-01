@@ -1,5 +1,6 @@
 import { InlineCode } from "@/once-ui/components";
 
+// Person Information
 const person = {
   firstName: "Kahu",
   lastName: "Hutton",
@@ -9,9 +10,10 @@ const person = {
   role: "Electrical Engineering Student at UC",
   avatar: "/images/avatar.jpg",
   location: "Pacific/Auckland", // Expecting the IANA time zone identifier
-  languages: ["English"], // optional
+  languages: ["English"], // Optional
 };
 
+// Newsletter Configuration
 const newsletter = {
   display: true,
   title: <>Subscribe to {person.firstName}'s Newsletter</>,
@@ -23,6 +25,7 @@ const newsletter = {
   ),
 };
 
+// Social Links
 const social = [
   {
     name: "GitHub",
@@ -46,6 +49,7 @@ const social = [
   },
 ];
 
+// Home Page
 const home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
@@ -53,12 +57,14 @@ const home = {
   headline: <>Kahu Hutton</>,
   subline: (
     <>
-      I'm an Electrical Engineer, founder of KORA, and currently interning at Dawn Aerospace, messing around with spacecraft propulsion and CubeSats.
-      I tinker with both hardware and software—basically, if it flies or runs code, I’m into it. 🚀
+      I'm an Electrical Engineer, founder of KORA, and currently interning at Dawn Aerospace,
+      messing around with spacecraft propulsion and CubeSats. I tinker with both hardware
+      and software—basically, if it flies or runs code, I’m into it. 🚀
     </>
   ),
 };
 
+// About Page
 const about = {
   label: "About",
   title: "About me",
@@ -79,8 +85,9 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        I'm currently interning at Dawn Aerospace, where I work on spacecraft propulsion systems. 
-        My role involves developing both hardware and software for CubeSat applications, focusing on integration and performance optimization.
+        My latest venture was an internship at Dawn Aerospace, where I worked in the 
+        software team, developing satellite communication software and contributing 
+        to spacecraft life-cycle testing.
       </>
     ),
   },
@@ -91,19 +98,38 @@ const about = {
       {
         company: "Dawn Aerospace",
         timeframe: "2024 - Present",
-        role: "Spacecraft Propulsion Development Intern",
+        role: "Spacecraft Propulsion Development Intern (Software team)",
+        logo: "/images/companies/dawnlogo.png",
         achievements: [
-          <>Development of CubeSat propulsion systems</>,
-          <>Hardware and software integration for spacecraft applications</>,
+          <>
+            Developed in-house satellite communication tools currently used in flight 
+            and testing
+          </>,
+          <>
+            Hardware and software integration for spacecraft applications (PixxelSpace, Argotec)
+          </>,
         ],
         images: [],
       },
       {
         company: "KORA",
         timeframe: "2024 - Present",
-        role: "Founder, Developer",
+        role: "Founder, App Developer",
+        logo: "/images/companies/kora.png",
         achievements: [
           <>AI-powered education platform for institutes and students</>,
+          <>200+ Daily active users</>,
+        ],
+        images: [],
+      },
+      {
+        company: "Halo Vision",
+        timeframe: "2023-2024",
+        role: "Personal project to improve motorcycle safety",
+        logo: "/images/companies/hv.png",
+        achievements: [
+          <>Developed an advanced motorcycle navigation system</>,
+          <>Embedded system design, software, PCB manufacturing, app design</>,
         ],
         images: [],
       },
@@ -111,19 +137,13 @@ const about = {
         company: "Wellington City Council",
         timeframe: "2024",
         role: "CFD Engineer (Wind Loading)",
+        logo: "/images/companies/wcc.png",
         achievements: [
           <>Conducted wind loading simulations for public event safety</>,
-          <>Analyzed Computational Fluid Dynamics (CFD) models for structural safety assessments</>,
-        ],
-        images: [],
-      },
-      {
-        company: "Halo Vision",
-        timeframe: "2023",
-        role: "Founder",
-        achievements: [
-          <>Developed an advanced motorcycle navigation system</>,
-          <>Embedded system design, software, PCB manufacturing, APP design</>,
+          <>
+            Analyzed Computational Fluid Dynamics (CFD) models for structural
+            safety assessments
+          </>,
         ],
         images: [],
       },
@@ -157,12 +177,14 @@ const about = {
   },
 };
 
+// Blog Page
 const blog = {
   label: "Blog",
   title: "Writing about AI, Embedded Systems, and Technology...",
   description: `Read what ${person.name} has been up to recently.`,
 };
 
+// Work Page
 const work = {
   label: "Work",
   title: "My Work",
@@ -170,35 +192,40 @@ const work = {
   sections: [
     {
       company: "Dawn Aerospace",
-      description: "Working on spacecraft propulsion systems and CubeSat development",
-      summary: "Leading the development of next-generation CubeSat propulsion systems, focusing on integration of hardware and software components for optimal performance and reliability.",
+      description: "Software development and testing for spacecraft propulsion systems",
+      summary:
+        "Developed in-house satellite control software for monitoring and logging CubeDrive and SatDrive telemetry, including thruster temperature and performance data. Designed and built custom testing equipment for spacecraft life-cycle testing.",
       logo: "/images/companies/dawnlogo.png",
-      fullReportLink: "/work/dawn-aerospace"
+      fullReportLink: "/work/dawn-aerospace",
     },
     {
       company: "KORA",
-      description: "Building an AI-powered education platform",
-      summary: "Founded and developed an innovative education platform that leverages AI to create personalized learning experiences for students and institutions.",
+      description: "AI-powered education platform for institutes and students",
+      summary:
+        "Developed a learning management system (LMS) plugin that enables AI-driven content generation and grading, including automated exam creation, flashcards, and programming question generation. Models trained specifically around the New Zealand university curriculum.",
       logo: "/images/companies/kora.png",
-      fullReportLink: "/work/kora"
-    },
-    {
-      company: "Wellington City Council",
-      description: "Wind loading analysis and CFD simulations for public safety",
-      summary: "Conducted comprehensive wind loading analysis using CFD simulations to ensure public safety during large-scale events and infrastructure projects.",
-      logo: "/images/companies/wcc.png",
-      fullReportLink: "/work/wellington-city-council"
+      fullReportLink: "/work/kora",
     },
     {
       company: "Halo Vision",
-      description: "Developing advanced motorcycle navigation systems",
-      summary: "Founded and led the development of an innovative motorcycle navigation system, including hardware design, embedded systems, and mobile app integration.",
+      description: "Helmet-mounted display system for motorcycle safety",
+      summary:
+        "Designed and developed a heads-up display system for motorcycle navigation and indicator notifications. Created custom PCBs, aerodynamic helmet mounts, and a mobile app for real-time, hands-free updates. Conducted safety testing using Computational Fluid Dynamics (CFD) in collaboration with Dr. Finn McIntyre, validating results through wind tunnel experiments at the University of Canterbury.",
       logo: "/images/companies/hv.png",
-      fullReportLink: "/work/halo-vision"
-    }
-  ]
+      fullReportLink: "/work/halo-vision",
+    },
+    {
+      company: "Wellington City Council",
+      description: "Wind loading analysis and public safety assessments",
+      summary:
+        "Conducted Computational Fluid Dynamics (CFD) simulations for wind loading analysis on structures to ensure public safety during large-scale events. Produced technical reports covering structural safety requirements, mathematical analysis, and rendered visualizations.",
+      logo: "/images/companies/wcc.png",
+      fullReportLink: "/work/wellington-city-council",
+    },
+  ],
 };
 
+// Gallery Page
 const gallery = {
   label: "Gallery",
   title: "My Photo Gallery",

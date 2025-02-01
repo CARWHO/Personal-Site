@@ -5,7 +5,8 @@ import styles from "./work.module.scss";
 import { work } from "@/app/resources/content";
 
 /**
- * MUI theme for the dark mode.
+ * MUI theme for a dark look but without forcing a dark background.
+ * We remove (or comment out) the background to allow a transparent/parent background.
  */
 const theme = createTheme({
   palette: {
@@ -17,10 +18,10 @@ const theme = createTheme({
     secondary: {
       main: "#6366F1",
     },
-    background: {
-      default: "#0a0a0a",
-      paper: "#0a0a0a",
-    },
+    // background: {
+    //   default: "#0a0a0a",
+    //   paper: "#0a0a0a",
+    // },
     text: {
       primary: "#FFFFFF",
       secondary: "#A1A1AA",
@@ -34,9 +35,20 @@ const theme = createTheme({
 export default function WorkContent() {
   return (
     <ThemeProvider theme={theme}>
-      <Column maxWidth="l" gap="l" paddingTop="xl" background="neutral-strong">
+      {/*
+        Use inline styles to make the container narrower (20% width)
+        and center it horizontally with margin: 0 auto.
+      */}
+      <Column
+        style={{ width: "50%", margin: "0 auto" }}
+        gap="l"
+        paddingTop="xl"
+        // Remove `background` prop to avoid any color overlay:
+        // background="neutral-strong" // <-- remove or comment out
+        horizontal="center"
+      >
         {/* Page Header */}
-        <Column gap="s" align="start">
+        <Column gap="s" align="center">
           <Heading variant="display-strong-xl" color="brand-strong">
             {work.title}
           </Heading>
@@ -48,7 +60,16 @@ export default function WorkContent() {
         {/* Projects List */}
         <Column gap="3xl">
           {work.sections.map((section, index) => (
-            <Flex key={index} gap="xl" align="start" className={styles.projectItem}>
+            // Use a horizontal flex so the number stays on the left,
+            // while the details remain on the right. We center them
+            // as a group by default.
+            <Flex
+              key={index}
+              gap="xl"
+              align="start"
+              direction="row"
+              className={styles.projectItem}
+            >
               {/* Project Number */}
               <Text variant="display-strong-m" onBackground="neutral-weak">
                 {String(index + 1).padStart(2, "0")}
