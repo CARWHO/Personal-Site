@@ -203,33 +203,19 @@ const PortfolioGraph: React.FC = () => {
   // When the focus counter changes (i.e. Enter is pressed), use the built-in centerAt
   // method to pan the camera so that the highlighted node becomes the center of the view.
   // centerAt will move the camera’s target without altering its distance.
-  useEffect(() => {
-    if (focusCounter > 0 && highlightedNodeId && graphRef.current) {
-      const node = graphData.nodes.find(n => n.id === highlightedNodeId);
-      if (node && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
-        const camera = graphRef.current.camera();
-        const nodePos = new THREE.Vector3(node.x, node.y, node.z);
-        
-        // Calculate new camera position with fixed distance and rotation
-        const distance = 500; // Keep consistent distance
-        const currentAngle = Math.atan2(camera.position.z - node.z, camera.position.x - node.x);
-        const newAngle = currentAngle + Math.PI / 2; // Rotate 90 degrees
+// src/components/portfolio/PortfolioGraph.tsx (changes highlighted)
 
-        const newCamPos = new THREE.Vector3(
-          nodePos.x + distance * Math.cos(newAngle),
-          camera.position.y, // Maintain current height
-          nodePos.z + distance * Math.sin(newAngle)
-        );
-
-        // Update camera position and target
-        graphRef.current.cameraPosition(
-          newCamPos,
-          nodePos,
-          2000
-        );
-      }
+// --- Camera Focusing via centerAt (No Zooming) ---
+// When the focus counter changes (i.e. Enter is pressed), use centerAt
+// to pan the camera to the highlighted node without changing zoom level.
+useEffect(() => {
+  if (focusCounter > 0 && highlightedNodeId && graphRef.current) {
+    const node = graphData.nodes.find(n => n.id === highlightedNodeId);
+    if (node && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
+      graphRef.current.centerAt(node.x, node.y, node.z, 2000);
     }
-  }, [focusCounter, highlightedNodeId, graphData.nodes, graphRef]);
+  }
+}, [focusCounter, highlightedNodeId, graphData.nodes, graphRef]);
 
   // --- Initial Camera Setup ---
   useEffect(() => {
