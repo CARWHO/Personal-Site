@@ -1,19 +1,40 @@
-// src/app/page.tsx
 import { baseURL } from "@/app/resources";
-import { work } from "@/app/resources/content";
-import { Metadata } from "next";
-import WorkPageContent from "./WorkPageContent";
+import { person, work } from "@/app/resources/content";
+import WorkContent from "./WorkContent";
 
-export const metadata: Metadata = {
-  title: work.title,
-  description: work.description,
-  openGraph: {
+export async function generateMetadata() {
+  return {
     title: work.title,
     description: work.description,
-    url: `https://${baseURL}/work`,
-  },
-};
+    openGraph: {
+      title: work.title,
+      description: work.description,
+      url: `${baseURL}/work`,
+    },
+  };
+}
 
-export default function WorkPage() {
-  return <WorkPageContent />;
+export default function Work() {
+  return (
+    <div>
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            headline: work.title,
+            description: work.description,
+            url: `${baseURL}/work`,
+            author: {
+              "@type": "Person",
+              name: person.name,
+            },
+          }),
+        }}
+      />
+      <WorkContent />
+    </div>
+  );
 }
