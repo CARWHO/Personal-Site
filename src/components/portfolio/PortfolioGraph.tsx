@@ -201,29 +201,46 @@ const PortfolioGraph: React.FC = () => {
     }
   };
 
-  // Whenever the highlighted node is set, move the camera toward it.
+  // Camera movement logic when a node is highlighted
   useEffect(() => {
     if (highlightedNodeId && graphRef.current) {
       const node = graphData.nodes.find(n => n.id === highlightedNodeId);
       if (node && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
         const camera = graphRef.current.camera();
-        const currentCamPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z);
         const nodePos = new THREE.Vector3(node.x, node.y, node.z);
-        // Compute direction from node to current camera.
-        const direction = currentCamPos.clone().sub(nodePos);
-        if (direction.length() === 0) direction.set(0, 0, 1);
-        direction.normalize();
-        // Place the camera at a fixed distance from the node.
-        const desiredDistance = 150;
-        const newCamPos = nodePos.clone().add(direction.multiplyScalar(desiredDistance));
-        // Temporarily disable controls so they don't fight the animation.
+        
+        // Calculate a position that's rotated at least π/4 around the node
+        const radius = 200; // Distance from node
+        const currentAngle = Math.atan2(camera.position.z - node.z, camera.position.x - node.x);
+        const targetAngle = currentAngle + Math.PI/2; // Rotate 90 degrees
+        
+        const newCamPos = new THREE.Vector3(
+          nodePos.x + radius * Math.cos(targetAngle),
+          nodePos.y + radius * 0.5, // Slightly above the node
+          nodePos.z + radius * Math.sin(targetAngle)
+        );
+
+        // Temporarily disable controls
         const controls = graphRef.current.controls();
-        if (controls) controls.enabled = false;
-        // Animate the camera move.
-        graphRef.current.cameraPosition(newCamPos, nodePos, 2000);
-        // Re-enable controls after animation.
+        if (controls) {
+          controls.enabled = false;
+          controls.minDistance = radius;
+          controls.maxDistance = radius;
+        }
+
+        // Animate camera movement
+        graphRef.current.cameraPosition(
+          newCamPos,
+          nodePos, // Look at the node
+          2000 // Animation duration
+        );
+
+        // Re-enable controls after animation
         setTimeout(() => {
-          if (controls) controls.enabled = true;
+          if (controls) {
+            controls.enabled = true;
+            controls.target.copy(nodePos);
+          }
         }, 2100);
       }
     }
