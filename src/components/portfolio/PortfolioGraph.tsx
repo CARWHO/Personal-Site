@@ -197,7 +197,7 @@ const PortfolioGraph: React.FC = () => {
         );
       }
     }
-  }, [focusCounter, highlightedNodeId, graphData.nodes]);
+  }, [focusCounter]); // Only depend on focusCounter to prevent re-runs with changing node positions
 
   // --- Initial Camera Setup ---
   useEffect(() => {
