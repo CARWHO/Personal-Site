@@ -154,7 +154,7 @@ const PortfolioGraph: React.FC = () => {
   useEffect(() => {
     if (graphRef.current) {
       // Set initial camera position
-      const distance = 600;
+      const distance = 100000;
       graphRef.current.cameraPosition(
         { x: distance, y: distance/3, z: distance },
         { x: 0, y: 0, z: 0 },
