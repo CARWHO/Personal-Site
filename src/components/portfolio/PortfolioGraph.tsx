@@ -205,7 +205,7 @@ const PortfolioGraph: React.FC = () => {
     setShouldFocus(true);
   };
 
-  // Handle camera movement when a node is highlighted and focus is requested
+  // Handle camera movement only when Enter is pressed (shouldFocus is true)
   useEffect(() => {
     if (highlightedNodeId && shouldFocus && graphRef.current) {
       const node = graphData.nodes.find(n => n.id === highlightedNodeId);
@@ -213,59 +213,54 @@ const PortfolioGraph: React.FC = () => {
         const camera = graphRef.current.camera();
         const nodePos = new THREE.Vector3(node.x, node.y, node.z);
         
-        // Calculate new camera position
-        const distance = 200;
-        const angle = Math.PI / 4; // 45 degrees
-        const heightOffset = distance * 0.5;
+        // Get current camera position relative to node
+        const currentPos = camera.position.clone().sub(nodePos);
+        const currentAngle = Math.atan2(currentPos.z, currentPos.x);
+        
+        // Calculate new position with π/2 rotation and closer to node
+        const distance = 150; // Closer to node
+        const newAngle = currentAngle + Math.PI/2; // Rotate 90 degrees
+        const heightOffset = distance * 0.3; // Less height offset
         
         const newCamPos = new THREE.Vector3(
-          nodePos.x + distance * Math.cos(angle),
+          nodePos.x + distance * Math.cos(newAngle),
           nodePos.y + heightOffset,
-          nodePos.z + distance * Math.sin(angle)
+          nodePos.z + distance * Math.sin(newAngle)
         );
 
         // Disable controls during transition
         const controls = graphRef.current.controls();
-        if (controls) controls.enabled = false;
+        if (controls) {
+          controls.enabled = false;
+          controls.target.copy(nodePos);
+        }
 
         // Smooth camera transition
         graphRef.current.cameraPosition(
           newCamPos,
           nodePos,
-          3000 // Longer duration for smoother movement
+          2000 // Faster animation
         );
 
         // Re-enable controls after animation
         setTimeout(() => {
           if (controls) {
             controls.enabled = true;
-            controls.target.copy(nodePos);
           }
-        }, 3100);
+        }, 2100);
       }
     }
-  }, [highlightedNodeId, graphData.nodes]);
+  }, [highlightedNodeId, shouldFocus, graphData.nodes]);
 
-  // Smoothly handle camera transitions based on search state
+  // Only handle initial camera setup, no transitions on search changes
   useEffect(() => {
-    if (graphRef.current) {
-      const controls = graphRef.current.controls();
-      if (controls) controls.enabled = false;
-
-      // Only move camera if we're not already animating
-      if (!highlightedNodeId && !searchQuery) {
-        // Return to default view
-        const defaultCamPos = new THREE.Vector3(1000, 600, 1000);
-        const target = new THREE.Vector3(0, 0, 0);
-        graphRef.current.cameraPosition(defaultCamPos, target, 3000);
-      }
-
-      // Re-enable controls after animation
-      setTimeout(() => {
-        if (controls) controls.enabled = true;
-      }, 3100);
+    if (graphRef.current && !searchQuery && !highlightedNodeId) {
+      const defaultCamPos = new THREE.Vector3(1000, 600, 1000);
+      const target = new THREE.Vector3(0, 0, 0);
+      graphRef.current.camera().position.copy(defaultCamPos);
+      graphRef.current.camera().lookAt(target);
     }
-  }, [searchQuery, highlightedNodeId, graphRef]);
+  }, [graphRef]);
 
   // Initial camera and controls setup.
   useEffect(() => {
