@@ -322,7 +322,7 @@ const PortfolioGraph: React.FC = () => {
 
   return (
     // The Column here is used as a flex container. The SearchBar is now on top.
-    <Column className="portfolio-graph" style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}>
+    <Column className="portfolio-graph" style={{ height: "800px", width: "800px", position: "relative" }}>
       <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
       <ForceGraph3D
         ref={graphRef}
