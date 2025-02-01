@@ -103,16 +103,12 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({
       <ForceGraph3D
         ref={fgRef}
         graphData={graphData}
-        // Setting a transparent background to override the default black background.
         backgroundColor="rgba(0,0,0,0)"
-        // When hovering, show the project name and description.
         nodeLabel={(node: ProjectNode) => `${node.name}: ${node.description}`}
-        // Show shared technology on the links.
         linkLabel={(link: ProjectLink) => `Shared Tech: ${link.sharedTech}`}
-        // Create custom 3D objects for nodes: a sphere whose size depends on importance.
         nodeThreeObject={(node: ProjectNode) => {
           const sphereGeometry = new THREE.SphereGeometry(
-            node.importance * 0.5, // Increased multiplier for better visibility
+            node.importance * 0.5,
             16,
             16
           );
@@ -126,11 +122,9 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({
           const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
           return sphere;
         }}
-        // When clicking a node, trigger the provided callback.
         onNodeClick={(node: ProjectNode) => {
           onNodeClick && onNodeClick(node);
         }}
-        // Adjust link width based on whether either connected node is highlighted.
         linkWidth={(link: ProjectLink) => {
           const sourceNode = graphData.nodes.find((n) => n.id === link.source);
           const targetNode = graphData.nodes.find((n) => n.id === link.target);
@@ -138,7 +132,6 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({
             ? 4
             : 1;
         }}
-        // Change link color if highlighted.
         linkColor={(link: ProjectLink) => {
           const sourceNode = graphData.nodes.find((n) => n.id === link.source);
           const targetNode = graphData.nodes.find((n) => n.id === link.target);
