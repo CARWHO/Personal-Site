@@ -40,7 +40,7 @@ export default function HomeContent() {
           }),
         }}
       />
-      <Column fillWidth paddingY="l" gap="m">
+      <Flex fillWidth paddingY="l" gap="xl">
         <Column maxWidth="s">
           <RevealFx translateY="4" fillWidth horizontal="start" paddingBottom="m">
             <Heading wrap="balance" variant="display-strong-l">
@@ -53,10 +53,10 @@ export default function HomeContent() {
             </Text>
           </RevealFx>
         </Column>
-        <Column fillWidth>
+        <Column style={{ marginTop: "-100px", marginLeft: "auto" }}>
           <PortfolioGraph />
         </Column>
-      </Column>
+      </Flex>
     </Column>
   );
 }

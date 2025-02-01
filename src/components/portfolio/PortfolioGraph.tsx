@@ -234,7 +234,7 @@ const PortfolioGraph: React.FC = () => {
   };
 
   return (
-    <Column className="portfolio-graph" style={{ height: "800px", width: "100%" }}>
+    <Column className="portfolio-graph" style={{ height: "800px", width: "800px" }}>
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
