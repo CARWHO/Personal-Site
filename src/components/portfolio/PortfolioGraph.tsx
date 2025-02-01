@@ -206,31 +206,14 @@ const PortfolioGraph: React.FC = () => {
 // src/components/portfolio/PortfolioGraph.tsx (changes highlighted)
 
 // --- Camera Focusing ---
-// When the focus counter changes (i.e. Enter is pressed), rotate the camera around the node
 useEffect(() => {
   if (focusCounter > 0 && highlightedNodeId && graphRef.current) {
     const node = graphData.nodes.find(n => n.id === highlightedNodeId);
-    if (node && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
-      const camera = graphRef.current.camera();
-      const nodePos = new THREE.Vector3(node.x, node.y, node.z);
-        
-      // Calculate new camera position with fixed distance and rotation
-      const distance = 500; // Keep consistent distance
-      const currentAngle = Math.atan2(camera.position.z - node.z, camera.position.x - node.x);
-      const newAngle = currentAngle + Math.PI / 2; // Rotate 90 degrees
-
-      const newCamPos = new THREE.Vector3(
-        nodePos.x + distance * Math.cos(newAngle),
-        camera.position.y, // Maintain current height
-        nodePos.z + distance * Math.sin(newAngle)
-      );
-
-      // Update camera position and target
-      graphRef.current.cameraPosition(
-        newCamPos,
-        nodePos,
-        2000
-      );
+    if (node?.x !== undefined && node?.y !== undefined && node?.z !== undefined) {
+      // Immediately update camera target without animation
+      const controls = graphRef.current.controls();
+      controls.target.set(node.x, node.y, node.z);
+      controls.update();
     }
   }
 }, [focusCounter, highlightedNodeId, graphData.nodes, graphRef]);
@@ -240,13 +223,15 @@ useEffect(() => {
     const initGraph = () => {
       if (graphRef.current) {
         const camera = graphRef.current.camera();
-        camera.position.set(1000, 600, 1000);
+        const initialDistance = 500;  // Match min/max distance
+        camera.position.set(initialDistance, 300, initialDistance);
         camera.lookAt(0, 0, 0);
+        
         const controls = graphRef.current.controls();
         if (controls) {
           controls.enableZoom = false;
-          controls.minDistance = 500;
-          controls.maxDistance = 500;
+          controls.minDistance = initialDistance;
+          controls.maxDistance = initialDistance;
           controls.minPolarAngle = Math.PI / 4;
           controls.maxPolarAngle = Math.PI * 3 / 4;
           controls.enablePan = true;
@@ -261,7 +246,6 @@ useEffect(() => {
       }
     };
     initGraph();
-    setTimeout(initGraph, 100);
   }, []);
 
   // --- Node Rendering ---
