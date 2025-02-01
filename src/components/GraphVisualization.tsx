@@ -1,12 +1,12 @@
 // src/components/GraphVisualization.tsx
 import React, { useRef, useMemo, useEffect } from "react";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import * as THREE from "three";
 import styles from "../styles/graph.module.scss";
 
-const ForceGraph3D = dynamic(() => import('react-force-graph-3d'), {
+const ForceGraph3D = dynamic(() => import("react-force-graph-3d"), {
   ssr: false,
-  loading: () => <div>Loading...</div>
+  loading: () => <div>Loading...</div>,
 });
 
 interface ProjectNode {
@@ -44,45 +44,43 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({
 }) => {
   const fgRef = useRef<any>();
 
-  // Sample project data. Replace this with dynamic data if needed.
-  const graphData: GraphData = useMemo(
-    () => {
-      // Filter nodes based on search and filters
-      const filteredNodes = projects.filter(project => {
-        const matchesSearch = !searchQuery || 
-          project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          project.techStack.some(tech => tech.toLowerCase().includes(searchQuery.toLowerCase()));
-        
-        const matchesCategory = !filters.category || project.category === filters.category;
-        const matchesTech = !filters.tech || project.techStack.includes(filters.tech);
-        
-        return matchesSearch && matchesCategory && matchesTech;
-      });
+  // Build the graph data (nodes and links) based on search and filters.
+  const graphData: GraphData = useMemo(() => {
+    const filteredNodes = projects.filter((project) => {
+      const matchesSearch =
+        !searchQuery ||
+        project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.techStack.some((tech) =>
+          tech.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
-      // Create links between projects that share technologies
-      const links = [];
-      for (let i = 0; i < filteredNodes.length; i++) {
-        for (let j = i + 1; j < filteredNodes.length; j++) {
-          const sharedTechs = filteredNodes[i].techStack.filter(tech => 
-            filteredNodes[j].techStack.includes(tech)
-          );
-          if (sharedTechs.length > 0) {
-            links.push({
-              source: filteredNodes[i].id,
-              target: filteredNodes[j].id,
-              sharedTech: sharedTechs.join(", ")
-            });
-          }
+      const matchesCategory = !filters.category || project.category === filters.category;
+      const matchesTech = !filters.tech || project.techStack.includes(filters.tech);
+
+      return matchesSearch && matchesCategory && matchesTech;
+    });
+
+    const links = [];
+    for (let i = 0; i < filteredNodes.length; i++) {
+      for (let j = i + 1; j < filteredNodes.length; j++) {
+        const sharedTechs = filteredNodes[i].techStack.filter((tech) =>
+          filteredNodes[j].techStack.includes(tech)
+        );
+        if (sharedTechs.length > 0) {
+          links.push({
+            source: filteredNodes[i].id,
+            target: filteredNodes[j].id,
+            sharedTech: sharedTechs.join(", "),
+          });
         }
       }
+    }
 
-      return {
-        nodes: filteredNodes,
-        links: links
-      };
-    },
-    [searchQuery, filters, projects]
-  );
+    return {
+      nodes: filteredNodes,
+      links: links,
+    };
+  }, [searchQuery, filters, projects]);
 
   // Helper to check if a node should be highlighted based on the search query.
   const isNodeHighlighted = (node: ProjectNode) => {
@@ -95,11 +93,18 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({
     );
   };
 
+  // Log graph data for debugging.
+  useEffect(() => {
+    console.log("Graph Data:", graphData);
+  }, [graphData]);
+
   return (
     <div className={styles.graphContainer}>
       <ForceGraph3D
         ref={fgRef}
         graphData={graphData}
+        // Setting a transparent background to override the default black background.
+        backgroundColor="rgba(0,0,0,0)"
         // When hovering, show the project name and description.
         nodeLabel={(node: ProjectNode) => `${node.name}: ${node.description}`}
         // Show shared technology on the links.
@@ -107,7 +112,7 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({
         // Create custom 3D objects for nodes: a sphere whose size depends on importance.
         nodeThreeObject={(node: ProjectNode) => {
           const sphereGeometry = new THREE.SphereGeometry(
-            node.importance * 0.1,
+            node.importance * 0.5, // Increased multiplier for better visibility
             16,
             16
           );
@@ -121,35 +126,26 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({
           const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
           return sphere;
         }}
-        // When clicking a node, trigger the provided callback (to open a modal or navigate).
+        // When clicking a node, trigger the provided callback.
         onNodeClick={(node: ProjectNode) => {
           onNodeClick && onNodeClick(node);
         }}
         // Adjust link width based on whether either connected node is highlighted.
         linkWidth={(link: ProjectLink) => {
-          const sourceNode = graphData.nodes.find(
-            (n) => n.id === link.source
-          );
-          const targetNode = graphData.nodes.find(
-            (n) => n.id === link.target
-          );
+          const sourceNode = graphData.nodes.find((n) => n.id === link.source);
+          const targetNode = graphData.nodes.find((n) => n.id === link.target);
           return isNodeHighlighted(sourceNode!) || isNodeHighlighted(targetNode!)
             ? 4
             : 1;
         }}
         // Change link color if highlighted.
         linkColor={(link: ProjectLink) => {
-          const sourceNode = graphData.nodes.find(
-            (n) => n.id === link.source
-          );
-          const targetNode = graphData.nodes.find(
-            (n) => n.id === link.target
-          );
+          const sourceNode = graphData.nodes.find((n) => n.id === link.source);
+          const targetNode = graphData.nodes.find((n) => n.id === link.target);
           return isNodeHighlighted(sourceNode!) || isNodeHighlighted(targetNode!)
             ? "#ff0000"
             : "#999999";
         }}
-        // (Optional) Add other ForceGraph3D configuration here (e.g., camera settings).
       />
     </div>
   );
