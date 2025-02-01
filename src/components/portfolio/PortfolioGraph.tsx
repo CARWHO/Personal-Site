@@ -7,13 +7,13 @@ import ForceGraph3D from "react-force-graph-3d";
 import { Column } from "@/once-ui/components";
 import * as THREE from "three";
 
-// Graph node and link types.
+// --- Graph Types ---
 interface GraphNode {
   id: string;
   type: "major" | "skill";
   project?: string;
   color: number;
-  // Positions set by the simulation.
+  // Positions assigned by the simulation.
   x?: number;
   y?: number;
   z?: number;
@@ -24,7 +24,7 @@ interface GraphLink {
   target: string;
 }
 
-// Utility to lighten a color.
+// --- Utility Function ---
 const lightenColor = (color: number, percent: number): number => {
   const r = (color >> 16) & 0xff;
   const g = (color >> 8) & 0xff;
@@ -35,7 +35,8 @@ const lightenColor = (color: number, percent: number): number => {
   return (newR << 16) + (newG << 8) + newB;
 };
 
-// Project data (with tags).
+// --- Project Data ---
+// (Only major projects matter for filtering/panning.)
 const majorProjects = [
   { 
     id: "Halo Vision", 
@@ -49,7 +50,7 @@ const majorProjects = [
   { 
     id: "KORA", 
     color: 0xffffff,
-    tags: ["AI"],
+    tags: ["AI", "Machine Learning"],
     skills: [
       "React Native", "Python", "OpenAI API", "AWS", "Database Design", 
       "User Authentication", "API Development", "ML/AI", "Node.js", "Redux"
@@ -75,7 +76,7 @@ const majorProjects = [
   }
 ];
 
-// Build the graph: add project nodes and skill nodes, plus links.
+// --- Build Graph Data ---
 const generateGraphData = () => {
   const graphNodes: GraphNode[] = [];
   const graphLinks: GraphLink[] = [];
@@ -92,9 +93,8 @@ const generateGraphData = () => {
   });
 
   // Add skill nodes.
-  majorProjects.forEach((project, projectIndex) => {
-    project.skills.forEach((skill, skillIndex) => {
-      // These positions are temporary; the force simulation will override them.
+  majorProjects.forEach(project => {
+    project.skills.forEach(skill => {
       const skillNode: GraphNode = {
         id: skill,
         type: "skill",
@@ -109,7 +109,7 @@ const generateGraphData = () => {
     });
   });
 
-  // Link major projects together.
+  // Link major projects.
   majorProjects.forEach((project1, i) => {
     majorProjects.slice(i + 1).forEach(project2 => {
       graphLinks.push({
@@ -134,16 +134,15 @@ const generateGraphData = () => {
   return { nodes: graphNodes, links: graphLinks };
 };
 
-// Helper: Create a text sprite.
+// --- Text Sprite Helper ---
 function makeTextSprite(message: string, parameters: any) {
   parameters = parameters || {};
   const fontface = parameters.fontface || "Arial";
   const fontsize = parameters.fontsize || 18;
-  const textColor = parameters.textColor || "rgba(255, 255, 255, 1.0)";
+  const textColor = parameters.textColor || "rgba(255,255,255,1)";
   const borderThickness = parameters.borderThickness || 2;
-  const borderColor = parameters.borderColor || { r: 0, g: 0, b: 0, a: 1.0 };
-  const backgroundColor =
-    parameters.backgroundColor || { r: 0, g: 0, b: 0, a: 0.0 };
+  const borderColor = parameters.borderColor || { r: 0, g: 0, b: 0, a: 1 };
+  const backgroundColor = parameters.backgroundColor || { r: 0, g: 0, b: 0, a: 0.0 };
 
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d")!;
@@ -171,19 +170,19 @@ function makeTextSprite(message: string, parameters: any) {
   return sprite;
 }
 
+// --- Main Component ---
 const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const [searchQuery, setSearchQuery] = useState("");
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
+  // focusCounter increments each time Enter is pressed.
+  const [focusCounter, setFocusCounter] = useState(0);
   const graphData = useMemo(() => generateGraphData(), []);
 
-  const [shouldFocus, setShouldFocus] = useState(false);
-
-  // Search handler: update query and determine matching node.
+  // Search handler (typing does not move the camera)
   const handleSearch = (query: string) => {
     const lowerQuery = query.toLowerCase();
     setSearchQuery(lowerQuery);
-    setShouldFocus(false);
     if (!lowerQuery) {
       setHighlightedNodeId(null);
       return;
@@ -197,77 +196,63 @@ const PortfolioGraph: React.FC = () => {
     });
     if (matchingNodes.length > 0) {
       setHighlightedNodeId(matchingNodes[0].id);
+    } else {
+      setHighlightedNodeId(null);
     }
   };
 
-  // Handle search submission (Enter pressed)
+  // When Enter is pressed in the search bar, increment the focus counter.
   const handleSearchSubmit = () => {
-    setShouldFocus(true);
+    // Only trigger camera movement if a node is highlighted.
+    if (highlightedNodeId) {
+      setFocusCounter(prev => prev + 1);
+    }
   };
 
-  // Handle camera movement only when Enter is pressed (shouldFocus is true)
+  // When focusCounter changes (i.e. Enter is pressed) and a node is highlighted,
+  // move the camera to pan by π/2 around the node.
   useEffect(() => {
-    if (highlightedNodeId && shouldFocus && graphRef.current) {
+    if (highlightedNodeId && graphRef.current) {
       const node = graphData.nodes.find(n => n.id === highlightedNodeId);
       if (node && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
         const camera = graphRef.current.camera();
         const nodePos = new THREE.Vector3(node.x, node.y, node.z);
-        
-        // Get current camera position relative to node
+
+        // Compute the vector from the node to the camera.
         const currentPos = camera.position.clone().sub(nodePos);
         const currentAngle = Math.atan2(currentPos.z, currentPos.x);
-        
-        // Calculate new position with π/2 rotation and closer to node
-        const distance = 150; // Closer to node
-        const newAngle = currentAngle + Math.PI/2; // Rotate 90 degrees
-        const heightOffset = distance * 0.3; // Less height offset
-        
+
+        // Rotate the angle by π/2 (90°)
+        const newAngle = currentAngle + Math.PI / 2;
+        const distance = currentPos.length() || 150; // if current distance is zero, default to 150
+        // Maintain vertical offset relative to the node.
+        const heightOffset = camera.position.y - nodePos.y;
+
         const newCamPos = new THREE.Vector3(
           nodePos.x + distance * Math.cos(newAngle),
           nodePos.y + heightOffset,
           nodePos.z + distance * Math.sin(newAngle)
         );
 
-        // Disable controls during transition
         const controls = graphRef.current.controls();
         if (controls) {
           controls.enabled = false;
           controls.target.copy(nodePos);
         }
-
-        // Smooth camera transition
-        graphRef.current.cameraPosition(
-          newCamPos,
-          nodePos,
-          2000 // Faster animation
-        );
-
-        // Re-enable controls after animation
+        // Animate camera movement.
+        graphRef.current.cameraPosition(newCamPos, nodePos, 2000);
         setTimeout(() => {
-          if (controls) {
-            controls.enabled = true;
-          }
+          if (controls) controls.enabled = true;
         }, 2100);
       }
     }
-  }, [highlightedNodeId, shouldFocus, graphData.nodes]);
-
-  // Only handle initial camera setup, no transitions on search changes
-  useEffect(() => {
-    if (graphRef.current && !searchQuery && !highlightedNodeId) {
-      const defaultCamPos = new THREE.Vector3(1000, 600, 1000);
-      const target = new THREE.Vector3(0, 0, 0);
-      graphRef.current.camera().position.copy(defaultCamPos);
-      graphRef.current.camera().lookAt(target);
-    }
-  }, [graphRef]);
+  }, [highlightedNodeId, focusCounter, graphData]);
 
   // Initial camera and controls setup.
   useEffect(() => {
     const initGraph = () => {
       if (graphRef.current) {
         const camera = graphRef.current.camera();
-        // Here you might set an initial position; note the effect above will move it if nothing is searched.
         camera.position.set(1000, 600, 1000);
         camera.lookAt(0, 0, 0);
         const controls = graphRef.current.controls();
@@ -282,7 +267,7 @@ const PortfolioGraph: React.FC = () => {
           controls.mouseButtons = {
             LEFT: THREE.MOUSE.ROTATE,
             MIDDLE: THREE.MOUSE.PAN,
-            RIGHT: THREE.MOUSE.PAN
+            RIGHT: THREE.MOUSE.PAN,
           };
           controls.update();
         }
@@ -292,7 +277,7 @@ const PortfolioGraph: React.FC = () => {
     setTimeout(initGraph, 100);
   }, []);
 
-  // Render each node; if a search is active, non-highlighted nodes appear muted.
+  // Render each node. When a search is active, non-highlighted nodes are muted.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
     const effectiveColor = highlightedNodeId
@@ -303,39 +288,33 @@ const PortfolioGraph: React.FC = () => {
     const material = new THREE.MeshBasicMaterial({ color: effectiveColor });
     const sphere = new THREE.Mesh(geometry, material);
     group.add(sphere);
-    
+
     const effectiveTextColor = highlightedNodeId
       ? (node.id === highlightedNodeId ? "rgba(255,255,255,1)" : "rgba(150,150,150,1)")
       : (node.type === "major" ? "rgba(255,255,255,1)" : "rgba(200,200,200,1)");
-    
+
     let sprite: THREE.Sprite;
     if (node.type === "major") {
-      sprite = makeTextSprite(
-        `${node.id} (Project)`,
-        {
-          fontsize: 24,
-          fontface: "Arial",
-          textColor: effectiveTextColor,
-          borderThickness: 2,
-          borderColor: { r: 50, g: 50, b: 50, a: 1 },
-          backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
-          scaleFactor: 0.5,
-        }
-      );
+      sprite = makeTextSprite(`${node.id} (Project)`, {
+        fontsize: 24,
+        fontface: "Arial",
+        textColor: effectiveTextColor,
+        borderThickness: 2,
+        borderColor: { r: 50, g: 50, b: 50, a: 1 },
+        backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
+        scaleFactor: 0.5,
+      });
       sprite.position.set(0, sphereRadius + 15, 0);
     } else {
-      sprite = makeTextSprite(
-        `${node.id} (Skill)`,
-        {
-          fontsize: 12,
-          fontface: "Arial",
-          textColor: effectiveTextColor,
-          borderThickness: 1,
-          borderColor: { r: 50, g: 50, b: 50, a: 1 },
-          backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
-          scaleFactor: 0.3,
-        }
-      );
+      sprite = makeTextSprite(`${node.id} (Skill)`, {
+        fontsize: 12,
+        fontface: "Arial",
+        textColor: effectiveTextColor,
+        borderThickness: 1,
+        borderColor: { r: 50, g: 50, b: 50, a: 1 },
+        backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
+        scaleFactor: 0.3,
+      });
       sprite.position.set(0, sphereRadius + 8, 0);
     }
     group.add(sprite);
@@ -347,8 +326,8 @@ const PortfolioGraph: React.FC = () => {
       className="portfolio-graph"
       style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}
     >
-      <SearchBar 
-        searchQuery={searchQuery} 
+      <SearchBar
+        searchQuery={searchQuery}
         onSearchChange={handleSearch}
         onSubmit={handleSearchSubmit}
       />
