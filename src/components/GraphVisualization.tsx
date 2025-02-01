@@ -27,6 +27,7 @@ interface GraphData {
 interface GraphVisualizationProps {
   searchQuery: string;
   filters: { [key: string]: any };
+  projects: ProjectNode[];
   onNodeClick?: (node: ProjectNode) => void;
 }
 

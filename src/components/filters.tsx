@@ -7,10 +7,13 @@ interface FiltersProps {
     tech?: string;
     timeline?: string;
   };
+  projects: Array<{
+    techStack: string[];
+  }>;
   onFilterChange: (newFilters: FiltersProps["filters"]) => void;
 }
 
-const Filters: React.FC<FiltersProps> = ({ filters, onFilterChange }) => {
+const Filters: React.FC<FiltersProps> = ({ filters, projects, onFilterChange }) => {
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onFilterChange({ ...filters, category: e.target.value });
   };

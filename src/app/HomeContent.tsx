@@ -64,7 +64,21 @@ export default function HomeContent() {
         </Column>
         <div className={styles.graphSection}>
           <SearchBar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
-          <Filters filters={filters} onFilterChange={setFilters} />
+          <Filters 
+            filters={filters} 
+            projects={[
+              {
+                id: 1,
+                name: "Project A",
+                description: "A cool project",
+                category: "Academic",
+                importance: 10,
+                techStack: ["React", "TypeScript"]
+              },
+              // Add more projects as needed
+            ]} 
+            onFilterChange={setFilters}
+          />
           <GraphVisualization
             searchQuery={searchQuery}
             filters={filters}
