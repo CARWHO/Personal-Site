@@ -162,6 +162,8 @@ const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const [searchQuery, setSearchQuery] = useState("");
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const [lastInteractionTime, setLastInteractionTime] = useState(Date.now());
   const graphData = useMemo(() => generateGraphData(), []);
 
   // Compute matching node IDs based on the search query.
@@ -220,48 +222,55 @@ const PortfolioGraph: React.FC = () => {
     setTimeout(initGraph, 100);
   }, []);
 
-  // --- Enforce Constant Camera Distance, Center on Graph, and Slowly Rotate ---
+  // --- Camera Auto-Rotation with Interaction Pause ---
   useEffect(() => {
     let animationFrameId: number;
-    const desiredDistance = 500; // fixed camera distance
-    const phi = Math.PI / 3; // fixed elevation angle
+    const desiredDistance = 500;
+    const interactionCooldown = 3000; // 3 seconds pause after interaction
 
     const updateCamera = () => {
       if (graphRef.current) {
         const camera = graphRef.current.camera();
         const controls = graphRef.current.controls();
 
-        // Compute center of all nodes with defined positions.
+        // Calculate center of graph
         const validNodes = graphData.nodes.filter(n => 
           n.x !== undefined && n.y !== undefined && n.z !== undefined
         );
-        const target = new THREE.Vector3();
-        if (validNodes.length > 0) {
-          validNodes.forEach(n => {
-            target.add(new THREE.Vector3(n.x!, n.y!, n.z!));
-          });
-          target.divideScalar(validNodes.length);
-        } else {
-          target.set(0, 0, 0);
+        const target = validNodes.reduce((acc, n) => {
+          acc.x += n.x!;
+          acc.y += n.y!;
+          acc.z += n.z!;
+          return acc;
+        }, new THREE.Vector3()).divideScalar(validNodes.length || 1);
+
+        const timeSinceLastInteraction = Date.now() - lastInteractionTime;
+
+        // Only auto-rotate if not interacting and cooldown has passed
+        if (!isInteracting && timeSinceLastInteraction > interactionCooldown) {
+          // Get current position relative to target
+          const offset = new THREE.Vector3()
+            .copy(camera.position)
+            .sub(target);
+          
+          // Convert to spherical coordinates for rotation
+          const spherical = new THREE.Spherical().setFromVector3(offset);
+          spherical.theta += 0.001; // Rotation speed
+          
+          // Convert back to cartesian coordinates
+          const newOffset = new THREE.Vector3().setFromSpherical(spherical);
+          camera.position.copy(target.clone().add(newOffset));
+          
+          controls.target.copy(target);
+          controls.update();
         }
-
-        // Increment rotation angle.
-        rotationAngleRef.current += 0.001; // adjust speed as desired
-        const theta = rotationAngleRef.current;
-
-        // Use spherical coordinates for a smooth orbit.
-        const spherical = new THREE.Spherical(desiredDistance, phi, theta);
-        const offset = new THREE.Vector3().setFromSpherical(spherical);
-        camera.position.copy(target).add(offset);
-        controls.target.copy(target);
-        controls.update();
       }
       animationFrameId = requestAnimationFrame(updateCamera);
     };
 
     updateCamera();
     return () => cancelAnimationFrame(animationFrameId);
-  }, [graphData.nodes]);
+  }, [graphData.nodes, isInteracting, lastInteractionTime]);
 
   // --- Animate Node Colors and Text Opacities ---
   // This effect runs every frame and uses linear interpolation (lerp)
