@@ -69,13 +69,44 @@ export default function HomeContent() {
             projects={[
               {
                 id: 1,
-                name: "Project A",
-                description: "A cool project",
-                category: "Academic",
-                importance: 10,
-                techStack: ["React", "TypeScript"]
+                name: "Portfolio Website",
+                description: "Personal portfolio built with Next.js",
+                category: "Personal",
+                importance: 8,
+                techStack: ["React", "TypeScript", "Next.js"]
               },
-              // Add more projects as needed
+              {
+                id: 2,
+                name: "Dawn Aerospace",
+                description: "Aerospace engineering projects",
+                category: "Professional",
+                importance: 10,
+                techStack: ["Python", "CFD", "Aerospace"]
+              },
+              {
+                id: 3,
+                name: "Halo Vision",
+                description: "Computer vision startup",
+                category: "Professional",
+                importance: 9,
+                techStack: ["Python", "OpenCV", "AI"]
+              },
+              {
+                id: 4,
+                name: "KORA",
+                description: "Robotics and automation",
+                category: "Professional",
+                importance: 9,
+                techStack: ["Python", "ROS", "Robotics"]
+              },
+              {
+                id: 5,
+                name: "WCC Wind Analysis",
+                description: "CFD analysis for Wellington City Council",
+                category: "Professional",
+                importance: 7,
+                techStack: ["Python", "CFD", "Civil"]
+              }
             ]} 
             onFilterChange={setFilters}
           />
@@ -85,13 +116,44 @@ export default function HomeContent() {
             projects={[
               {
                 id: 1,
-                name: "Project A",
-                description: "A cool project",
-                category: "Academic",
-                importance: 10,
-                techStack: ["React", "TypeScript"]
+                name: "Portfolio Website",
+                description: "Personal portfolio built with Next.js",
+                category: "Personal",
+                importance: 8,
+                techStack: ["React", "TypeScript", "Next.js"]
               },
-              // Add more projects as needed
+              {
+                id: 2,
+                name: "Dawn Aerospace",
+                description: "Aerospace engineering projects",
+                category: "Professional",
+                importance: 10,
+                techStack: ["Python", "CFD", "Aerospace"]
+              },
+              {
+                id: 3,
+                name: "Halo Vision",
+                description: "Computer vision startup",
+                category: "Professional",
+                importance: 9,
+                techStack: ["Python", "OpenCV", "AI"]
+              },
+              {
+                id: 4,
+                name: "KORA",
+                description: "Robotics and automation",
+                category: "Professional",
+                importance: 9,
+                techStack: ["Python", "ROS", "Robotics"]
+              },
+              {
+                id: 5,
+                name: "WCC Wind Analysis",
+                description: "CFD analysis for Wellington City Council",
+                category: "Professional",
+                importance: 7,
+                techStack: ["Python", "CFD", "Civil"]
+              }
             ]}
             onNodeClick={handleNodeClick}
           />
