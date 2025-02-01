@@ -95,7 +95,7 @@ const generateGraphData = () => {
 // Helper function to create a text sprite as an annotation.
 function makeTextSprite(message: string, parameters: any) {
   parameters = parameters || {};
-  const fontface = parameters.fontface || "Inter";
+  const fontface = parameters.fontface || "Arial";
   const fontsize = parameters.fontsize || 18;
   const textColor = parameters.textColor || "rgba(255, 255, 255, 1.0)";
   const borderThickness = parameters.borderThickness || 2;
@@ -150,7 +150,7 @@ const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const graphData = useMemo(() => generateGraphData(), []);
 
-  // Position the camera so that the entire sphere is visible.
+  // Set initial camera position.
   useEffect(() => {
     if (graphRef.current) {
       graphRef.current.cameraPosition(
@@ -159,6 +159,27 @@ const PortfolioGraph: React.FC = () => {
         2000                   // Animation duration (ms).
       );
     }
+  }, []);
+
+  // Disable zoom by waiting until OrbitControls is available.
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (graphRef.current && typeof graphRef.current.controls === "function") {
+        const controls = graphRef.current.controls();
+        if (controls) {
+          controls.enableZoom = false;
+          // Optionally, also disable zoom via the mouse wheel:
+          controls.mouseButtons = {
+            LEFT: THREE.MOUSE.ROTATE,
+            MIDDLE: THREE.MOUSE.PAN,
+            RIGHT: THREE.MOUSE.ROTATE
+          };
+          clearInterval(intervalId);
+        }
+      }
+    }, 100);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   // Create a custom 3D object for each node that includes a sphere and a text annotation.
@@ -179,7 +200,7 @@ const PortfolioGraph: React.FC = () => {
         `${node.id} (Project)`,
         {
           fontsize: 24,
-          fontface: "Inter",
+          fontface: "Arial",
           textColor: "rgba(255,255,255,1)",
           borderThickness: 2,
           borderColor: { r: 50, g: 50, b: 50, a: 1 },
@@ -194,7 +215,7 @@ const PortfolioGraph: React.FC = () => {
         `${node.id} (Skill)`,
         {
           fontsize: 12,
-          fontface: "Inter",
+          fontface: "Arial",
           textColor: "rgba(200,200,200,1)",
           borderThickness: 1,
           borderColor: { r: 50, g: 50, b: 50, a: 1 },
