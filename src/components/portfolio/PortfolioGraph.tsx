@@ -152,33 +152,41 @@ const PortfolioGraph: React.FC = () => {
 
   // Delay updating the camera to ensure everything is initialized.
   useEffect(() => {
-    if (graphRef.current) {
-      // Set initial camera position
-      const distance = 100000;
-      graphRef.current.cameraPosition(
-        { x: distance, y: distance/3, z: distance },
-        { x: 0, y: 0, z: 0 },
-        0
-      );
+    const initCamera = () => {
+      if (graphRef.current) {
+        const camera = graphRef.current.camera();
+        // Set a much larger initial position
+        camera.position.set(0, 0, 5000);
+        camera.lookAt(0, 0, 0);
+        camera.far = 10000;
+        camera.updateProjectionMatrix();
 
-      // Configure controls
-      const controls = graphRef.current.controls();
-      if (controls) {
-        controls.enableZoom = false;
-        controls.minDistance = distance;
-        controls.maxDistance = distance;
-        controls.minPolarAngle = Math.PI / 4;
-        controls.maxPolarAngle = Math.PI * 3/4;
-        controls.enablePan = false;
-        controls.rotateSpeed = 0.5;
-        controls.mouseButtons = {
-          LEFT: THREE.MOUSE.ROTATE,
-          MIDDLE: null,
-          RIGHT: null
-        };
-        controls.update();
+        // Configure controls
+        const controls = graphRef.current.controls();
+        if (controls) {
+          controls.enableZoom = false;
+          controls.minDistance = 5000;
+          controls.maxDistance = 5000;
+          controls.minPolarAngle = Math.PI / 4;
+          controls.maxPolarAngle = Math.PI * 3/4;
+          controls.enablePan = false;
+          controls.rotateSpeed = 0.5;
+          controls.mouseButtons = {
+            LEFT: THREE.MOUSE.ROTATE,
+            MIDDLE: null,
+            RIGHT: null
+          };
+          controls.update();
+        }
       }
-    }
+    };
+
+    // Initial setup
+    initCamera();
+    
+    // Also run after a short delay to ensure it takes effect
+    const timeoutId = setTimeout(initCamera, 100);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   // Create a custom 3D object for each node that includes a sphere and a text annotation.
@@ -231,7 +239,7 @@ const PortfolioGraph: React.FC = () => {
   };
 
   return (
-    <Column className="portfolio-graph" style={{ height: "800px", width: "100%" }}>
+    <Column className="portfolio-graph" style={{ height: "1200px", width: "100%" }}>
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}

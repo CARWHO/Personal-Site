@@ -17,7 +17,7 @@ const PortfolioGraph = dynamic(() => import('@/components/portfolio/PortfolioGra
 export default function HomeContent() {
 
   return (
-    <Column maxWidth="m" horizontal="center">
+    <Column maxWidth="xl" horizontal="center">
       <script
         type="application/ld+json"
         suppressHydrationWarning
