@@ -36,7 +36,7 @@ const lightenColor = (color: number, percent: number): number => {
 };
 
 // --- Project Data ---
-// (Only major projects matter for filtering/panning.)
+// (Only major projects are considered for filtering/panning.)
 const majorProjects = [
   { 
     id: "Halo Vision", 
@@ -109,7 +109,7 @@ const generateGraphData = () => {
     });
   });
 
-  // Link major projects.
+  // Link major projects together.
   majorProjects.forEach((project1, i) => {
     majorProjects.slice(i + 1).forEach(project2 => {
       graphLinks.push({
@@ -175,11 +175,11 @@ const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const [searchQuery, setSearchQuery] = useState("");
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
-  // focusCounter increments each time Enter is pressed.
+  // Increment this counter on Enter to trigger camera movement.
   const [focusCounter, setFocusCounter] = useState(0);
   const graphData = useMemo(() => generateGraphData(), []);
 
-  // Search handler (typing does not move the camera)
+  // Search handler: only update the highlighted node as the user types.
   const handleSearch = (query: string) => {
     const lowerQuery = query.toLowerCase();
     setSearchQuery(lowerQuery);
@@ -201,31 +201,28 @@ const PortfolioGraph: React.FC = () => {
     }
   };
 
-  // When Enter is pressed in the search bar, increment the focus counter.
+  // When Enter is pressed, increment the focus counter.
   const handleSearchSubmit = () => {
-    // Only trigger camera movement if a node is highlighted.
     if (highlightedNodeId) {
       setFocusCounter(prev => prev + 1);
     }
   };
 
-  // When focusCounter changes (i.e. Enter is pressed) and a node is highlighted,
-  // move the camera to pan by π/2 around the node.
+  // Move the camera only when the user presses Enter.
   useEffect(() => {
-    if (highlightedNodeId && graphRef.current) {
+    if (focusCounter > 0 && highlightedNodeId && graphRef.current) {
       const node = graphData.nodes.find(n => n.id === highlightedNodeId);
       if (node && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
         const camera = graphRef.current.camera();
         const nodePos = new THREE.Vector3(node.x, node.y, node.z);
 
-        // Compute the vector from the node to the camera.
+        // Calculate current vector from node to camera.
         const currentPos = camera.position.clone().sub(nodePos);
         const currentAngle = Math.atan2(currentPos.z, currentPos.x);
 
-        // Rotate the angle by π/2 (90°)
+        // Rotate by π/2 (90°) and preserve the current distance and vertical offset.
+        const distance = currentPos.length() || 150; 
         const newAngle = currentAngle + Math.PI / 2;
-        const distance = currentPos.length() || 150; // if current distance is zero, default to 150
-        // Maintain vertical offset relative to the node.
         const heightOffset = camera.position.y - nodePos.y;
 
         const newCamPos = new THREE.Vector3(
@@ -239,14 +236,16 @@ const PortfolioGraph: React.FC = () => {
           controls.enabled = false;
           controls.target.copy(nodePos);
         }
-        // Animate camera movement.
+        // Animate the camera movement.
         graphRef.current.cameraPosition(newCamPos, nodePos, 2000);
         setTimeout(() => {
           if (controls) controls.enabled = true;
         }, 2100);
       }
     }
-  }, [highlightedNodeId, focusCounter, graphData]);
+    // We depend solely on focusCounter so that changes from typing (which update highlightedNodeId)
+    // don’t trigger camera movement.
+  }, [focusCounter]);
 
   // Initial camera and controls setup.
   useEffect(() => {
@@ -277,7 +276,7 @@ const PortfolioGraph: React.FC = () => {
     setTimeout(initGraph, 100);
   }, []);
 
-  // Render each node. When a search is active, non-highlighted nodes are muted.
+  // Render each node. Non-highlighted nodes are muted when a search is active.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
     const effectiveColor = highlightedNodeId
