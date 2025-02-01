@@ -216,18 +216,14 @@ const PortfolioGraph: React.FC = () => {
         const camera = graphRef.current.camera();
         const nodePos = new THREE.Vector3(node.x, node.y, node.z);
 
-        // Calculate current vector from node to camera.
-        const currentPos = camera.position.clone().sub(nodePos);
-        const currentAngle = Math.atan2(currentPos.z, currentPos.x);
-
-        // Rotate by π/2 (90°) and preserve the current distance and vertical offset.
-        const distance = currentPos.length() || 150; 
+        // Calculate new camera position with fixed distance and angle
+        const distance = 500; // Keep consistent distance
+        const currentAngle = Math.atan2(camera.position.z, camera.position.x);
         const newAngle = currentAngle + Math.PI / 2;
-        const heightOffset = camera.position.y - nodePos.y;
 
         const newCamPos = new THREE.Vector3(
           nodePos.x + distance * Math.cos(newAngle),
-          nodePos.y + heightOffset,
+          camera.position.y, // Maintain current height
           nodePos.z + distance * Math.sin(newAngle)
         );
 
