@@ -161,25 +161,30 @@ const PortfolioGraph: React.FC = () => {
     }
   }, []);
 
-  // Disable zoom by waiting until OrbitControls is available.
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (graphRef.current && typeof graphRef.current.controls === "function") {
-        const controls = graphRef.current.controls();
-        if (controls) {
-          controls.enableZoom = false;
-          // Optionally, also disable zoom via the mouse wheel:
-          controls.mouseButtons = {
-            LEFT: THREE.MOUSE.ROTATE,
-            MIDDLE: THREE.MOUSE.PAN,
-            RIGHT: THREE.MOUSE.ROTATE
-          };
-          clearInterval(intervalId);
-        }
+    if (graphRef.current) {
+      const controls = graphRef.current.controls();
+      if (controls) {
+        // Disable zooming
+        controls.enableZoom = false;
+        controls.minDistance = 200;
+        controls.maxDistance = 200;
+        
+        // Limit rotation
+        controls.minPolarAngle = Math.PI / 4; // 45 degrees
+        controls.maxPolarAngle = Math.PI * 3/4; // 135 degrees
+        
+        // Disable panning
+        controls.enablePan = false;
+        
+        // Only allow left click rotation
+        controls.mouseButtons = {
+          LEFT: THREE.MOUSE.ROTATE,
+          MIDDLE: null,
+          RIGHT: null
+        };
       }
-    }, 100);
-
-    return () => clearInterval(intervalId);
+    }
   }, []);
 
   // Create a custom 3D object for each node that includes a sphere and a text annotation.
@@ -241,6 +246,9 @@ const PortfolioGraph: React.FC = () => {
         linkWidth={1}
         linkColor={() => "#ffffff"}
         backgroundColor="rgba(0,0,0,0)"
+        controlType="orbit"
+        enableNodeDrag={false}
+        enableNavigationControls={true}
       />
     </Column>
   );
