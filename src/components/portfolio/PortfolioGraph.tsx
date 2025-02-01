@@ -152,24 +152,33 @@ const PortfolioGraph: React.FC = () => {
 
   // Delay updating the camera to ensure everything is initialized.
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (graphRef.current) {
-        const distance = 10000; // Desired camera distance.
-        // Directly update the camera's position.
-        const camera = graphRef.current.camera();
-        camera.position.set(distance, distance / 3, distance);
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
-        // Disable OrbitControls so they don't override your settings.
-        if (graphRef.current.controls) {
-          const controls = graphRef.current.controls();
-          controls.enableZoom = false;
-          // (Optionally) disable other controls if needed.
-          controls.enablePan = false;
-          controls.update();
-        }
+    if (graphRef.current) {
+      // Set initial camera position
+      const distance = 600;
+      graphRef.current.cameraPosition(
+        { x: distance, y: distance/3, z: distance },
+        { x: 0, y: 0, z: 0 },
+        0
+      );
+
+      // Configure controls
+      const controls = graphRef.current.controls();
+      if (controls) {
+        controls.enableZoom = false;
+        controls.minDistance = distance;
+        controls.maxDistance = distance;
+        controls.minPolarAngle = Math.PI / 4;
+        controls.maxPolarAngle = Math.PI * 3/4;
+        controls.enablePan = false;
+        controls.rotateSpeed = 0.5;
+        controls.mouseButtons = {
+          LEFT: THREE.MOUSE.ROTATE,
+          MIDDLE: null,
+          RIGHT: null
+        };
+        controls.update();
       }
-    }, 500); // Delay 500ms; adjust if necessary.
-    return () => clearTimeout(timeoutId);
+    }
   }, []);
 
   // Create a custom 3D object for each node that includes a sphere and a text annotation.
