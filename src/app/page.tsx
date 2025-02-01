@@ -75,6 +75,15 @@ export default function Home() {
             </Text>
           </RevealFx>
         </Column>
+        <div className={styles.graphSection}>
+          <SearchBar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+          <Filters filters={filters} onFilterChange={setFilters} />
+          <GraphVisualization
+            searchQuery={searchQuery}
+            filters={filters}
+            onNodeClick={handleNodeClick}
+          />
+        </div>
       </Column>
     </Column>
   );

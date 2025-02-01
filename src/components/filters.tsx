@@ -38,12 +38,9 @@ const Filters: React.FC<FiltersProps> = ({ filters, onFilterChange }) => {
         Technology:
         <select value={filters.tech || ""} onChange={handleTechChange}>
           <option value="">All</option>
-          <option value="React">React</option>
-          <option value="Python">Python</option>
-          <option value="Next.js">Next.js</option>
-          <option value="D3.js">D3.js</option>
-          <option value="Node.js">Node.js</option>
-          {/* Add more options as needed */}
+          {Array.from(new Set(projects.flatMap(p => p.techStack))).map(tech => (
+            <option key={tech} value={tech}>{tech}</option>
+          ))}
         </select>
       </label>
       <label>

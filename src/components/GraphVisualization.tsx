@@ -39,41 +39,42 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({
 
   // Sample project data. Replace this with dynamic data if needed.
   const graphData: GraphData = useMemo(
-    () => ({
-      nodes: [
-        {
-          id: 1,
-          name: "Project A",
-          description: "A cool academic project.",
-          category: "Academic",
-          importance: 10,
-          techStack: ["React", "Python"],
-        },
-        {
-          id: 2,
-          name: "Project B",
-          description: "A professional project.",
-          category: "Professional",
-          importance: 15,
-          techStack: ["Next.js", "Node.js"],
-        },
-        {
-          id: 3,
-          name: "Project C",
-          description: "A personal project.",
-          category: "Personal",
-          importance: 5,
-          techStack: ["D3.js", "JavaScript"],
-        },
-        // …add more projects as needed
-      ],
-      links: [
-        { source: 1, target: 2, sharedTech: "React" },
-        { source: 2, target: 3, sharedTech: "JavaScript" },
-        // …add more links as needed
-      ],
-    }),
-    []
+    () => {
+      // Filter nodes based on search and filters
+      const filteredNodes = projects.filter(project => {
+        const matchesSearch = !searchQuery || 
+          project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          project.techStack.some(tech => tech.toLowerCase().includes(searchQuery.toLowerCase()));
+        
+        const matchesCategory = !filters.category || project.category === filters.category;
+        const matchesTech = !filters.tech || project.techStack.includes(filters.tech);
+        
+        return matchesSearch && matchesCategory && matchesTech;
+      });
+
+      // Create links between projects that share technologies
+      const links = [];
+      for (let i = 0; i < filteredNodes.length; i++) {
+        for (let j = i + 1; j < filteredNodes.length; j++) {
+          const sharedTechs = filteredNodes[i].techStack.filter(tech => 
+            filteredNodes[j].techStack.includes(tech)
+          );
+          if (sharedTechs.length > 0) {
+            links.push({
+              source: filteredNodes[i].id,
+              target: filteredNodes[j].id,
+              sharedTech: sharedTechs.join(", ")
+            });
+          }
+        }
+      }
+
+      return {
+        nodes: filteredNodes,
+        links: links
+      };
+    },
+    [searchQuery, filters, projects]
   );
 
   // Helper to check if a node should be highlighted based on the search query.
