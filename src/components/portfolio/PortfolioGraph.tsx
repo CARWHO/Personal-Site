@@ -28,7 +28,7 @@ interface GraphLink {
 // -------------------------------------------------------------------------
 // Configuration
 // -------------------------------------------------------------------------
-const SPHERE_RADIUS = 150;
+const SPHERE_RADIUS = 100;
 
 // Instead of placing the four major nodes at extreme, separate positions,
 // we assign each one spherical coordinates in the same band (for example,
@@ -177,7 +177,7 @@ const PortfolioGraph: React.FC = () => {
   useEffect(() => {
     if (graphRef.current) {
       graphRef.current.cameraPosition(
-        { x: 0, y: 0, z: SPHERE_RADIUS * 2 },
+        { x: SPHERE_RADIUS * 1.5, y: SPHERE_RADIUS, z: SPHERE_RADIUS },
         { x: 0, y: 0, z: 0 },
         2000
       );
@@ -193,7 +193,7 @@ const PortfolioGraph: React.FC = () => {
   };
 
   return (
-    <Column className="portfolio-graph" style={{ height: "600px", width: "100%" }}>
+    <Column className="portfolio-graph" style={{ height: "400px", width: "100%", marginTop: "-50px" }}>
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
