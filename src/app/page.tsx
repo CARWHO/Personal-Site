@@ -1,12 +1,14 @@
-import React from "react";
-
+import React, { useState } from "react";
 import { Heading, Flex, Text, Button, Avatar, RevealFx, Arrow, Column } from "@/once-ui/components";
 import { Projects } from "@/components/work/Projects";
-
 import { baseURL, routes } from "@/app/resources";
 import { home, about, person, newsletter } from "@/app/resources/content";
 import { Mailchimp } from "@/components";
 import { Posts } from "@/components/blog/Posts";
+import styles from "@/styles/graph.module.scss";
+import SearchBar from "@/components/SearchBar";
+import Filters from "@/components/Filters";
+import GraphVisualization from "@/components/GraphVisualization";
 
 export async function generateMetadata() {
   const title = home.title;
@@ -38,6 +40,17 @@ export async function generateMetadata() {
 }
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState({
+    category: "",
+    tech: "",
+    timeline: "",
+  });
+
+  const handleNodeClick = (node: any) => {
+    console.log("Node clicked:", node);
+    // Add modal handling logic here
+  };
   return (
     <Column maxWidth="m" horizontal="center">
       <script
