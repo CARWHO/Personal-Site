@@ -165,12 +165,12 @@ const PortfolioGraph: React.FC = () => {
           controls.maxDistance = 500;
           controls.minPolarAngle = Math.PI / 4;
           controls.maxPolarAngle = Math.PI * 3/4;
-          controls.enablePan = false;
+          controls.enablePan = true;
           controls.rotateSpeed = 0.5;
           controls.mouseButtons = {
-            LEFT: THREE.MOUSE.ROTATE,
-            MIDDLE: null,
-            RIGHT: null
+            // LEFT: THREE.MOUSE.ROTATE,
+            // MIDDLE: null,
+            // RIGHT: null
           };
           controls.update();
         }
