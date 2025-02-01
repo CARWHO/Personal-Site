@@ -13,6 +13,7 @@ interface GraphNode {
   type: "major" | "skill";
   project?: string;
   color: number;
+  // These are set by the simulation.
   x?: number;
   y?: number;
   z?: number;
@@ -79,20 +80,37 @@ const generateGraphData = () => {
   const nodes: GraphNode[] = [];
   const links: GraphLink[] = [];
 
+  // Add major project nodes.
   majorProjects.forEach(project => {
-    nodes.push({ id: project.id, type: "major", color: project.color });
+    nodes.push({
+      id: project.id,
+      type: "major",
+      color: project.color,
+    });
+  });
+
+  // Add skill nodes.
+  majorProjects.forEach(project => {
     project.skills.forEach(skill => {
-      nodes.push({ id: skill, type: "skill", project: project.id, color: 0xcccccc });
+      const node: GraphNode = {
+        id: skill,
+        type: "skill",
+        project: project.id,
+        color: 0xcccccc,
+      };
+      nodes.push(node);
       links.push({ source: project.id, target: skill });
     });
   });
 
+  // Link major projects together.
   majorProjects.forEach((project1, i) => {
     majorProjects.slice(i + 1).forEach(project2 => {
       links.push({ source: project1.id, target: project2.id });
     });
   });
 
+  // Some cross-links between skill nodes.
   const skillNodes = nodes.filter(n => n.type === "skill");
   for (let i = 0; i < skillNodes.length; i += 5) {
     const randomSkillIndex = Math.floor(Math.random() * skillNodes.length);
@@ -144,10 +162,10 @@ const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const [searchQuery, setSearchQuery] = useState("");
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
-  const [focusCounter, setFocusCounter] = useState(0);
   const graphData = useMemo(() => generateGraphData(), []);
 
   // --- Search Handler ---
+  // As the user types, update the highlighted node.
   const handleSearch = (query: string) => {
     const lowerQuery = query.toLowerCase();
     setSearchQuery(lowerQuery);
@@ -162,54 +180,27 @@ const PortfolioGraph: React.FC = () => {
         node.id.toLowerCase().includes(lowerQuery)
       );
     });
-    setHighlightedNodeId(matchingNodes[0]?.id || null);
-  };
-
-  // --- Focus Trigger ---
-  const handleSearchSubmit = () => {
-    if (highlightedNodeId) setFocusCounter(prev => prev + 1);
-  };
-
-  // --- Camera Focusing ---
-  useEffect(() => {
-    if (focusCounter > 0 && highlightedNodeId && graphRef.current) {
-      const node = graphData.nodes.find(n => n.id === highlightedNodeId);
-      if (node?.x !== undefined && node?.y !== undefined && node?.z !== undefined) {
-        // Get current camera position
-        const camera = graphRef.current.camera();
-        const controls = graphRef.current.controls();
-        const distance = 500; // Fixed camera distance
-        
-        // Calculate direction vector from node to current camera position
-        const direction = new THREE.Vector3()
-          .subVectors(camera.position, new THREE.Vector3(node.x, node.y, node.z))
-          .normalize();
-        
-        // Calculate new camera position maintaining fixed distance
-        const newPos = new THREE.Vector3(node.x, node.y, node.z)
-          .add(direction.multiplyScalar(distance));
-
-        // Animate camera to new position
-        graphRef.current.cameraPosition(
-          newPos,
-          { x: node.x, y: node.y, z: node.z },
-          1000
-        );
-      }
+    if (matchingNodes.length > 0) {
+      setHighlightedNodeId(matchingNodes[0].id);
+    } else {
+      setHighlightedNodeId(null);
     }
-  }, [focusCounter]); // Only depend on focusCounter to prevent re-runs with changing node positions
+  };
+
+  // --- (Optional) Search Submit Handler ---
+  // We no longer change the camera on Enter so this can be a no-op.
+  const handleSearchSubmit = () => {
+    // Could trigger other behavior if desired.
+  };
 
   // --- Initial Camera Setup ---
   useEffect(() => {
     const initGraph = () => {
       if (graphRef.current) {
         const camera = graphRef.current.camera();
-        const controls = graphRef.current.controls();
-        
-        // Set initial camera position with fixed distance
-        camera.position.set(500, 300, 500);
+        camera.position.set(1000, 600, 1000);
         camera.lookAt(0, 0, 0);
-        
+        const controls = graphRef.current.controls();
         if (controls) {
           controls.enableZoom = false;
           controls.minDistance = 500;
@@ -228,39 +219,130 @@ const PortfolioGraph: React.FC = () => {
       }
     };
     initGraph();
+    setTimeout(initGraph, 100);
   }, []);
 
+  // --- Enforce Constant Camera Distance and Centering ---
+  // Continuously compute the center of all nodes (ignoring any highlighted node)
+  // and position the camera exactly 500 units away.
+  useEffect(() => {
+    let animationFrameId: number;
+    const desiredDistance = 500; // fixed camera distance
+
+    const updateCameraDistance = () => {
+      if (graphRef.current) {
+        const camera = graphRef.current.camera();
+        const controls = graphRef.current.controls();
+
+        // Compute the center of all nodes that have defined positions.
+        const validNodes = graphData.nodes.filter(n => 
+          n.x !== undefined && n.y !== undefined && n.z !== undefined
+        );
+        const target = new THREE.Vector3();
+        if (validNodes.length > 0) {
+          validNodes.forEach(n => {
+            target.add(new THREE.Vector3(n.x!, n.y!, n.z!));
+          });
+          target.divideScalar(validNodes.length);
+        } else {
+          target.set(0, 0, 0);
+        }
+
+        // Compute the vector from the target to the camera.
+        const offset = new THREE.Vector3().subVectors(camera.position, target);
+        if (offset.length() < 0.001) {
+          offset.set(desiredDistance, 0, 0);
+        } else {
+          offset.normalize().multiplyScalar(desiredDistance);
+        }
+        // Update the camera position and controls' target.
+        camera.position.copy(target).add(offset);
+        controls.target.copy(target);
+        controls.update();
+      }
+      animationFrameId = requestAnimationFrame(updateCameraDistance);
+    };
+
+    updateCameraDistance();
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [graphData.nodes]);
+
   // --- Node Rendering ---
+  // Create the 3D object for each node.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
-    const effectiveColor = highlightedNodeId === node.id ? 0xffffff : 0x444444;
     const sphereRadius = node.type === "major" ? 15 : 5;
-    
     const geometry = new THREE.SphereGeometry(sphereRadius, 16, 16);
-    const material = new THREE.MeshBasicMaterial({ color: effectiveColor });
+    // Use the node’s base color.
+    const material = new THREE.MeshBasicMaterial({ color: node.color });
     const sphere = new THREE.Mesh(geometry, material);
     group.add(sphere);
 
-    const textColor = highlightedNodeId === node.id 
-      ? "rgba(255,255,255,1)" 
-      : "rgba(150,150,150,1)";
-
-    const sprite = makeTextSprite(
-      `${node.id} (${node.type === "major" ? "Project" : "Skill"})`,
-      {
-        fontsize: node.type === "major" ? 24 : 12,
+    // Create a text sprite.
+    let sprite: THREE.Sprite;
+    if (node.type === "major") {
+      sprite = makeTextSprite(`${node.id} (Project)`, {
+        fontsize: 24,
         fontface: "Arial",
-        textColor,
-        borderThickness: node.type === "major" ? 2 : 1,
+        textColor: "rgba(255,255,255,1)",
+        borderThickness: 2,
         borderColor: { r: 50, g: 50, b: 50, a: 1 },
         backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
-        scaleFactor: node.type === "major" ? 0.5 : 0.3,
-      }
-    );
-    sprite.position.set(0, sphereRadius + (node.type === "major" ? 15 : 8), 0);
+        scaleFactor: 0.5,
+      });
+      sprite.position.set(0, sphereRadius + 15, 0);
+    } else {
+      sprite = makeTextSprite(`${node.id} (Skill)`, {
+        fontsize: 12,
+        fontface: "Arial",
+        textColor: "rgba(200,200,200,1)",
+        borderThickness: 1,
+        borderColor: { r: 50, g: 50, b: 50, a: 1 },
+        backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
+        scaleFactor: 0.3,
+      });
+      sprite.position.set(0, sphereRadius + 8, 0);
+    }
     group.add(sprite);
-
     return group;
+  };
+
+  // --- Node Update for Smooth Transition ---
+  // This callback is invoked on each animation frame for every node.
+  // We use it to gradually update each node's sphere and sprite colors so that
+  // when the highlighted node changes the color “fades” smoothly.
+  const nodeThreeObjectUpdate = (object: THREE.Group, node: GraphNode) => {
+    // The first child is the sphere.
+    const sphere = object.children[0] as THREE.Mesh;
+    // The second child is the text sprite.
+    const sprite = object.children[1] as THREE.Sprite;
+
+    // Define target colors.
+    const baseColor = new THREE.Color(node.color);
+    const highlightColor = new THREE.Color(0xffffff);
+    let targetSphereColor = baseColor;
+    let targetTextColor: THREE.Color;
+
+    if (highlightedNodeId) {
+      if (node.id === highlightedNodeId) {
+        targetSphereColor = highlightColor;
+        targetTextColor = new THREE.Color(0xffffff);
+      } else {
+        targetSphereColor = new THREE.Color(0x444444);
+        targetTextColor = new THREE.Color(0x969696); // roughly rgba(150,150,150,1)
+      }
+    } else {
+      targetSphereColor = baseColor;
+      targetTextColor =
+        node.type === "major"
+          ? new THREE.Color(0xffffff)
+          : new THREE.Color(0xc8c8c8); // roughly rgba(200,200,200,1)
+    }
+
+    // Smoothly transition the sphere's material color.
+    (sphere.material as THREE.MeshBasicMaterial).color.lerp(targetSphereColor, 0.1);
+    // Similarly, update the sprite's color.
+    (sprite.material as THREE.SpriteMaterial).color.lerp(targetTextColor, 0.1);
   };
 
   return (
@@ -278,6 +360,7 @@ const PortfolioGraph: React.FC = () => {
         graphData={graphData}
         nodeLabel={() => ""}
         nodeThreeObject={nodeThreeObject}
+        nodeThreeObjectUpdate={nodeThreeObjectUpdate}  {/* <-- New update callback */}
         linkWidth={2}
         linkColor={() => "#666666"}
         linkOpacity={0.5}
