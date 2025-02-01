@@ -79,12 +79,24 @@ const generateGraphData = () => {
     });
   }
 
-  // Optionally, create links between major projects.
+  // Create a more connected web by linking major projects and some skills
   for (let i = 0; i < majorProjects.length; i++) {
     for (let j = i + 1; j < majorProjects.length; j++) {
       graphLinks.push({
         source: majorProjects[i].id,
         target: majorProjects[j].id,
+      });
+    }
+  }
+
+  // Add some cross-links between skills of different projects
+  const skillNodes = graphNodes.filter(node => node.type === "skill");
+  for (let i = 0; i < skillNodes.length; i += 5) { // Link every 5th skill node
+    const randomSkillIndex = Math.floor(Math.random() * skillNodes.length);
+    if (i !== randomSkillIndex) {
+      graphLinks.push({
+        source: skillNodes[i].id,
+        target: skillNodes[randomSkillIndex].id,
       });
     }
   }
@@ -240,11 +252,12 @@ const PortfolioGraph: React.FC = () => {
         graphData={graphData}
         nodeLabel={() => ""} // Disable default hover labels.
         nodeThreeObject={nodeThreeObject}
-        linkWidth={1}
+        linkWidth={2}
         linkColor={() => "#ffffff"}
+        linkOpacity={0.5}
         backgroundColor="rgba(0,0,0,0)"
         controlType="orbit"
-        enableNodeDrag={false}
+        enableNodeDrag={true}
         enableNavigationControls={true} // Enable built-in navigation controls
       />
     </Column>
