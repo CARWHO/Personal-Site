@@ -13,7 +13,6 @@ interface GraphNode {
   type: "major" | "skill";
   project?: string;
   color: number;
-  // These are set by the simulation.
   x?: number;
   y?: number;
   z?: number;
@@ -36,7 +35,6 @@ const lightenColor = (color: number, percent: number): number => {
 };
 
 // ----- Project Data -----
-// (Only major projects are used for filtering and focusing.)
 const majorProjects = [
   { 
     id: "Halo Vision", 
@@ -80,39 +78,21 @@ const majorProjects = [
 const generateGraphData = () => {
   const nodes: GraphNode[] = [];
   const links: GraphLink[] = [];
-  const skillNodesPerProject = 10;
 
-  // Add major project nodes.
   majorProjects.forEach(project => {
-    nodes.push({
-      id: project.id,
-      type: "major",
-      color: project.color,
-    });
-  });
-
-  // Add skill nodes.
-  majorProjects.forEach(project => {
+    nodes.push({ id: project.id, type: "major", color: project.color });
     project.skills.forEach(skill => {
-      const node: GraphNode = {
-        id: skill,
-        type: "skill",
-        project: project.id,
-        color: 0xcccccc,
-      };
-      nodes.push(node);
+      nodes.push({ id: skill, type: "skill", project: project.id, color: 0xcccccc });
       links.push({ source: project.id, target: skill });
     });
   });
 
-  // Link major projects together.
   majorProjects.forEach((project1, i) => {
     majorProjects.slice(i + 1).forEach(project2 => {
       links.push({ source: project1.id, target: project2.id });
     });
   });
 
-  // Some cross-links between skill nodes.
   const skillNodes = nodes.filter(n => n.type === "skill");
   for (let i = 0; i < skillNodes.length; i += 5) {
     const randomSkillIndex = Math.floor(Math.random() * skillNodes.length);
@@ -164,12 +144,10 @@ const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const [searchQuery, setSearchQuery] = useState("");
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
-  // focusCounter increments when Enter is pressed.
   const [focusCounter, setFocusCounter] = useState(0);
   const graphData = useMemo(() => generateGraphData(), []);
 
   // --- Search Handler ---
-  // As the user types, update the highlighted node.
   const handleSearch = (query: string) => {
     const lowerQuery = query.toLowerCase();
     setSearchQuery(lowerQuery);
@@ -184,54 +162,58 @@ const PortfolioGraph: React.FC = () => {
         node.id.toLowerCase().includes(lowerQuery)
       );
     });
-    if (matchingNodes.length > 0) {
-      setHighlightedNodeId(matchingNodes[0].id);
-    } else {
-      setHighlightedNodeId(null);
-    }
+    setHighlightedNodeId(matchingNodes[0]?.id || null);
   };
 
   // --- Focus Trigger ---
-  // When the user presses Enter, simply increment the focusCounter.
   const handleSearchSubmit = () => {
-    if (highlightedNodeId) {
-      setFocusCounter(prev => prev + 1);
-    }
+    if (highlightedNodeId) setFocusCounter(prev => prev + 1);
   };
 
-  // --- Camera Focusing via centerAt (No Zooming) ---
-  // When the focus counter changes (i.e. Enter is pressed), use the built-in centerAt
-  // method to pan the camera so that the highlighted node becomes the center of the view.
-  // centerAt will move the camera’s target without altering its distance.
-// src/components/portfolio/PortfolioGraph.tsx (changes highlighted)
+  // --- Camera Focusing ---
+  useEffect(() => {
+    if (focusCounter > 0 && highlightedNodeId && graphRef.current) {
+      const node = graphData.nodes.find(n => n.id === highlightedNodeId);
+      if (node?.x !== undefined && node?.y !== undefined && node?.z !== undefined) {
+        // Get current camera position
+        const camera = graphRef.current.camera();
+        const controls = graphRef.current.controls();
+        const distance = 500; // Fixed camera distance
+        
+        // Calculate direction vector from node to current camera position
+        const direction = new THREE.Vector3()
+          .subVectors(camera.position, new THREE.Vector3(node.x, node.y, node.z))
+          .normalize();
+        
+        // Calculate new camera position maintaining fixed distance
+        const newPos = new THREE.Vector3(node.x, node.y, node.z)
+          .add(direction.multiplyScalar(distance));
 
-// --- Camera Focusing ---
-useEffect(() => {
-  if (focusCounter > 0 && highlightedNodeId && graphRef.current) {
-    const node = graphData.nodes.find(n => n.id === highlightedNodeId);
-    if (node?.x !== undefined && node?.y !== undefined && node?.z !== undefined) {
-      // Immediately update camera target without animation
-      const controls = graphRef.current.controls();
-      controls.target.set(node.x, node.y, node.z);
-      controls.update();
+        // Animate camera to new position
+        graphRef.current.cameraPosition(
+          newPos,
+          { x: node.x, y: node.y, z: node.z },
+          1000
+        );
+      }
     }
-  }
-}, [focusCounter, highlightedNodeId, graphData.nodes, graphRef]);
+  }, [focusCounter, highlightedNodeId, graphData.nodes]);
 
   // --- Initial Camera Setup ---
   useEffect(() => {
     const initGraph = () => {
       if (graphRef.current) {
         const camera = graphRef.current.camera();
-        const initialDistance = 500;  // Match min/max distance
-        camera.position.set(initialDistance, 300, initialDistance);
+        const controls = graphRef.current.controls();
+        
+        // Set initial camera position with fixed distance
+        camera.position.set(500, 300, 500);
         camera.lookAt(0, 0, 0);
         
-        const controls = graphRef.current.controls();
         if (controls) {
           controls.enableZoom = false;
-          controls.minDistance = initialDistance;
-          controls.maxDistance = initialDistance;
+          controls.minDistance = 500;
+          controls.maxDistance = 500;
           controls.minPolarAngle = Math.PI / 4;
           controls.maxPolarAngle = Math.PI * 3 / 4;
           controls.enablePan = true;
@@ -249,53 +231,35 @@ useEffect(() => {
   }, []);
 
   // --- Node Rendering ---
-  // Render nodes in full color if highlighted; otherwise, use a muted color.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
-    const effectiveColor = highlightedNodeId
-      ? node.id === highlightedNodeId
-        ? 0xffffff
-        : 0x444444
-      : node.color;
+    const effectiveColor = highlightedNodeId === node.id ? 0xffffff : 0x444444;
     const sphereRadius = node.type === "major" ? 15 : 5;
+    
     const geometry = new THREE.SphereGeometry(sphereRadius, 16, 16);
     const material = new THREE.MeshBasicMaterial({ color: effectiveColor });
     const sphere = new THREE.Mesh(geometry, material);
     group.add(sphere);
 
-    const effectiveTextColor = highlightedNodeId
-      ? node.id === highlightedNodeId
-        ? "rgba(255,255,255,1)"
-        : "rgba(150,150,150,1)"
-      : node.type === "major"
-      ? "rgba(255,255,255,1)"
-      : "rgba(200,200,200,1)";
+    const textColor = highlightedNodeId === node.id 
+      ? "rgba(255,255,255,1)" 
+      : "rgba(150,150,150,1)";
 
-    let sprite: THREE.Sprite;
-    if (node.type === "major") {
-      sprite = makeTextSprite(`${node.id} (Project)`, {
-        fontsize: 24,
+    const sprite = makeTextSprite(
+      `${node.id} (${node.type === "major" ? "Project" : "Skill"})`,
+      {
+        fontsize: node.type === "major" ? 24 : 12,
         fontface: "Arial",
-        textColor: effectiveTextColor,
-        borderThickness: 2,
+        textColor,
+        borderThickness: node.type === "major" ? 2 : 1,
         borderColor: { r: 50, g: 50, b: 50, a: 1 },
         backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
-        scaleFactor: 0.5,
-      });
-      sprite.position.set(0, sphereRadius + 15, 0);
-    } else {
-      sprite = makeTextSprite(`${node.id} (Skill)`, {
-        fontsize: 12,
-        fontface: "Arial",
-        textColor: effectiveTextColor,
-        borderThickness: 1,
-        borderColor: { r: 50, g: 50, b: 50, a: 1 },
-        backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
-        scaleFactor: 0.3,
-      });
-      sprite.position.set(0, sphereRadius + 8, 0);
-    }
+        scaleFactor: node.type === "major" ? 0.5 : 0.3,
+      }
+    );
+    sprite.position.set(0, sphereRadius + (node.type === "major" ? 15 : 8), 0);
     group.add(sprite);
+
     return group;
   };
 
