@@ -87,24 +87,25 @@ const generateGraphData = () => {
         project: project.id,
         color: 0xcccccc, // Light gray for all skill nodes
       };
-    graphNodes.push(skillNode);
+      graphNodes.push(skillNode);
 
-    // Link the skill node to its assigned major project.
-    graphLinks.push({
-      source: assignedProject.id,
-      target: skillNode.id,
-    });
-  }
-
-  // Create a more connected web by linking major projects and some skills
-  for (let i = 0; i < majorProjects.length; i++) {
-    for (let j = i + 1; j < majorProjects.length; j++) {
+      // Link the skill node to its assigned major project.
       graphLinks.push({
-        source: majorProjects[i].id,
-        target: majorProjects[j].id,
+        source: project.id,
+        target: skillNode.id,
       });
-    }
-  }
+    });
+  });
+
+  // Create a more connected web by linking major projects
+  majorProjects.forEach((project1, i) => {
+    majorProjects.slice(i + 1).forEach(project2 => {
+      graphLinks.push({
+        source: project1.id,
+        target: project2.id,
+      });
+    });
+  });
 
   // Add some cross-links between skills of different projects
   const skillNodes = graphNodes.filter(node => node.type === "skill");
