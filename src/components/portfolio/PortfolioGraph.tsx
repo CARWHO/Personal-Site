@@ -7,13 +7,13 @@ import ForceGraph3D from "react-force-graph-3d";
 import { Column } from "@/once-ui/components";
 import * as THREE from "three";
 
-// --- Graph Types ---
+// ----- Graph Types -----
 interface GraphNode {
   id: string;
   type: "major" | "skill";
   project?: string;
   color: number;
-  // Positions assigned by the simulation.
+  // These are set by the simulation.
   x?: number;
   y?: number;
   z?: number;
@@ -24,7 +24,7 @@ interface GraphLink {
   target: string;
 }
 
-// --- Utility Function ---
+// ----- Utility Function -----
 const lightenColor = (color: number, percent: number): number => {
   const r = (color >> 16) & 0xff;
   const g = (color >> 8) & 0xff;
@@ -35,8 +35,8 @@ const lightenColor = (color: number, percent: number): number => {
   return (newR << 16) + (newG << 8) + newB;
 };
 
-// --- Project Data ---
-// Only major projects are used for filtering and focusing.
+// ----- Project Data -----
+// (Only major projects are used for filtering and focusing.)
 const majorProjects = [
   { 
     id: "Halo Vision", 
@@ -76,16 +76,15 @@ const majorProjects = [
   }
 ];
 
-// --- Build Graph Data ---
+// ----- Build Graph Data -----
 const generateGraphData = () => {
-  const graphNodes: GraphNode[] = [];
-  const graphLinks: GraphLink[] = [];
-  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+  const nodes: GraphNode[] = [];
+  const links: GraphLink[] = [];
   const skillNodesPerProject = 10;
 
   // Add major project nodes.
   majorProjects.forEach(project => {
-    graphNodes.push({
+    nodes.push({
       id: project.id,
       type: "major",
       color: project.color,
@@ -95,46 +94,36 @@ const generateGraphData = () => {
   // Add skill nodes.
   majorProjects.forEach(project => {
     project.skills.forEach(skill => {
-      const skillNode: GraphNode = {
+      const node: GraphNode = {
         id: skill,
         type: "skill",
         project: project.id,
         color: 0xcccccc,
       };
-      graphNodes.push(skillNode);
-      graphLinks.push({
-        source: project.id,
-        target: skill,
-      });
+      nodes.push(node);
+      links.push({ source: project.id, target: skill });
     });
   });
 
   // Link major projects together.
   majorProjects.forEach((project1, i) => {
     majorProjects.slice(i + 1).forEach(project2 => {
-      graphLinks.push({
-        source: project1.id,
-        target: project2.id,
-      });
+      links.push({ source: project1.id, target: project2.id });
     });
   });
 
-  // Create some cross-links between skill nodes.
-  const skillNodes = graphNodes.filter(node => node.type === "skill");
+  // Some cross-links between skill nodes.
+  const skillNodes = nodes.filter(n => n.type === "skill");
   for (let i = 0; i < skillNodes.length; i += 5) {
     const randomSkillIndex = Math.floor(Math.random() * skillNodes.length);
     if (i !== randomSkillIndex) {
-      graphLinks.push({
-        source: skillNodes[i].id,
-        target: skillNodes[randomSkillIndex].id,
-      });
+      links.push({ source: skillNodes[i].id, target: skillNodes[randomSkillIndex].id });
     }
   }
-
-  return { nodes: graphNodes, links: graphLinks };
+  return { nodes, links };
 };
 
-// --- Text Sprite Helper ---
+// ----- Text Sprite Helper -----
 function makeTextSprite(message: string, parameters: any) {
   parameters = parameters || {};
   const fontface = parameters.fontface || "Arial";
@@ -170,17 +159,17 @@ function makeTextSprite(message: string, parameters: any) {
   return sprite;
 }
 
-// --- Main Component ---
+// ----- Main Component -----
 const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const [searchQuery, setSearchQuery] = useState("");
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
-  // focusCounter increments each time the user presses Enter.
+  // focusCounter increments when Enter is pressed.
   const [focusCounter, setFocusCounter] = useState(0);
   const graphData = useMemo(() => generateGraphData(), []);
 
   // --- Search Handler ---
-  // As the user types, update the highlighted node (but do not move the camera).
+  // As the user types, update the highlighted node.
   const handleSearch = (query: string) => {
     const lowerQuery = query.toLowerCase();
     setSearchQuery(lowerQuery);
@@ -203,43 +192,29 @@ const PortfolioGraph: React.FC = () => {
   };
 
   // --- Focus Trigger ---
-  // When the user presses Enter, increment the focus counter.
+  // When the user presses Enter, simply increment the focusCounter.
   const handleSearchSubmit = () => {
     if (highlightedNodeId) {
       setFocusCounter(prev => prev + 1);
     }
   };
 
-  // --- Camera Focusing ---
+  // --- Camera Focusing via centerAt (No Zooming) ---
+  // When the focus counter changes (i.e. Enter is pressed), use the built-in centerAt
+  // method to pan the camera so that the highlighted node becomes the center of the view.
+  // centerAt will move the camera’s target without altering its distance.
   useEffect(() => {
     if (focusCounter > 0 && highlightedNodeId && graphRef.current) {
       const node = graphData.nodes.find(n => n.id === highlightedNodeId);
       if (node && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
-        const camera = graphRef.current.camera();
-        const nodePos = new THREE.Vector3(node.x, node.y, node.z);
-        
-        // Calculate new camera position with fixed distance and rotation
-        const distance = 500; // Keep consistent distance
-        const currentAngle = Math.atan2(camera.position.z - node.z, camera.position.x - node.x);
-        const newAngle = currentAngle + Math.PI / 2; // Rotate 90 degrees
-
-        const newCamPos = new THREE.Vector3(
-          nodePos.x + distance * Math.cos(newAngle),
-          camera.position.y, // Maintain current height
-          nodePos.z + distance * Math.sin(newAngle)
-        );
-
-        // Update camera position and target
-        graphRef.current.cameraPosition(
-          newCamPos,
-          nodePos,
-          2000
-        );
+        // Pan (rotate) the view so that the node is centered.
+        // We call centerAt which adjusts the camera target over 2 seconds.
+        graphRef.current.centerAt(node.x, node.y, node.z, 2000);
       }
     }
-  }, [focusCounter, highlightedNodeId, graphData.nodes]);
+  }, [focusCounter]);
 
-  // --- Initial Camera and Controls Setup ---
+  // --- Initial Camera Setup ---
   useEffect(() => {
     const initGraph = () => {
       if (graphRef.current) {
@@ -269,7 +244,7 @@ const PortfolioGraph: React.FC = () => {
   }, []);
 
   // --- Node Rendering ---
-  // Render nodes with muted color if not highlighted.
+  // Render nodes in full color if highlighted; otherwise, use a muted color.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
     const effectiveColor = highlightedNodeId
