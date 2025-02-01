@@ -257,7 +257,7 @@ const PortfolioGraph: React.FC = () => {
         if (controls) controls.enabled = true;
       }, 3100);
     }
-  }, [searchQuery, highlightedNodeId]);
+  }, [searchQuery, highlightedNodeId, graphRef]);
 
   // Initial camera and controls setup.
   useEffect(() => {
