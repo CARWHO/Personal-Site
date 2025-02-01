@@ -197,11 +197,24 @@ const PortfolioGraph: React.FC = () => {
       });
 
       if (matchingNodes.length > 0 && query) {
-        const node = matchingNodes[0];
-        graphRef.current.centerAt(0, 0, 1000);
-        graphRef.current.zoomToFit(400, 250, (n: any) => 
-          matchingNodes.some(match => match.id === n.id)
-        );
+        // Focus camera on matching nodes
+        const matchNode = matchingNodes[0];
+        const distance = 500;
+        const position = graphRef.current.camera().position;
+        position.x = distance;
+        position.y = distance/2;
+        position.z = distance;
+        graphRef.current.camera().lookAt(0, 0, 0);
+        
+        // Highlight matching nodes
+        graphData.nodes.forEach((node: any) => {
+          node.color = matchingNodes.some(match => match.id === node.id) 
+            ? 0xffffff  // White for matching nodes
+            : 0x666666; // Dark gray for non-matching nodes
+        });
+        
+        // Force a re-render
+        graphRef.current.refresh();
       }
     }
   };
