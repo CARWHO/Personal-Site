@@ -34,6 +34,7 @@ interface GraphVisualizationProps {
 const GraphVisualization: React.FC<GraphVisualizationProps> = ({
   searchQuery,
   filters,
+  projects,
   onNodeClick,
 }) => {
   const fgRef = useRef<any>();

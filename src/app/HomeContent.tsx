@@ -82,6 +82,17 @@ export default function HomeContent() {
           <GraphVisualization
             searchQuery={searchQuery}
             filters={filters}
+            projects={[
+              {
+                id: 1,
+                name: "Project A",
+                description: "A cool project",
+                category: "Academic",
+                importance: 10,
+                techStack: ["React", "TypeScript"]
+              },
+              // Add more projects as needed
+            ]}
             onNodeClick={handleNodeClick}
           />
         </div>
