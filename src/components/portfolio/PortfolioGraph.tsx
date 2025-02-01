@@ -207,12 +207,29 @@ const PortfolioGraph: React.FC = () => {
     if (focusCounter > 0 && highlightedNodeId && graphRef.current) {
       const node = graphData.nodes.find(n => n.id === highlightedNodeId);
       if (node && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
-        // Pan (rotate) the view so that the node is centered.
-        // We call centerAt which adjusts the camera target over 2 seconds.
-        graphRef.current.centerAt(node.x, node.y, node.z, 2000);
+        const camera = graphRef.current.camera();
+        const nodePos = new THREE.Vector3(node.x, node.y, node.z);
+        
+        // Calculate new camera position with fixed distance and rotation
+        const distance = 500; // Keep consistent distance
+        const currentAngle = Math.atan2(camera.position.z - node.z, camera.position.x - node.x);
+        const newAngle = currentAngle + Math.PI / 2; // Rotate 90 degrees
+
+        const newCamPos = new THREE.Vector3(
+          nodePos.x + distance * Math.cos(newAngle),
+          camera.position.y, // Maintain current height
+          nodePos.z + distance * Math.sin(newAngle)
+        );
+
+        // Update camera position and target
+        graphRef.current.cameraPosition(
+          newCamPos,
+          nodePos,
+          2000
+        );
       }
     }
-  }, [focusCounter]);
+  }, [focusCounter, highlightedNodeId, graphData.nodes, graphRef]);
 
   // --- Initial Camera Setup ---
   useEffect(() => {
