@@ -13,6 +13,7 @@ interface GraphNode {
   type: "major" | "skill";
   project?: string;
   color: number;
+  link?: string;
   // These are set by the simulation.
   x?: number;
   y?: number;
@@ -86,6 +87,7 @@ const generateGraphData = () => {
       id: project.id,
       type: "major",
       color: project.color,
+      link: `/work/${project.id.toLowerCase().replace(/\s+/g, '-')}`,
     });
   });
 
