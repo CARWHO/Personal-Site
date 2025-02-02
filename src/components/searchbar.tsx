@@ -22,6 +22,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange, onSu
         maxWidth: "400px",
         padding: "8px",
         marginTop: "16px",
+        marginLeft: "-8px",
         backgroundColor: "transparent",
         borderRadius: "8px",
         zIndex: 1001,
