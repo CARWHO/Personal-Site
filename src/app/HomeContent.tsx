@@ -1,7 +1,7 @@
 // src/app/HomeContent.tsx
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Heading, Flex, Text, Button, Avatar, RevealFx, Arrow, Column } from "@/once-ui/components";
 import { Projects } from "@/components/work/Projects";
 import { baseURL, routes } from "@/app/resources";
@@ -15,6 +15,15 @@ const PortfolioGraph = dynamic(() => import('@/components/portfolio/PortfolioGra
 });
 
 export default function HomeContent() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const handleSearchSubmit = () => {
+    // Handle search submit if needed
+  };
 
   return (
     <Column maxWidth="xl" horizontal="center">
@@ -51,6 +60,13 @@ export default function HomeContent() {
             <Text wrap="balance" onBackground="neutral-weak" variant="heading-default-xl">
               {home.subline}
             </Text>
+          </RevealFx>
+          <RevealFx translateY="12" delay={0.4}>
+            <SearchBar
+              searchQuery={searchQuery}
+              onSearchChange={handleSearch}
+              onSubmit={handleSearchSubmit}
+            />
           </RevealFx>
         </Column>
         <Column style={{ marginTop: "-100px", marginLeft: "-50%" }}>

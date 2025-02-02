@@ -18,14 +18,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange, onSu
     <div
       className="search-bar"
       style={{
-        width: "300px",
+        width: "100%",
+        maxWidth: "400px",
         padding: "8px",
-        marginBottom: "20px",
+        marginTop: "16px",
         backgroundColor: "transparent",
         borderRadius: "8px",
-        position: "absolute",
-        right: "20px",
-        top: "20px",
         zIndex: 1000,
       }}
     >

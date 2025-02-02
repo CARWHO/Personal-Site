@@ -380,11 +380,6 @@ const PortfolioGraph: React.FC = () => {
       className="portfolio-graph"
       style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}
     >
-      <SearchBar
-        searchQuery={searchQuery}
-        onSearchChange={handleSearch}
-        onSubmit={handleSearchSubmit}
-      />
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
