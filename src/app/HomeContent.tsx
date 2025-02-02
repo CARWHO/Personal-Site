@@ -62,7 +62,7 @@ export default function HomeContent() {
               {home.subline}
             </Text>
           </RevealFx>
-          <RevealFx translateY="12" delay={0.4}>
+          <RevealFx translateY="12" delay={0.4} fillWidth horizontal="start">
             <SearchBar
               searchQuery={searchQuery}
               onSearchChange={handleSearch}
