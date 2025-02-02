@@ -388,7 +388,7 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
-        nodeLabel={() => ""}
+        nodeLabel={(node: GraphNode) => node.type === "major" ? `Click to view ${node.id}` : node.id}
         nodeThreeObject={nodeThreeObject}
         linkWidth={2}
         linkColor={() => "#666666"}
@@ -397,6 +397,18 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
         controlType="orbit"
         enableNodeDrag={true}
         enableNavigationControls={true}
+        onNodeClick={(node: GraphNode) => {
+          // Prevent event propagation
+          const event = window.event;
+          if (event) {
+            event.stopPropagation();
+          }
+          
+          // Navigate to project page if it's a major node
+          if (node.type === "major" && node.link) {
+            window.location.href = node.link;
+          }
+        }}
       />
     </Column>
   );
