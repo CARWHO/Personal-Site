@@ -75,7 +75,7 @@ export default function HomeContent() {
             />
           </RevealFx>
         </Column>
-        <Column style={{ marginTop: "-100px", marginLeft: "-50%", zIndex: 0 }}>
+        <Column style={{ marginTop: "-150px", marginLeft: "-40%", zIndex: 0 }}>
           <PortfolioGraph searchQuery={searchQuery} onSearch={handleSearch} />
         </Column>
       </Flex>
