@@ -12,7 +12,6 @@ interface GraphNode {
   type: "major" | "skill";
   project?: string;
   color: number;
-  // These are set by the simulation.
   x?: number;
   y?: number;
   z?: number;
@@ -79,7 +78,6 @@ const generateGraphData = () => {
   const nodes: GraphNode[] = [];
   const links: GraphLink[] = [];
 
-  // Add major project nodes.
   majorProjects.forEach(project => {
     nodes.push({
       id: project.id,
@@ -88,7 +86,6 @@ const generateGraphData = () => {
     });
   });
 
-  // Add skill nodes.
   majorProjects.forEach(project => {
     project.skills.forEach(skill => {
       const node: GraphNode = {
@@ -102,14 +99,12 @@ const generateGraphData = () => {
     });
   });
 
-  // Link major projects together.
   majorProjects.forEach((project1, i) => {
     majorProjects.slice(i + 1).forEach(project2 => {
       links.push({ source: project1.id, target: project2.id });
     });
   });
 
-  // Some cross-links between skill nodes.
   const skillNodes = nodes.filter(n => n.type === "skill");
   for (let i = 0; i < skillNodes.length; i += 5) {
     const randomSkillIndex = Math.floor(Math.random() * skillNodes.length);
@@ -121,7 +116,6 @@ const generateGraphData = () => {
 };
 
 // ----- Text Sprite Helper -----
-// NOTE: Font changed to "Inter, sans-serif" to match layout.tsx
 function makeTextSprite(message: string, parameters: any) {
   parameters = parameters || {};
   const fontface = parameters.fontface || "Inter, sans-serif";
@@ -166,7 +160,6 @@ const PortfolioGraph: React.FC = () => {
   const [lastInteractionTime, setLastInteractionTime] = useState(Date.now());
   const graphData = useMemo(() => generateGraphData(), []);
 
-  // Compute matching node IDs based on the search query.
   const matchingNodeIds = useMemo(() => {
     if (!searchQuery) return new Set<string>();
     const lowerQuery = searchQuery.toLowerCase();
@@ -176,7 +169,7 @@ const PortfolioGraph: React.FC = () => {
         matches.add(node.id);
       } else if (node.type === "major") {
         const project = majorProjects.find(p => p.id === node.id);
-        if (project && project.tags && project.tags.some(tag => tag.toLowerCase().includes(lowerQuery))) {
+        if (project?.tags?.some(tag => tag.toLowerCase().includes(lowerQuery))) {
           matches.add(node.id);
         }
       }
@@ -184,19 +177,9 @@ const PortfolioGraph: React.FC = () => {
     return matches;
   }, [searchQuery, graphData.nodes]);
 
-  // --- Search Handler ---
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-  };
+  const handleSearch = (query: string) => setSearchQuery(query);
+  const handleSearchSubmit = () => {};
 
-  // --- Search Submit (No camera focusing on individual nodes) ---
-  const handleSearchSubmit = () => {
-    // No camera focusing on individual nodes.
-  };
-
-  // --- Initial Camera Setup & Disable Built-in Auto-Rotate ---
-  // (We’ll rotate the camera manually below.)
-  const rotationAngleRef = useRef(0);
   useEffect(() => {
     const initGraph = () => {
       if (graphRef.current) {
@@ -212,9 +195,23 @@ const PortfolioGraph: React.FC = () => {
           controls.maxPolarAngle = Math.PI * 3 / 4;
           controls.enablePan = true;
           controls.rotateSpeed = 0.5;
-          // Disable autoRotate because we handle rotation manually.
           controls.autoRotate = false;
-          controls.update();
+
+          const handleInteractionStart = () => {
+            setIsInteracting(true);
+          };
+          const handleInteractionEnd = () => {
+            setIsInteracting(false);
+            setLastInteractionTime(Date.now());
+          };
+
+          controls.addEventListener('start', handleInteractionStart);
+          controls.addEventListener('end', handleInteractionEnd);
+
+          return () => {
+            controls.removeEventListener('start', handleInteractionStart);
+            controls.removeEventListener('end', handleInteractionEnd);
+          };
         }
       }
     };
@@ -222,21 +219,16 @@ const PortfolioGraph: React.FC = () => {
     setTimeout(initGraph, 100);
   }, []);
 
-  // --- Camera Auto-Rotation with Interaction Pause ---
   useEffect(() => {
     let animationFrameId: number;
     const desiredDistance = 500;
-    const interactionCooldown = 3000; // 3 seconds pause after interaction
+    const interactionCooldown = 3000;
 
     const updateCamera = () => {
       if (graphRef.current) {
         const camera = graphRef.current.camera();
         const controls = graphRef.current.controls();
-
-        // Calculate center of graph
-        const validNodes = graphData.nodes.filter(n => 
-          n.x !== undefined && n.y !== undefined && n.z !== undefined
-        );
+        const validNodes = graphData.nodes.filter(n => n.x !== undefined);
         const target = validNodes.reduce((acc, n) => {
           acc.x += n.x!;
           acc.y += n.y!;
@@ -246,21 +238,12 @@ const PortfolioGraph: React.FC = () => {
 
         const timeSinceLastInteraction = Date.now() - lastInteractionTime;
 
-        // Only auto-rotate if not interacting and cooldown has passed
         if (!isInteracting && timeSinceLastInteraction > interactionCooldown) {
-          // Get current position relative to target
-          const offset = new THREE.Vector3()
-            .copy(camera.position)
-            .sub(target);
-          
-          // Convert to spherical coordinates for rotation
+          const offset = new THREE.Vector3().copy(camera.position).sub(target);
           const spherical = new THREE.Spherical().setFromVector3(offset);
-          spherical.theta += 0.001; // Rotation speed
-          
-          // Convert back to cartesian coordinates
+          spherical.theta += 0.001;
           const newOffset = new THREE.Vector3().setFromSpherical(spherical);
           camera.position.copy(target.clone().add(newOffset));
-          
           controls.target.copy(target);
           controls.update();
         }
@@ -272,39 +255,33 @@ const PortfolioGraph: React.FC = () => {
     return () => cancelAnimationFrame(animationFrameId);
   }, [graphData.nodes, isInteracting, lastInteractionTime]);
 
-  // --- Animate Node Colors and Text Opacities ---
-  // This effect runs every frame and uses linear interpolation (lerp)
-  // to smoothly update the sphere color and the text sprite opacity.
   useEffect(() => {
     let frameId: number;
     const animate = () => {
       if (graphRef.current) {
         const scene = graphRef.current.scene();
         scene.traverse((object: any) => {
-          if (object.userData && object.userData.nodeId) {
+          if (object.userData?.nodeId) {
             const nodeId = object.userData.nodeId;
             const originalColor = new THREE.Color(object.userData.originalColor);
-            let targetSphereColor: THREE.Color;
-            if (searchQuery) {
-              targetSphereColor = matchingNodeIds.has(nodeId)
-                ? new THREE.Color(0xffffff)
-                : new THREE.Color(0x444444);
-            } else {
-              targetSphereColor = originalColor;
-            }
+            const targetSphereColor = searchQuery 
+              ? matchingNodeIds.has(nodeId) ? new THREE.Color(0xffffff) : new THREE.Color(0x444444)
+              : originalColor;
+
             if (object.userData.sphereMaterial) {
               object.userData.sphereMaterial.color.lerp(targetSphereColor, 0.1);
             }
+
             if (object.userData.textSprite) {
-              let targetTextOpacity = 0.1; // default low opacity
-              // If the user is hovering over a main node, or the search matches, increase opacity.
-              if (hoveredNodeId === nodeId && object.userData.nodeType === "major") {
-                targetTextOpacity = 1;
-              } else if (searchQuery && matchingNodeIds.has(nodeId)) {
+              let targetTextOpacity = 0.1;
+              if ((hoveredNodeId === nodeId && object.userData.nodeType === "major") || 
+                  (searchQuery && matchingNodeIds.has(nodeId))) {
                 targetTextOpacity = 1;
               }
               const currentOpacity = object.userData.textSprite.material.opacity;
-              object.userData.textSprite.material.opacity = THREE.MathUtils.lerp(currentOpacity, targetTextOpacity, 0.1);
+              object.userData.textSprite.material.opacity = THREE.MathUtils.lerp(
+                currentOpacity, targetTextOpacity, 0.1
+              );
             }
           }
         });
@@ -315,22 +292,15 @@ const PortfolioGraph: React.FC = () => {
     return () => cancelAnimationFrame(frameId);
   }, [searchQuery, matchingNodeIds, hoveredNodeId]);
 
-  // --- Node Rendering ---
-  // Each node is rendered as a group containing a sphere and a text sprite.
-  // We store the original color and the sprite reference for later animations.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
-    group.userData.nodeId = node.id;
-    group.userData.nodeType = node.type;
-    group.userData.originalColor = node.color;
+    group.userData = {
+      nodeId: node.id,
+      nodeType: node.type,
+      originalColor: node.color
+    };
 
-    // Set the sphere’s initial color based on whether a search is active.
-    let initialColor: number;
-    if (searchQuery) {
-      initialColor = matchingNodeIds.has(node.id) ? 0xffffff : 0x444444;
-    } else {
-      initialColor = node.color;
-    }
+    const initialColor = searchQuery && matchingNodeIds.has(node.id) ? 0xffffff : node.color;
     const sphereRadius = node.type === "major" ? 15 : 5;
     const geometry = new THREE.SphereGeometry(sphereRadius, 16, 16);
     const material = new THREE.MeshBasicMaterial({ color: new THREE.Color(initialColor) });
@@ -338,41 +308,34 @@ const PortfolioGraph: React.FC = () => {
     group.userData.sphereMaterial = material;
     group.add(sphere);
 
-    // Create text sprite (using the Inter font) with an initially low opacity.
-    let sprite: THREE.Sprite;
-    if (node.type === "major") {
-      sprite = makeTextSprite(`${node.id} (Project)`, {
-        fontsize: 24,
-        fontface: "Inter, sans-serif",
-        textColor: "rgba(255,255,255,1)",
-        borderThickness: 2,
-        borderColor: { r: 50, g: 50, b: 50, a: 1 },
-        backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
-        scaleFactor: 0.5,
-      });
-      sprite.position.set(0, sphereRadius + 15, 0);
-    } else {
-      sprite = makeTextSprite(`${node.id} (Skill)`, {
-        fontsize: 12,
-        fontface: "Inter, sans-serif",
-        textColor: "rgba(255,255,255,1)",
-        borderThickness: 1,
-        borderColor: { r: 50, g: 50, b: 50, a: 1 },
-        backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
-        scaleFactor: 0.3,
-      });
-      sprite.position.set(0, sphereRadius + 8, 0);
-    }
+    const spriteParams = node.type === "major" ? {
+      fontsize: 24,
+      borderThickness: 2,
+      scaleFactor: 0.5,
+      yOffset: sphereRadius + 15
+    } : {
+      fontsize: 12,
+      borderThickness: 1,
+      scaleFactor: 0.3,
+      yOffset: sphereRadius + 8
+    };
+
+    const sprite = makeTextSprite(`${node.id} (${node.type === "major" ? "Project" : "Skill"})`, {
+      ...spriteParams,
+      fontface: "Inter, sans-serif",
+      textColor: "rgba(255,255,255,1)",
+      borderColor: { r: 50, g: 50, b: 50, a: 1 },
+      backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 }
+    });
+    sprite.position.set(0, spriteParams.yOffset, 0);
     group.userData.textSprite = sprite;
     group.add(sprite);
+
     return group;
   };
 
   return (
-    <Column
-      className="portfolio-graph"
-      style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}
-    >
+    <Column className="portfolio-graph" style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}>
       <SearchBar
         searchQuery={searchQuery}
         onSearchChange={handleSearch}
@@ -390,7 +353,7 @@ const PortfolioGraph: React.FC = () => {
         controlType="orbit"
         enableNodeDrag={true}
         enableNavigationControls={true}
-        onNodeHover={node => setHoveredNodeId(node ? node.id : null)}
+        onNodeHover={node => setHoveredNodeId(node?.id || null)}
       />
     </Column>
   );
