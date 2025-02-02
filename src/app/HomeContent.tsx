@@ -73,6 +73,17 @@ export default function HomeContent() {
               onSearchChange={handleSearch}
               onSubmit={handleSearchSubmit}
             />
+            <Text 
+              style={{ 
+                marginTop: "8px",
+                marginLeft: "-4px",
+                fontSize: "14px",
+                opacity: 0.6 
+              }} 
+              onBackground="neutral-weak"
+            >
+              Try searching: embedded • satellite • PCB design • AI
+            </Text>
           </RevealFx>
         </Column>
         <Column style={{ marginTop: "-150px", marginLeft: "-40%", zIndex: 0 }}>
