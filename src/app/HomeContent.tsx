@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import { Heading, Flex, Text, Button, Avatar, RevealFx, Arrow, Column } from "@/once-ui/components";
+import SearchBar from "@/components/searchbar";
 import { Projects } from "@/components/work/Projects";
 import { baseURL, routes } from "@/app/resources";
 import { home, about, person, newsletter } from "@/app/resources/content";
