@@ -1,18 +1,15 @@
 // src/components/SearchBar.tsx
-import React from "react";
+import React, { KeyboardEvent } from "react";
 
 interface SearchBarProps {
   searchQuery: string;
   onSearchChange: (newQuery: string) => void;
+  onSubmit: () => void;
 }
 
-const SearchBar: React.FC<SearchBarProps & { onSubmit?: () => void }> = ({ 
-  searchQuery, 
-  onSearchChange,
-  onSubmit 
-}) => {
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && onSubmit) {
+const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange, onSubmit }) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
       onSubmit();
     }
   };
@@ -27,8 +24,8 @@ const SearchBar: React.FC<SearchBarProps & { onSubmit?: () => void }> = ({
         backgroundColor: "transparent",
         borderRadius: "8px",
         position: "absolute",
-        right: "0",
-        top: "20%",
+        right: "20px",
+        top: "20px",
         zIndex: 1000,
       }}
     >
@@ -43,7 +40,7 @@ const SearchBar: React.FC<SearchBarProps & { onSubmit?: () => void }> = ({
           padding: "8px",
           fontSize: "16px",
           boxSizing: "border-box",
-          backgroundColor: "rgba(0, 0, 0, 0.1)",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
           color: "#fff",
           border: "1px solid rgba(255, 255, 255, 0.2)",
           outline: "none",
