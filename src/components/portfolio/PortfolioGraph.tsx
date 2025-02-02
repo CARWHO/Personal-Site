@@ -187,7 +187,7 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
     } else {
       setHighlightedNodeId(null);
     }
-  };
+  }, [searchQuery, graphData.nodes]);
 
   // Since the camera will always be centered on the overall graph,
   // we disable any focus-on–node behavior.
