@@ -24,7 +24,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange, onSu
         marginTop: "16px",
         backgroundColor: "transparent",
         borderRadius: "8px",
-        zIndex: 1000,
+        zIndex: 1001,
+        position: "relative",
       }}
     >
       <input
