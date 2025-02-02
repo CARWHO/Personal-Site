@@ -1,3 +1,4 @@
+// src/components/portfolio/PortfolioGraph.tsx
 "use client";
 
 import React, { useEffect, useRef, useMemo, useState } from "react";
@@ -12,6 +13,7 @@ interface GraphNode {
   type: "major" | "skill";
   project?: string;
   color: number;
+  // These are set by the simulation.
   x?: number;
   y?: number;
   z?: number;
@@ -78,6 +80,7 @@ const generateGraphData = () => {
   const nodes: GraphNode[] = [];
   const links: GraphLink[] = [];
 
+  // Add major project nodes.
   majorProjects.forEach(project => {
     nodes.push({
       id: project.id,
@@ -86,6 +89,7 @@ const generateGraphData = () => {
     });
   });
 
+  // Add skill nodes.
   majorProjects.forEach(project => {
     project.skills.forEach(skill => {
       const node: GraphNode = {
@@ -99,12 +103,14 @@ const generateGraphData = () => {
     });
   });
 
+  // Link major projects together.
   majorProjects.forEach((project1, i) => {
     majorProjects.slice(i + 1).forEach(project2 => {
       links.push({ source: project1.id, target: project2.id });
     });
   });
 
+  // Some cross-links between skill nodes.
   const skillNodes = nodes.filter(n => n.type === "skill");
   for (let i = 0; i < skillNodes.length; i += 5) {
     const randomSkillIndex = Math.floor(Math.random() * skillNodes.length);
@@ -118,7 +124,7 @@ const generateGraphData = () => {
 // ----- Text Sprite Helper -----
 function makeTextSprite(message: string, parameters: any) {
   parameters = parameters || {};
-  const fontface = parameters.fontface || "Inter, sans-serif";
+  const fontface = parameters.fontface || "Arial";
   const fontsize = parameters.fontsize || 18;
   const textColor = parameters.textColor || "rgba(255,255,255,1)";
   const borderThickness = parameters.borderThickness || 2;
@@ -144,7 +150,7 @@ function makeTextSprite(message: string, parameters: any) {
   context.fillText(message, canvas.width / 2, canvas.height / 2);
   const texture = new THREE.CanvasTexture(canvas);
   texture.needsUpdate = true;
-  const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true, opacity: 0.1 });
+  const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true });
   const sprite = new THREE.Sprite(spriteMaterial);
   const scaleFactor = parameters.scaleFactor || 0.25;
   sprite.scale.set(canvas.width * scaleFactor, canvas.height * scaleFactor, 1);
@@ -155,31 +161,42 @@ function makeTextSprite(message: string, parameters: any) {
 const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const [searchQuery, setSearchQuery] = useState("");
-  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
-  const [isInteracting, setIsInteracting] = useState(false);
-  const [lastInteractionTime, setLastInteractionTime] = useState(Date.now());
+  const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
   const graphData = useMemo(() => generateGraphData(), []);
 
-  const matchingNodeIds = useMemo(() => {
-    if (!searchQuery) return new Set<string>();
-    const lowerQuery = searchQuery.toLowerCase();
-    const matches = new Set<string>();
-    graphData.nodes.forEach(node => {
-      if (node.id.toLowerCase().includes(lowerQuery)) {
-        matches.add(node.id);
-      } else if (node.type === "major") {
-        const project = majorProjects.find(p => p.id === node.id);
-        if (project?.tags?.some(tag => tag.toLowerCase().includes(lowerQuery))) {
-          matches.add(node.id);
-        }
-      }
+  // --- Search Handler ---
+  const handleSearch = (query: string) => {
+    const lowerQuery = query.toLowerCase();
+    setSearchQuery(lowerQuery);
+    if (!lowerQuery) {
+      setHighlightedNodeId(null);
+      return;
+    }
+    const matchingNodes = graphData.nodes.filter(node => {
+      const project = majorProjects.find(p => p.id === node.id);
+      return (
+        project?.tags?.some(tag => tag.toLowerCase().includes(lowerQuery)) ||
+        node.id.toLowerCase().includes(lowerQuery)
+      );
     });
-    return matches;
-  }, [searchQuery, graphData.nodes]);
+    if (matchingNodes.length > 0) {
+      setHighlightedNodeId(matchingNodes[0].id);
+    } else {
+      setHighlightedNodeId(null);
+    }
+  };
 
-  const handleSearch = (query: string) => setSearchQuery(query);
-  const handleSearchSubmit = () => {};
+  // Since the camera will always be centered on the overall graph,
+  // we disable any focus-on–node behavior.
+  const handleSearchSubmit = () => {
+    // No camera focusing on individual nodes.
+  };
 
+  // --- Track User Interaction ---
+  // We use a mutable ref so that our animation loop can immediately check if the user is interacting.
+  const userInteractingRef = useRef(false);
+
+  // --- Initial Camera Setup ---
   useEffect(() => {
     const initGraph = () => {
       if (graphRef.current) {
@@ -195,23 +212,21 @@ const PortfolioGraph: React.FC = () => {
           controls.maxPolarAngle = Math.PI * 3 / 4;
           controls.enablePan = true;
           controls.rotateSpeed = 0.5;
-          controls.autoRotate = false;
-
-          const handleInteractionStart = () => {
-            setIsInteracting(true);
-          };
-          const handleInteractionEnd = () => {
-            setIsInteracting(false);
-            setLastInteractionTime(Date.now());
+          controls.mouseButtons = {
+            LEFT: THREE.MOUSE.ROTATE,
+            MIDDLE: THREE.MOUSE.PAN,
+            RIGHT: THREE.MOUSE.PAN,
           };
 
-          controls.addEventListener('start', handleInteractionStart);
-          controls.addEventListener('end', handleInteractionEnd);
+          // --- Listen for interaction events ---
+          controls.addEventListener("start", () => {
+            userInteractingRef.current = true;
+          });
+          controls.addEventListener("end", () => {
+            userInteractingRef.current = false;
+          });
 
-          return () => {
-            controls.removeEventListener('start', handleInteractionStart);
-            controls.removeEventListener('end', handleInteractionEnd);
-          };
+          controls.update();
         }
       }
     };
@@ -219,69 +234,78 @@ const PortfolioGraph: React.FC = () => {
     setTimeout(initGraph, 100);
   }, []);
 
+  // --- Enforce Constant Camera Distance, Center on the Graph, and Auto-Rotate ---
   useEffect(() => {
     let animationFrameId: number;
-    const desiredDistance = 500;
-    const interactionCooldown = 3000;
+    const desiredDistance = 500; // fixed camera distance
+    const rotationSpeed = 0.001; // radians per frame
 
-    const updateCamera = () => {
+    const updateCameraDistance = () => {
       if (graphRef.current) {
         const camera = graphRef.current.camera();
         const controls = graphRef.current.controls();
-        const validNodes = graphData.nodes.filter(n => n.x !== undefined);
-        const target = validNodes.reduce((acc, n) => {
-          acc.x += n.x!;
-          acc.y += n.y!;
-          acc.z += n.z!;
-          return acc;
-        }, new THREE.Vector3()).divideScalar(validNodes.length || 1);
 
-        const timeSinceLastInteraction = Date.now() - lastInteractionTime;
-
-        if (!isInteracting && timeSinceLastInteraction > interactionCooldown) {
-          const offset = new THREE.Vector3().copy(camera.position).sub(target);
-          const spherical = new THREE.Spherical().setFromVector3(offset);
-          spherical.theta += 0.001;
-          const newOffset = new THREE.Vector3().setFromSpherical(spherical);
-          camera.position.copy(target.clone().add(newOffset));
-          controls.target.copy(target);
-          controls.update();
+        // Compute center of all nodes with defined positions.
+        const validNodes = graphData.nodes.filter(n => 
+          n.x !== undefined && n.y !== undefined && n.z !== undefined
+        );
+        const target = new THREE.Vector3();
+        if (validNodes.length > 0) {
+          validNodes.forEach(n => {
+            target.add(new THREE.Vector3(n.x!, n.y!, n.z!));
+          });
+          target.divideScalar(validNodes.length);
+        } else {
+          target.copy(controls.target);
         }
+
+        // Compute the vector from the target to the camera.
+        const offset = new THREE.Vector3().subVectors(camera.position, target);
+        if (offset.length() < 0.001) {
+          offset.set(desiredDistance, 0, 0);
+        } else {
+          offset.normalize().multiplyScalar(desiredDistance);
+        }
+
+        // --- Apply slow auto-rotation when the user is not interacting ---
+        if (!userInteractingRef.current) {
+          // Rotate the offset around the Y axis.
+          offset.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotationSpeed);
+        }
+
+        // Update the camera position and the controls’ target.
+        camera.position.copy(target).add(offset);
+        controls.target.copy(target);
+        controls.update();
       }
-      animationFrameId = requestAnimationFrame(updateCamera);
+      animationFrameId = requestAnimationFrame(updateCameraDistance);
     };
 
-    updateCamera();
+    updateCameraDistance();
     return () => cancelAnimationFrame(animationFrameId);
-  }, [graphData.nodes, isInteracting, lastInteractionTime]);
+  }, [graphData.nodes]);
 
+  // --- Animate Node Color Transitions for a Smooth Highlight ---
   useEffect(() => {
     let frameId: number;
     const animate = () => {
       if (graphRef.current) {
         const scene = graphRef.current.scene();
         scene.traverse((object: any) => {
-          if (object.userData?.nodeId) {
+          if (object.userData && object.userData.nodeId && object.userData.sphereMaterial) {
             const nodeId = object.userData.nodeId;
-            const originalColor = new THREE.Color(object.userData.originalColor);
-            const targetSphereColor = searchQuery 
-              ? matchingNodeIds.has(nodeId) ? new THREE.Color(0xffffff) : new THREE.Color(0x444444)
-              : originalColor;
-
-            if (object.userData.sphereMaterial) {
-              object.userData.sphereMaterial.color.lerp(targetSphereColor, 0.1);
-            }
-
-            if (object.userData.textSprite) {
-              let targetTextOpacity = 0.1;
-              if ((hoveredNodeId === nodeId && object.userData.nodeType === "major") || 
-                  (searchQuery && matchingNodeIds.has(nodeId))) {
-                targetTextOpacity = 1;
+            // Find corresponding node data.
+            const nodeData = graphData.nodes.find(n => n.id === nodeId);
+            if (nodeData) {
+              let targetColorInt: number;
+              if (highlightedNodeId) {
+                targetColorInt = nodeId === highlightedNodeId ? 0xffffff : 0x444444;
+              } else {
+                targetColorInt = nodeData.color;
               }
-              const currentOpacity = object.userData.textSprite.material.opacity;
-              object.userData.textSprite.material.opacity = THREE.MathUtils.lerp(
-                currentOpacity, targetTextOpacity, 0.1
-              );
+              const targetColor = new THREE.Color(targetColorInt);
+              // Smoothly interpolate from the current color to the target color.
+              object.userData.sphereMaterial.color.lerp(targetColor, 0.1);
             }
           }
         });
@@ -290,52 +314,72 @@ const PortfolioGraph: React.FC = () => {
     };
     animate();
     return () => cancelAnimationFrame(frameId);
-  }, [searchQuery, matchingNodeIds, hoveredNodeId]);
+  }, [graphData.nodes, highlightedNodeId]);
 
+  // --- Node Rendering ---
+  // We attach each node’s sphere material to its three.js object so that our animation loop
+  // can update its color gradually.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
-    group.userData = {
-      nodeId: node.id,
-      nodeType: node.type,
-      originalColor: node.color
-    };
+    group.userData.nodeId = node.id;
 
-    const initialColor = searchQuery && matchingNodeIds.has(node.id) ? 0xffffff : node.color;
+    // Determine the initial color based on whether this node is highlighted.
+    let initialColor: number;
+    if (highlightedNodeId) {
+      initialColor = node.id === highlightedNodeId ? 0xffffff : 0x444444;
+    } else {
+      initialColor = node.color;
+    }
     const sphereRadius = node.type === "major" ? 15 : 5;
     const geometry = new THREE.SphereGeometry(sphereRadius, 16, 16);
     const material = new THREE.MeshBasicMaterial({ color: new THREE.Color(initialColor) });
     const sphere = new THREE.Mesh(geometry, material);
+    // Store the material so our animation loop can modify it.
     group.userData.sphereMaterial = material;
     group.add(sphere);
 
-    const spriteParams = node.type === "major" ? {
-      fontsize: 24,
-      borderThickness: 2,
-      scaleFactor: 0.5,
-      yOffset: sphereRadius + 15
-    } : {
-      fontsize: 12,
-      borderThickness: 1,
-      scaleFactor: 0.3,
-      yOffset: sphereRadius + 8
-    };
-
-    const sprite = makeTextSprite(`${node.id} (${node.type === "major" ? "Project" : "Skill"})`, {
-      ...spriteParams,
-      fontface: "Inter, sans-serif",
-      textColor: "rgba(255,255,255,1)",
-      borderColor: { r: 50, g: 50, b: 50, a: 1 },
-      backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 }
-    });
-    sprite.position.set(0, spriteParams.yOffset, 0);
-    group.userData.textSprite = sprite;
+    // Create text sprite (without animation for simplicity).
+    let sprite: THREE.Sprite;
+    if (node.type === "major") {
+      sprite = makeTextSprite(`${node.id} (Project)`, {
+        fontsize: 24,
+        fontface: "Arial",
+        textColor: highlightedNodeId
+          ? node.id === highlightedNodeId
+            ? "rgba(255,255,255,1)"
+            : "rgba(150,150,150,1)"
+          : "rgba(255,255,255,1)",
+        borderThickness: 2,
+        borderColor: { r: 50, g: 50, b: 50, a: 1 },
+        backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
+        scaleFactor: 0.5,
+      });
+      sprite.position.set(0, sphereRadius + 15, 0);
+    } else {
+      sprite = makeTextSprite(`${node.id} (Skill)`, {
+        fontsize: 12,
+        fontface: "Arial",
+        textColor: highlightedNodeId
+          ? node.id === highlightedNodeId
+            ? "rgba(255,255,255,1)"
+            : "rgba(150,150,150,1)"
+          : "rgba(200,200,200,1)",
+        borderThickness: 1,
+        borderColor: { r: 50, g: 50, b: 50, a: 1 },
+        backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
+        scaleFactor: 0.3,
+      });
+      sprite.position.set(0, sphereRadius + 8, 0);
+    }
     group.add(sprite);
-
     return group;
   };
 
   return (
-    <Column className="portfolio-graph" style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}>
+    <Column
+      className="portfolio-graph"
+      style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}
+    >
       <SearchBar
         searchQuery={searchQuery}
         onSearchChange={handleSearch}
@@ -353,7 +397,6 @@ const PortfolioGraph: React.FC = () => {
         controlType="orbit"
         enableNodeDrag={true}
         enableNavigationControls={true}
-        onNodeHover={node => setHoveredNodeId(node?.id || null)}
       />
     </Column>
   );
