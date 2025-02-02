@@ -12,8 +12,13 @@ import { Posts } from "@/components/blog/Posts";
 import dynamic from 'next/dynamic';
 
 const PortfolioGraph = dynamic(() => import('@/components/portfolio/PortfolioGraph'), {
-  ssr: false
+  ssr: false,
 });
+
+interface SearchState {
+  query: string;
+  onSearch: (query: string) => void;
+}
 
 export default function HomeContent() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -71,7 +76,7 @@ export default function HomeContent() {
           </RevealFx>
         </Column>
         <Column style={{ marginTop: "-100px", marginLeft: "-50%", zIndex: 0 }}>
-          <PortfolioGraph />
+          <PortfolioGraph searchQuery={searchQuery} onSearch={handleSearch} />
         </Column>
       </Flex>
     </Column>

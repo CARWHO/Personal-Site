@@ -158,16 +158,19 @@ function makeTextSprite(message: string, parameters: any) {
 }
 
 // ----- Main Component -----
-const PortfolioGraph: React.FC = () => {
+interface PortfolioGraphProps {
+  searchQuery: string;
+  onSearch: (query: string) => void;
+}
+
+const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }) => {
   const graphRef = useRef<any>();
-  const [searchQuery, setSearchQuery] = useState("");
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
   const graphData = useMemo(() => generateGraphData(), []);
 
   // --- Search Handler ---
-  const handleSearch = (query: string) => {
-    const lowerQuery = query.toLowerCase();
-    setSearchQuery(lowerQuery);
+  useEffect(() => {
+    const lowerQuery = searchQuery.toLowerCase();
     if (!lowerQuery) {
       setHighlightedNodeId(null);
       return;
