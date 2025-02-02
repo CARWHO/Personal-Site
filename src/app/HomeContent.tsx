@@ -18,6 +18,37 @@ export default function HomeContent() {
 
   return (
     <Column maxWidth="xl" horizontal="center">
+      <Column 
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          padding: '20px',
+          borderRadius: '12px',
+          maxWidth: '300px',
+          zIndex: 1000,
+        }}
+      >
+        <Text
+          variant="heading-default-m"
+          style={{ color: '#fff', marginBottom: '12px' }}
+        >
+          How to Explore
+        </Text>
+        <Text style={{ color: '#fff', marginBottom: '8px' }}>
+          🔍 Search: Use the search bar to find specific projects or skills
+        </Text>
+        <Text style={{ color: '#fff', marginBottom: '8px' }}>
+          🖱️ Navigate: Click and drag to rotate the graph
+        </Text>
+        <Text style={{ color: '#fff', marginBottom: '8px' }}>
+          🔎 Discover: Hover over nodes to see connections
+        </Text>
+        <Text style={{ color: '#fff' }}>
+          ⭐ Projects appear as large nodes, skills as smaller ones
+        </Text>
+      </Column>
       <script
         type="application/ld+json"
         suppressHydrationWarning
