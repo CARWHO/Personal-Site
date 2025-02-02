@@ -53,7 +53,7 @@ export default function HomeContent() {
             </Text>
           </RevealFx>
         </Column>
-        <Column style={{ marginTop: "-100px", marginLeft: "30%" }}>
+        <Column style={{ marginTop: "-100px", marginLeft: "-50%" }}>
           <PortfolioGraph />
         </Column>
       </Flex>
