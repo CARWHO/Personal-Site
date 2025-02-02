@@ -3,6 +3,7 @@
 
 import React, { useEffect, useRef, useMemo, useState } from "react";
 import SearchBar from "@/components/searchbar";
+import InteractiveInstructions from "./InteractiveInstructions";
 import ForceGraph3D from "react-force-graph-3d";
 import { Column } from "@/once-ui/components";
 import * as THREE from "three";
@@ -161,6 +162,8 @@ function makeTextSprite(message: string, parameters: any) {
 const PortfolioGraph: React.FC = () => {
   const graphRef = useRef<any>();
   const [searchQuery, setSearchQuery] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
+  const [hasDragged, setHasDragged] = useState(false);
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
   const graphData = useMemo(() => generateGraphData(), []);
 
@@ -168,6 +171,9 @@ const PortfolioGraph: React.FC = () => {
   const handleSearch = (query: string) => {
     const lowerQuery = query.toLowerCase();
     setSearchQuery(lowerQuery);
+    if (lowerQuery.length > 0) {
+      setHasSearched(true);
+    }
     if (!lowerQuery) {
       setHighlightedNodeId(null);
       return;
@@ -221,6 +227,7 @@ const PortfolioGraph: React.FC = () => {
           // --- Listen for interaction events ---
           controls.addEventListener("start", () => {
             userInteractingRef.current = true;
+            setHasDragged(true);
           });
           controls.addEventListener("end", () => {
             userInteractingRef.current = false;
@@ -378,8 +385,12 @@ const PortfolioGraph: React.FC = () => {
   return (
     <Column
       className="portfolio-graph"
-      style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}
+      style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column", position: "relative" }}
     >
+      <InteractiveInstructions
+        onDrag={hasDragged}
+        hasSearched={hasSearched}
+      />
       <SearchBar
         searchQuery={searchQuery}
         onSearchChange={handleSearch}
