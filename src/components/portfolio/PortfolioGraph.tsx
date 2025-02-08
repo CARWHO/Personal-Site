@@ -189,18 +189,26 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
   // for a given search query. If a skill is matched, its parent project is used.
   const getHighlightedProjectId = (query: string): string | null => {
     const lowerQuery = query.toLowerCase();
+    console.log('PortfolioGraph: Searching for query:', lowerQuery);
     if (!lowerQuery) return null;
+    
     const matchingNodes = graphData.nodes.filter(node => {
       const project = majorProjects.find(p => p.id === node.id);
-      return (
-        project?.tags?.some(tag => tag.toLowerCase().includes(lowerQuery)) ||
-        node.id.toLowerCase().includes(lowerQuery)
-      );
+      const matches = project?.tags?.some(tag => tag.toLowerCase().includes(lowerQuery)) ||
+                     node.id.toLowerCase().includes(lowerQuery);
+      if (matches) {
+        console.log('PortfolioGraph: Found matching node:', node.id, 'of type:', node.type);
+      }
+      return matches;
     });
+    
     if (matchingNodes.length > 0) {
       const firstMatch = matchingNodes[0];
-      return firstMatch.type === "skill" && firstMatch.project ? firstMatch.project : firstMatch.id;
+      const resultId = firstMatch.type === "skill" && firstMatch.project ? firstMatch.project : firstMatch.id;
+      console.log('PortfolioGraph: Selected project ID:', resultId);
+      return resultId;
     }
+    console.log('PortfolioGraph: No matching nodes found');
     return null;
   };
 
