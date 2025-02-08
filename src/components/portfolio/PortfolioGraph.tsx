@@ -222,21 +222,16 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
   const handleSearchSubmit = (query: string) => {
     console.log('PortfolioGraph: Search submitted with query:', query);
     
-    // Find the skill node that matches the search
-    const skillNode = graphData.nodes.find(node => 
-      node.type === "skill" && 
-      node.id.toLowerCase().includes(query.toLowerCase())
-    );
+    if (highlightedNodeId) {
+      // Find the major project node that's highlighted
+      const projectNode = graphData.nodes.find(node => 
+        node.id === highlightedNodeId && node.type === "major"
+      );
 
-    if (skillNode && skillNode.project) {
-      // Get the parent project's URL
-      const projectId = skillNode.project;
-      console.log('PortfolioGraph: Found skill node belonging to project:', projectId);
-      
-      // Convert project name to URL
-      const url = `/work/${projectId.toLowerCase().replace(/\s+/g, '-')}`;
-      console.log('PortfolioGraph: Navigating to:', url);
-      window.location.href = url;
+      if (projectNode && projectNode.link) {
+        console.log('PortfolioGraph: Navigating to highlighted project:', projectNode.link);
+        window.location.href = projectNode.link;
+      }
     }
   };
 
