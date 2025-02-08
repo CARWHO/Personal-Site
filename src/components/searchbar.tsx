@@ -11,6 +11,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange, onSu
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && searchQuery.trim()) {
       e.preventDefault();
+      console.log('SearchBar: Enter pressed with query:', searchQuery);
       onSubmit(searchQuery);
     }
   };
