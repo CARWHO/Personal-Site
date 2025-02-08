@@ -36,15 +36,19 @@ const lightenColor = (color: number, percent: number): number => {
   return (newR << 16) + (newG << 8) + newB;
 };
 
-// ----- Project Data -----
 const majorProjects = [
   { 
     id: "Halo Vision", 
     color: 0xffffff,
     tags: ["Embedded system design"],
     skills: [
-      "PCB Design", "Embedded C++", "Mobile App Dev", "3D Modeling", "CFD Analysis", 
-      "Bluetooth LE", "Battery Management", "UI/UX Design", "Arduino", "Safety Systems"
+      "Printed Circuit Board (PCB) Design",
+      "Embedded Systems Programming (C/C++)",
+      "Mobile Application Development",
+      "3D Modeling & CAD",
+      "CFD Analysis",
+      "Bluetooth Low Energy (BLE) Communication",
+      "Battery Management Systems (BMS)",
     ]
   },
   { 
@@ -52,8 +56,11 @@ const majorProjects = [
     color: 0xffffff,
     tags: ["AI", "Machine Learning"],
     skills: [
-      "React Native", "Python", "OpenAI API", "AWS", "Database Design", 
-      "User Authentication", "API Development", "ML/AI", "Node.js", "Redux"
+      "Database Architecture & Design",
+      "User Authentication & Security",
+      "API Development",
+      "Machine Learning & Artificial Intelligence",
+      "Node.js Development",
     ]
   },
   { 
@@ -61,8 +68,10 @@ const majorProjects = [
     color: 0xffffff,
     tags: ["Aerospace", "Software", "Hardware"],
     skills: [
-      "Satellite Comms", "Python Testing", "Hardware Integration", "Git", "CI/CD", 
-      "Embedded Linux", "RF Systems", "Technical Documentation", "C++", "System Architecture"
+      "Satellite Communications",
+      "Hardware Integration & Testing",
+      "Continuous Integration/Continuous Deployment (CI/CD)",
+      "System Architecture & Design"
     ]
   },
   { 
@@ -70,8 +79,14 @@ const majorProjects = [
     color: 0xffffff,
     tags: ["Engineering", "Analysis", "Safety"],
     skills: [
-      "ANSYS Fluent", "Technical Writing", "CAD", "Data Analysis", "Risk Assessment", 
-      "Project Management", "MATLAB", "Safety Standards", "Statistical Analysis", "AutoCAD"
+      "Fluid Simulation",
+      "Professional Report Writing",
+      "CAD",
+      "Data Analysis & Interpretation",
+      "Risk Assessment & Management",
+      "Safety Standards & Compliance",
+      "Data Analysis",
+      "AutoCAD"
     ]
   }
 ];
