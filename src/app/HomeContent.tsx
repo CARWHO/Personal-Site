@@ -27,8 +27,10 @@ export default function HomeContent() {
     setSearchQuery(query);
   };
 
-  const handleSearchSubmit = () => {
-    // Handle search submit if needed
+  const handleSearchSubmit = (query: string) => {
+    console.log('HomeContent: Received search submit for query:', query);
+    // Pass the search query to PortfolioGraph through props
+    setSearchQuery(query);
   };
 
   return (
