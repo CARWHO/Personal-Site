@@ -9,7 +9,8 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange, onSubmit }) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      e.preventDefault();
       onSubmit(searchQuery);
     }
   };

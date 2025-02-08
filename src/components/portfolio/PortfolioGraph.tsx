@@ -406,11 +406,6 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
       className="portfolio-graph"
       style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}
     >
-      <SearchBar 
-        searchQuery={searchQuery}
-        onSearchChange={onSearch}
-        onSubmit={handleSearchSubmit}
-      />
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
