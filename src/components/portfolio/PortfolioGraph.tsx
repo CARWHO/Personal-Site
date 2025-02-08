@@ -389,7 +389,7 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
     // Create text sprite.
     let sprite: THREE.Sprite;
     if (node.type === "major") {
-      sprite = makeTextSprite(`${node.id} (Project)`, {
+      sprite = makeTextSprite(node.id, {
         fontsize: 24,
         fontface: "Arial",
         textColor: highlightedNodeId
