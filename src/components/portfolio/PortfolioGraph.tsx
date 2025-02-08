@@ -219,21 +219,45 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
   }, [searchQuery, graphData.nodes]);
 
   // --- Handle Search Submission for Redirection ---
-  const handleSearchSubmit = (query: string) => {
-    console.log('PortfolioGraph: Search submitted with query:', query);
-    
-    if (highlightedNodeId) {
-      // Find the major project node that's highlighted
-      const projectNode = graphData.nodes.find(node => 
-        node.id === highlightedNodeId && node.type === "major"
-      );
-
-      if (projectNode && projectNode.link) {
-        console.log('PortfolioGraph: Navigating to highlighted project:', projectNode.link);
-        window.location.href = projectNode.link;
+// --- Handle Search Submission for Redirection ---
+const handleSearchSubmit = () => {
+  console.log('PortfolioGraph: Enter pressed; highlighted node:', highlightedNodeId);
+  if (highlightedNodeId) {
+    // Find the highlighted node in the graph data
+    const selectedNode = graphData.nodes.find(node => node.id === highlightedNodeId);
+    if (selectedNode) {
+      // If it's a skill node, redirect to its parent project
+      if (selectedNode.type === "skill" && selectedNode.project) {
+        const parentNode = graphData.nodes.find(
+          node => node.id === selectedNode.project && node.type === "major"
+        );
+        if (parentNode && parentNode.link) {
+          console.log('PortfolioGraph: Navigating to parent project:', parentNode.link);
+          window.location.href = parentNode.link;
+          return;
+        }
+      } 
+      // If it is a major node, redirect directly.
+      else if (selectedNode.type === "major" && selectedNode.link) {
+        console.log('PortfolioGraph: Navigating to project:', selectedNode.link);
+        window.location.href = selectedNode.link;
+        return;
       }
     }
-  };
+  }
+  // Fallback: if no node is highlighted, you might choose to use the query to select one.
+  const projectId = getHighlightedProjectId(searchQuery);
+  if (projectId) {
+    const fallbackNode = graphData.nodes.find(
+      node => node.id === projectId && node.type === "major"
+    );
+    if (fallbackNode && fallbackNode.link) {
+      console.log('PortfolioGraph: Fallback navigation to project:', fallbackNode.link);
+      window.location.href = fallbackNode.link;
+    }
+  }
+};
+
 
   // --- Track User Interaction ---
   const userInteractingRef = useRef(false);
