@@ -183,6 +183,7 @@ interface PortfolioGraphProps {
 const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }) => {
   const graphRef = useRef<any>();
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const graphData = useMemo(() => generateGraphData(), []);
 
   // --- Search Handler ---
@@ -318,7 +319,9 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
             const nodeData = graphData.nodes.find(n => n.id === nodeId);
             if (nodeData) {
               let targetColorInt: number;
-              if (highlightedNodeId) {
+              if (hoveredNodeId && nodeId === hoveredNodeId) {
+                targetColorInt = 0x0000ff; // Blue on hover
+              } else if (highlightedNodeId) {
                 targetColorInt = nodeId === highlightedNodeId ? 0xffffff : 0x444444;
               } else {
                 targetColorInt = nodeData.color;
@@ -334,7 +337,7 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
     };
     animate();
     return () => cancelAnimationFrame(frameId);
-  }, [graphData.nodes, highlightedNodeId]);
+  }, [graphData.nodes, highlightedNodeId, hoveredNodeId]);
 
   // --- Node Rendering ---
   // We attach each node’s sphere material to its three.js object so that our animation loop
@@ -343,9 +346,11 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
     const group = new THREE.Group();
     group.userData.nodeId = node.id;
 
-    // Determine the initial color based on whether this node is highlighted.
+    // Determine the initial color based on whether this node is hovered or highlighted.
     let initialColor: number;
-    if (highlightedNodeId) {
+    if (hoveredNodeId && node.id === hoveredNodeId) {
+      initialColor = 0x0000ff; // Blue on hover
+    } else if (highlightedNodeId) {
       initialColor = node.id === highlightedNodeId ? 0xffffff : 0x444444;
     } else {
       initialColor = node.color;
@@ -364,7 +369,9 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
       sprite = makeTextSprite(`${node.id} (Project)`, {
         fontsize: 24,
         fontface: "Arial",
-        textColor: highlightedNodeId
+        textColor: hoveredNodeId && node.id === hoveredNodeId
+          ? "rgba(255,255,255,1)"
+          : highlightedNodeId
           ? node.id === highlightedNodeId
             ? "rgba(255,255,255,1)"
             : "rgba(150,150,150,1)"
@@ -379,7 +386,9 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
       sprite = makeTextSprite(`${node.id} (Skill)`, {
         fontsize: 12,
         fontface: "Arial",
-        textColor: highlightedNodeId
+        textColor: hoveredNodeId && node.id === hoveredNodeId
+          ? "rgba(255,255,255,1)"
+          : highlightedNodeId
           ? node.id === highlightedNodeId
             ? "rgba(255,255,255,1)"
             : "rgba(150,150,150,1)"
@@ -412,6 +421,9 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
         controlType="orbit"
         enableNodeDrag={true}
         enableNavigationControls={true}
+        onNodeHover={(node: GraphNode | null) => {
+          setHoveredNodeId(node ? node.id : null);
+        }}
         onNodeClick={(node: GraphNode) => {
           // Prevent event propagation
           const event = window.event;
