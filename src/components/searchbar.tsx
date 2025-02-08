@@ -4,13 +4,13 @@ import React, { KeyboardEvent } from "react";
 interface SearchBarProps {
   searchQuery: string;
   onSearchChange: (newQuery: string) => void;
-  onSubmit: () => void;
+  onSubmit: (query: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange, onSubmit }) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      onSubmit();
+      onSubmit(searchQuery);
     }
   };
 

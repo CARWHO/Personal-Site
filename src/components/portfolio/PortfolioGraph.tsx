@@ -209,8 +209,20 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
 
   // Since the camera will always be centered on the overall graph,
   // we disable any focus-on–node behavior.
-  const handleSearchSubmit = () => {
-    // No camera focusing on individual nodes.
+  const handleSearchSubmit = (query: string) => {
+    const lowerQuery = query.toLowerCase();
+    
+    // Find the most relevant major project
+    const matchingProject = majorProjects.find(project => 
+      project.id.toLowerCase().includes(lowerQuery) ||
+      project.tags?.some(tag => tag.toLowerCase().includes(lowerQuery)) ||
+      project.skills.some(skill => skill.toLowerCase().includes(lowerQuery))
+    );
+
+    if (matchingProject) {
+      // Navigate to the project page
+      window.location.href = `/work/${matchingProject.id.toLowerCase().replace(/\s+/g, '-')}`;
+    }
   };
 
   // --- Track User Interaction ---
