@@ -221,26 +221,22 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
   // --- Handle Search Submission for Redirection ---
   const handleSearchSubmit = (query: string) => {
     console.log('PortfolioGraph: Search submitted with query:', query);
-    const projectId = getHighlightedProjectId(query);
-    console.log('PortfolioGraph: Found projectId:', projectId);
-    console.log('PortfolioGraph: Highlighted node ID:', highlightedNodeId);
     
-    if (projectId) {
-      // Map project IDs to their specific URLs
-      const projectUrls: { [key: string]: string } = {
-        'Dawn Aerospace': '/work/dawn-aerospace',
-        'Wellington City Council': '/work/wellington-city-council',
-        'KORA': '/work/kora',
-        'Halo Vision': '/work/halo-vision'
-      };
+    // Find the skill node that matches the search
+    const skillNode = graphData.nodes.find(node => 
+      node.type === "skill" && 
+      node.id.toLowerCase().includes(query.toLowerCase())
+    );
+
+    if (skillNode && skillNode.project) {
+      // Get the parent project's URL
+      const projectId = skillNode.project;
+      console.log('PortfolioGraph: Found skill node belonging to project:', projectId);
       
-      const url = projectUrls[projectId];
-      if (url) {
-        console.log('PortfolioGraph: Navigating to hardcoded URL:', url);
-        window.location.href = url;
-      }
-    } else {
-      console.log('PortfolioGraph: No matching project found for query:', query);
+      // Convert project name to URL
+      const url = `/work/${projectId.toLowerCase().replace(/\s+/g, '-')}`;
+      console.log('PortfolioGraph: Navigating to:', url);
+      window.location.href = url;
     }
   };
 
