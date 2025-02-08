@@ -185,13 +185,11 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
   const graphData = useMemo(() => generateGraphData(), []);
 
-  // --- Search Handler ---
-  useEffect(() => {
-    const lowerQuery = searchQuery.toLowerCase();
-    if (!lowerQuery) {
-      setHighlightedNodeId(null);
-      return;
-    }
+  // Helper function that returns the associated major project id
+  // for a given search query. If a skill is matched, its parent project is used.
+  const getHighlightedProjectId = (query: string): string | null => {
+    const lowerQuery = query.toLowerCase();
+    if (!lowerQuery) return null;
     const matchingNodes = graphData.nodes.filter(node => {
       const project = majorProjects.find(p => p.id === node.id);
       return (
@@ -200,20 +198,31 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
       );
     });
     if (matchingNodes.length > 0) {
-      setHighlightedNodeId(matchingNodes[0].id);
-    } else {
-      setHighlightedNodeId(null);
+      const firstMatch = matchingNodes[0];
+      return firstMatch.type === "skill" && firstMatch.project ? firstMatch.project : firstMatch.id;
     }
+    return null;
+  };
+
+  // --- Search Highlighting Effect ---
+  useEffect(() => {
+    const projectId = getHighlightedProjectId(searchQuery);
+    setHighlightedNodeId(projectId);
   }, [searchQuery, graphData.nodes]);
 
-  // Since the camera will always be centered on the overall graph,
-  // we disable any focus-on–node behavior.
-  const handleSearchSubmit = () => {
-    // No camera focusing on individual nodes.
+  // --- Handle Search Submission for Redirection ---
+  const handleSearchSubmit = (query: string) => {
+    const projectId = getHighlightedProjectId(query);
+    if (projectId) {
+      // Find the corresponding major project node to get its link.
+      const projectNode = graphData.nodes.find(n => n.id === projectId && n.type === "major");
+      if (projectNode && projectNode.link) {
+        window.location.href = projectNode.link;
+      }
+    }
   };
 
   // --- Track User Interaction ---
-  // We use a mutable ref so that our animation loop can immediately check if the user is interacting.
   const userInteractingRef = useRef(false);
 
   // --- Initial Camera Setup ---
@@ -337,8 +346,6 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
   }, [graphData.nodes, highlightedNodeId]);
 
   // --- Node Rendering ---
-  // We attach each node’s sphere material to its three.js object so that our animation loop
-  // can update its color gradually.
   const nodeThreeObject = (node: GraphNode) => {
     const group = new THREE.Group();
     group.userData.nodeId = node.id;
@@ -354,11 +361,10 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
     const geometry = new THREE.SphereGeometry(sphereRadius, 16, 16);
     const material = new THREE.MeshBasicMaterial({ color: new THREE.Color(initialColor) });
     const sphere = new THREE.Mesh(geometry, material);
-    // Store the material so our animation loop can modify it.
     group.userData.sphereMaterial = material;
     group.add(sphere);
 
-    // Create text sprite (without animation for simplicity).
+    // Create text sprite.
     let sprite: THREE.Sprite;
     if (node.type === "major") {
       sprite = makeTextSprite(`${node.id} (Project)`, {
@@ -400,6 +406,11 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
       className="portfolio-graph"
       style={{ height: "800px", width: "800px", display: "flex", flexDirection: "column" }}
     >
+      <SearchBar 
+        searchQuery={searchQuery}
+        onSearchChange={onSearch}
+        onSubmit={handleSearchSubmit}
+      />
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
