@@ -226,9 +226,19 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
     console.log('PortfolioGraph: Highlighted node ID:', highlightedNodeId);
     
     if (projectId) {
-      const url = `/work/${projectId.toLowerCase().replace(/\s+/g, '-')}`;
-      console.log('PortfolioGraph: Suggesting navigation to:', url);
-      window.location.href = url;
+      // Map project IDs to their specific URLs
+      const projectUrls: { [key: string]: string } = {
+        'Dawn Aerospace': '/work/dawn-aerospace',
+        'Wellington City Council': '/work/wellington-city-council',
+        'KORA': '/work/kora',
+        'Halo Vision': '/work/halo-vision'
+      };
+      
+      const url = projectUrls[projectId];
+      if (url) {
+        console.log('PortfolioGraph: Navigating to hardcoded URL:', url);
+        window.location.href = url;
+      }
     } else {
       console.log('PortfolioGraph: No matching project found for query:', query);
     }
