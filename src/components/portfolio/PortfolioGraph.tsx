@@ -58,7 +58,7 @@ const majorProjects = [
     ],
   },
   {
-    id: "KORA (AI)",
+    id: "KORA",
     color: 0xffffff,
     tags: ["AI", "Machine Learning"],
     skills: [
@@ -70,7 +70,7 @@ const majorProjects = [
     ],
   },
   {
-    id: "Satellites",
+    id: "Dawn Aerospace",
     color: 0xffffff,
     tags: ["Aerospace", "Software", "Hardware"],
     skills: [
@@ -81,7 +81,7 @@ const majorProjects = [
     ],
   },
   {
-    id: "Fluid Simulations",
+    id: "Wellington City Council",
     color: 0xffffff,
     tags: ["Engineering", "Analysis", "Safety"],
     skills: [
