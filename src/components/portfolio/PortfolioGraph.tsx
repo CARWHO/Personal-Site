@@ -215,6 +215,7 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
     console.log('PortfolioGraph: Search submitted with query:', query);
     const projectId = getHighlightedProjectId(query);
     console.log('PortfolioGraph: Found projectId:', projectId);
+    console.log('PortfolioGraph: Highlighted node ID:', highlightedNodeId);
     
     if (projectId) {
       const url = `/work/${projectId.toLowerCase().replace(/\s+/g, '-')}`;
