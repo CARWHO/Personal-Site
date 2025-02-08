@@ -12,6 +12,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange, onSu
     if (e.key === "Enter" && searchQuery.trim()) {
       e.preventDefault();
       console.log('SearchBar: Enter pressed with query:', searchQuery);
+      console.log('SearchBar: Submitting search to PortfolioGraph for navigation');
       onSubmit(searchQuery);
     }
   };

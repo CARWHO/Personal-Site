@@ -215,14 +215,13 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
     console.log('PortfolioGraph: Search submitted with query:', query);
     const projectId = getHighlightedProjectId(query);
     console.log('PortfolioGraph: Found projectId:', projectId);
+    
     if (projectId) {
-      // Find the corresponding major project node to get its link.
-      const projectNode = graphData.nodes.find(n => n.id === projectId && n.type === "major");
-      console.log('PortfolioGraph: Found project node:', projectNode);
-      if (projectNode && projectNode.link) {
-        console.log('PortfolioGraph: Navigating to:', projectNode.link);
-        window.location.href = projectNode.link;
-      }
+      const url = `/work/${projectId.toLowerCase().replace(/\s+/g, '-')}`;
+      console.log('PortfolioGraph: Suggesting navigation to:', url);
+      window.location.href = url;
+    } else {
+      console.log('PortfolioGraph: No matching project found for query:', query);
     }
   };
 
