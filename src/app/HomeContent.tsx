@@ -118,7 +118,7 @@ export default function HomeContent() {
                 }} 
                 onBackground="neutral-weak"
               >
-                Try searching: embedded • satellite • PCB design • AI
+                Try searching: Satellite • Embedded • API • AI
               </Text>
             </Column>
           </RevealFx>

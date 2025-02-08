@@ -1,4 +1,3 @@
-// src/components/portfolio/PortfolioGraph.tsx
 "use client";
 
 import React, { useEffect, useRef, useMemo, useState } from "react";
@@ -92,6 +91,8 @@ const majorProjects = [
 ];
 
 // ----- Build Graph Data -----
+// Note: For major projects, we now strip out any parenthetical text
+// so that "KORA (AI)" becomes "kora" in the link.
 const generateGraphData = () => {
   const nodes: GraphNode[] = [];
   const links: GraphLink[] = [];
@@ -102,7 +103,7 @@ const generateGraphData = () => {
       id: project.id,
       type: "major",
       color: project.color,
-      link: `/work/${project.id.toLowerCase().replace(/\s+/g, '-')}`,
+      link: `/work/${project.id.replace(/\s*\(.*?\)\s*/g, "").toLowerCase().replace(/\s+/g, "-")}`,
     });
   });
 
@@ -185,30 +186,33 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
   const graphData = useMemo(() => generateGraphData(), []);
 
-  // Helper function that returns the associated major project id
-  // for a given search query. If a skill is matched, its parent project is used.
+  // Helper function that returns the associated major project id for a given search query.
+  // If a skill node is matched, its parent project id is returned.
   const getHighlightedProjectId = (query: string): string | null => {
     const lowerQuery = query.toLowerCase();
-    console.log('PortfolioGraph: Searching for query:', lowerQuery);
+    console.log("PortfolioGraph: Searching for query:", lowerQuery);
     if (!lowerQuery) return null;
-    
-    const matchingNodes = graphData.nodes.filter(node => {
-      const project = majorProjects.find(p => p.id === node.id);
-      const matches = project?.tags?.some(tag => tag.toLowerCase().includes(lowerQuery)) ||
-                     node.id.toLowerCase().includes(lowerQuery);
+
+    const matchingNodes = graphData.nodes.filter((node) => {
+      // For major projects, check their tags; for all nodes check their id.
+      const majorProject = majorProjects.find((p) => p.id === node.id);
+      const matches =
+        (majorProject?.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery)) ||
+          node.id.toLowerCase().includes(lowerQuery));
       if (matches) {
-        console.log('PortfolioGraph: Found matching node:', node.id, 'of type:', node.type);
+        console.log("PortfolioGraph: Found matching node:", node.id, "of type:", node.type);
       }
       return matches;
     });
-    
+
     if (matchingNodes.length > 0) {
       const firstMatch = matchingNodes[0];
+      // If the matched node is a skill, use its parent project id.
       const resultId = firstMatch.type === "skill" && firstMatch.project ? firstMatch.project : firstMatch.id;
-      console.log('PortfolioGraph: Selected project ID:', resultId);
+      console.log("PortfolioGraph: Selected project ID:", resultId);
       return resultId;
     }
-    console.log('PortfolioGraph: No matching nodes found');
+    console.log("PortfolioGraph: No matching nodes found");
     return null;
   };
 
@@ -219,44 +223,24 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
   }, [searchQuery, graphData.nodes]);
 
   // --- Handle Search Submission for Redirection ---
+  // We now compute the highlighted project id directly from the query to avoid any stale state.
   const handleSearchSubmit = (query: string) => {
-    console.log('PortfolioGraph: Enter pressed; highlighted node:', highlightedNodeId);
-    if (highlightedNodeId) {
-      // Find the highlighted node in the graph data
-      const selectedNode = graphData.nodes.find(node => node.id === highlightedNodeId);
-      if (selectedNode) {
-        // If it's a skill node, redirect to its parent project
-        if (selectedNode.type === "skill" && selectedNode.project) {
-          const parentNode = graphData.nodes.find(
-            node => node.id === selectedNode.project && node.type === "major"
-          );
-          if (parentNode && parentNode.link) {
-            console.log('PortfolioGraph: Navigating to parent project:', parentNode.link);
-            window.location.href = parentNode.link;
-            return;
-          }
-        } 
-        // If it is a major node, redirect directly.
-        else if (selectedNode.type === "major" && selectedNode.link) {
-          console.log('PortfolioGraph: Navigating to project:', selectedNode.link);
-          window.location.href = selectedNode.link;
-          return;
-        }
-      }
-    }
-    // Fallback: if no node is highlighted, use the query to select one.
+    console.log("PortfolioGraph: Search submitted with query:", query);
     const projectId = getHighlightedProjectId(query);
     if (projectId) {
-      const fallbackNode = graphData.nodes.find(
-        node => node.id === projectId && node.type === "major"
+      const projectNode = graphData.nodes.find(
+        (node) => node.id === projectId && node.type === "major"
       );
-      if (fallbackNode && fallbackNode.link) {
-        console.log('PortfolioGraph: Fallback navigation to project:', fallbackNode.link);
-        window.location.href = fallbackNode.link;
+      if (projectNode && projectNode.link) {
+        console.log("PortfolioGraph: Navigating to highlighted project:", projectNode.link);
+        window.location.href = projectNode.link;
+      } else {
+        console.log("PortfolioGraph: No valid project node found for id:", projectId);
       }
+    } else {
+      console.log("PortfolioGraph: No matching project for query:", query);
     }
-};
-
+  };
 
   // --- Track User Interaction ---
   const userInteractingRef = useRef(false);
@@ -274,7 +258,7 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
           controls.minDistance = 500;
           controls.maxDistance = 500;
           controls.minPolarAngle = Math.PI / 4;
-          controls.maxPolarAngle = Math.PI * 3 / 4;
+          controls.maxPolarAngle = (Math.PI * 3) / 4;
           controls.enablePan = true;
           controls.rotateSpeed = 0.5;
           controls.mouseButtons = {
@@ -311,12 +295,12 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
         const controls = graphRef.current.controls();
 
         // Compute center of all nodes with defined positions.
-        const validNodes = graphData.nodes.filter(n => 
-          n.x !== undefined && n.y !== undefined && n.z !== undefined
+        const validNodes = graphData.nodes.filter(
+          (n) => n.x !== undefined && n.y !== undefined && n.z !== undefined
         );
         const target = new THREE.Vector3();
         if (validNodes.length > 0) {
-          validNodes.forEach(n => {
+          validNodes.forEach((n) => {
             target.add(new THREE.Vector3(n.x!, n.y!, n.z!));
           });
           target.divideScalar(validNodes.length);
@@ -360,7 +344,7 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
           if (object.userData && object.userData.nodeId && object.userData.sphereMaterial) {
             const nodeId = object.userData.nodeId;
             // Find corresponding node data.
-            const nodeData = graphData.nodes.find(n => n.id === nodeId);
+            const nodeData = graphData.nodes.find((n) => n.id === nodeId);
             if (nodeData) {
               let targetColorInt: number;
               if (highlightedNodeId) {
@@ -446,14 +430,16 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
         searchQuery={searchQuery}
         onSearchChange={onSearch}
         onSubmit={(query) => {
-          console.log('PortfolioGraph: Received search submit for query:', query);
+          console.log("PortfolioGraph: Received search submit for query:", query);
           handleSearchSubmit(query);
         }}
       />
       <ForceGraph3D
         ref={graphRef}
         graphData={graphData}
-        nodeLabel={(node: GraphNode) => node.type === "major" ? `Click to view ${node.id}` : node.id}
+        nodeLabel={(node: GraphNode) =>
+          node.type === "major" ? `Click to view ${node.id}` : node.id
+        }
         nodeThreeObject={nodeThreeObject}
         linkWidth={2}
         linkColor={() => "#666666"}
@@ -463,15 +449,22 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
         enableNodeDrag={true}
         enableNavigationControls={true}
         onNodeClick={(node: GraphNode) => {
-          // Prevent event propagation
+          // Prevent event propagation.
           const event = window.event;
           if (event) {
             event.stopPropagation();
           }
-          
-          // Navigate to project page if it's a major node
-          if (node.type === "major" && node.link) {
-            window.location.href = node.link;
+
+          // Navigate based on the node’s own link or, for a skill node, its parent project’s link.
+          let redirectLink = node.link;
+          if (!redirectLink && node.project) {
+            const parentNode = graphData.nodes.find((n) => n.id === node.project);
+            if (parentNode) {
+              redirectLink = parentNode.link;
+            }
+          }
+          if (redirectLink) {
+            window.location.href = redirectLink;
           }
         }}
       />
