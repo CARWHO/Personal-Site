@@ -31,6 +31,25 @@ export default function HomeContent() {
     console.log('HomeContent: Received search submit for query:', query);
     // Pass the search query to PortfolioGraph through props
     setSearchQuery(query);
+    // Forward the search submission to PortfolioGraph
+    if (query.trim()) {
+      const projectUrls: { [key: string]: string } = {
+        'Dawn Aerospace': '/work/dawn-aerospace',
+        'Wellington City Council': '/work/wellington-city-council',
+        'KORA': '/work/kora',
+        'Halo Vision': '/work/halo-vision'
+      };
+      
+      // Find the matching project (case insensitive)
+      const projectKey = Object.keys(projectUrls).find(key => 
+        key.toLowerCase().includes(query.toLowerCase())
+      );
+      
+      if (projectKey) {
+        console.log('HomeContent: Navigating to:', projectUrls[projectKey]);
+        window.location.href = projectUrls[projectKey];
+      }
+    }
   };
 
   return (
