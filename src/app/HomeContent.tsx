@@ -30,42 +30,6 @@ export default function HomeContent() {
   const handleSearchSubmit = (query: string) => {
     console.log('HomeContent: Received search submit for query:', query);
     setSearchQuery(query);
-    
-    if (query.trim()) {
-      const projectUrls: { [key: string]: string } = {
-        'Dawn Aerospace': '/work/dawn-aerospace',
-        'Wellington City Council': '/work/wellington-city-council',
-        'KORA': '/work/kora',
-        'Halo Vision': '/work/halo-vision'
-      };
-
-      // First try exact project name match
-      const exactMatch = Object.keys(projectUrls).find(key => 
-        key.toLowerCase() === query.toLowerCase()
-      );
-      
-      // Then try partial project name match
-      const partialMatch = Object.keys(projectUrls).find(key => 
-        key.toLowerCase().includes(query.toLowerCase())
-      );
-      
-      // Then try tag match (using the same tags as in PortfolioGraph)
-      const tagMatch = Object.entries({
-        'Dawn Aerospace': ['aerospace', 'software', 'hardware'],
-        'Halo Vision': ['embedded system design'],
-        'KORA': ['ai', 'machine learning'],
-        'Wellington City Council': ['engineering', 'analysis', 'safety']
-      }).find(([_, tags]) => 
-        tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
-      );
-
-      const matchedProject = exactMatch || partialMatch || (tagMatch && tagMatch[0]);
-      
-      if (matchedProject) {
-        console.log('HomeContent: Navigating to:', projectUrls[matchedProject]);
-        window.location.href = projectUrls[matchedProject];
-      }
-    }
   };
 
   return (

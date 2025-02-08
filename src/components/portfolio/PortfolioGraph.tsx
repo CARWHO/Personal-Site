@@ -227,16 +227,14 @@ const PortfolioGraph: React.FC<PortfolioGraphProps> = ({ searchQuery, onSearch }
   const handleSearchSubmit = (query: string) => {
     console.log("PortfolioGraph: Search submitted with query:", query);
     const projectId = getHighlightedProjectId(query);
+    console.log("PortfolioGraph: Found projectId:", projectId);
+    
     if (projectId) {
-      const projectNode = graphData.nodes.find(
-        (node) => node.id === projectId && node.type === "major"
-      );
-      if (projectNode && projectNode.link) {
-        console.log("PortfolioGraph: Navigating to highlighted project:", projectNode.link);
-        window.location.href = projectNode.link;
-      } else {
-        console.log("PortfolioGraph: No valid project node found for id:", projectId);
-      }
+      // Strip out any parenthetical text for the URL
+      const cleanProjectId = projectId.replace(/\s*\(.*?\)\s*/g, "");
+      const url = `/work/${cleanProjectId.toLowerCase().replace(/\s+/g, "-")}`;
+      console.log("PortfolioGraph: Navigating to:", url);
+      window.location.href = url;
     } else {
       console.log("PortfolioGraph: No matching project for query:", query);
     }
