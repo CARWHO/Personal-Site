@@ -49,11 +49,11 @@ export default function DawnAerospace() {
       <Column gap="m" style={{ position: 'relative' }}>
         <div style={{
           position: 'absolute',
-          width: '600px', // Adjust size
-          height: '50px', // Adjust size
-          top: '30%', // Adjust vertical position
-          left: '90%', // Adjust horizontal position
-          transform: 'translate(-50%, -50%)', // Centers the image at the specified position
+          width: '800px', // Wider to show full plane
+          height: '200px', // Taller to show full plane
+          top: '50%', // Center vertically
+          left: '70%', // Move more to the left
+          transform: 'translate(-50%, -50%) rotate(-5deg)', // Centers the image and adds slight rotation
           opacity: 1.0,
           zIndex: 0,
           backgroundImage: 'url("/images/Dawn+Mk-II+Aurora+Flight.png")',
