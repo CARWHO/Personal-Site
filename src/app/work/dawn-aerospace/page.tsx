@@ -1,6 +1,6 @@
 'use client';
 import { Column, Heading, Text, SmartImage, Input } from "@/once-ui/components";
-import ImageCarousel from "@/components/ImageCarousel";
+import StackedImageShowcase from "@/components/StackedImageShowcase";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -82,7 +82,7 @@ export default function DawnAerospace() {
           dive into both software and hardware aspects—bridging theory with real-world
           satellite operations.
         </Text>
-        <ImageCarousel
+        <StackedImageShowcase
           images={[
             {
               src: "/images/spaceplane2.jpeg",
