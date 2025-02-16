@@ -105,7 +105,7 @@ export default function DawnAerospace() {
               alt: "Wearing safety gear in the workshop",
               position: { x: 0, y: 50 },
               dimensions: { width: 60, height: 350 },
-              opacity: 0.5,
+              opacity: 1.0,
               zIndex: 2
             },
             {
@@ -113,7 +113,7 @@ export default function DawnAerospace() {
               alt: "Feedline test jig setup",
               position: { x: 300, y: 300 },
               dimensions: { width: 50, height: 200 },
-              opacity: 0.6,
+              opacity: 1.0,
               zIndex: 1
             }
           ]}

@@ -30,7 +30,7 @@ export default function ImageControl({ images }: ImageControlProps) {
               objectFit: 'cover',
               borderRadius: '12px',
               zIndex: image.zIndex || images.length - index,
-              boxShadow: '0 4px 15px rgba(0, 123, 255, 0.3)',
+              boxShadow: '0 20px 30px rgba(0, 0, 0, 0.3)',
             }}
           />
         ))}
