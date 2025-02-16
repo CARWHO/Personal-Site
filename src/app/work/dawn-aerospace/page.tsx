@@ -50,7 +50,7 @@ export default function DawnAerospace() {
         <div style={{
           position: 'absolute',
           width: '600px', // Adjust size
-          height: '450px', // Adjust size
+          height: '50px', // Adjust size
           top: '30%', // Adjust vertical position
           left: '90%', // Adjust horizontal position
           transform: 'translate(-50%, -50%)', // Centers the image at the specified position
@@ -60,7 +60,7 @@ export default function DawnAerospace() {
           backgroundSize: 'cover', // Changed to cover to fill the specified dimensions
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          borderRadius: '12px',
+          borderRadius: '0px',
           pointerEvents: 'none'
         }} />
         <div style={{ position: 'relative', zIndex: 1 }}>
@@ -87,8 +87,8 @@ export default function DawnAerospace() {
             {
               src: "/images/spaceplane2.png",
               alt: "Dawn Aerospace workshop and spaceplane",
-              position: { x: 130, y: 60 },
-              dimensions: { width: 60, height: 350 },
+              position: { x: 130, y: 130 },
+              dimensions: { width: 70, height: 400 },
               opacity: 1,
               zIndex: 4,
               rotation: 0
@@ -96,16 +96,16 @@ export default function DawnAerospace() {
             {
               src: "/images/igniter.jpeg",
               alt: "Igniter setup",
-              position: { x: 400, y: 20 },
+              position: { x: 450, y: 100 },
               dimensions: { width: 50, height: 200 },
               opacity: 0.7,
               zIndex: 3,
-              rotation: -15
+              rotation: 10
             },
             {
               src: "/images/safetygear.png",
               alt: "Wearing safety gear in the workshop",
-              position: { x: -100, y: 100 },
+              position: { x: -100, y: 170 },
               dimensions: { width: 60, height: 350 },
               opacity: 0.6,
               zIndex: 2,
@@ -114,12 +114,21 @@ export default function DawnAerospace() {
             {
               src: "/images/feedlinetestjig.jpeg",
               alt: "Feedline test jig setup",
-              position: { x: 500, y: 300 },
+              position: { x: 400, y: 390 },
               dimensions: { width: 50, height: 200 },
               opacity: 0.5,
               zIndex: 1,
               rotation: -5
-            }
+            },
+            {
+              src: "/images/grafana.png",
+              alt: "Grafana",
+              position: { x: 150, y: 20 },
+              dimensions: { width: 50, height: 200 },
+              opacity: 1.0,
+              zIndex: 3,
+              rotation: -4
+            },
           ]}
         />
       </Column>
