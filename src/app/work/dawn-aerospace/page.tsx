@@ -80,9 +80,10 @@ export default function DawnAerospace() {
           dive into both software and hardware aspects—bridging theory with real-world
           satellite operations.
         </Text>
-        <SmartImage
+        <img
           src="/images/spaceplane2.jpeg"
           alt="Dawn Aerospace workshop and spaceplane"
+          style={{ width: '100%', height: 'auto' }}
         />
       </Column>
 
@@ -112,9 +113,10 @@ export default function DawnAerospace() {
             Their products range from green propellant thrusters to suborbital spaceplanes.
           </Text>
         </div>
-        <SmartImage
+        <img
           src="/images/spaceplane2.jpeg"
           alt="Dawn Aerospace workshop and spaceplane"
+          style={{ width: '100%', height: 'auto' }}
         />
       </Column>
 
@@ -163,9 +165,10 @@ export default function DawnAerospace() {
           Integral to our quality assurance were custom-built test jigs used for rigorous propulsion component evaluation.
           These setups allowed us to simulate in-space conditions and continuously iterate on design improvements.
         </Text>
-        <SmartImage
+        <img
           src="/images/spaceplane2.jpeg"
           alt="Dawn Aerospace workshop and spaceplane"
+          style={{ width: '100%', height: 'auto' }}
         />
       </Column>
 
@@ -177,9 +180,10 @@ export default function DawnAerospace() {
           in the evaluation of propulsion and communication systems under simulated in-space conditions, ensuring that
           every component performed reliably.
         </Text>
-        <SmartImage
+        <img
           src="/images/spaceplane2.jpeg"
           alt="Dawn Aerospace workshop and spaceplane"
+          style={{ width: '100%', height: 'auto' }}
         />
       </Column>
 
