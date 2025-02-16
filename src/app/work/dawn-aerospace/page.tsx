@@ -207,7 +207,13 @@ export default function DawnAerospace() {
         <img
           src="/images/lifecycle.jpeg"
           alt="Dawn Aerospace workshop and spaceplane"
-          style={{ width: '50%', height: 'auto', borderRadius: '12px' }}
+          style={{ 
+            width: '50%', 
+            height: 'auto', 
+            borderRadius: '12px',
+            display: 'block',
+            margin: '0 auto'
+          }}
         />
       </Column>
 
