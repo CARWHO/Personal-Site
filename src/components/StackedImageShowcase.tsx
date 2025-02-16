@@ -21,7 +21,8 @@ export default function StackedImageShowcase({ images }: StackedImageShowcasePro
           className={styles.imageWrapper}
           style={{
             zIndex: images.length - index,
-            opacity: index === currentIndex ? 1 : 0,
+            opacity: index === currentIndex ? 1 : 0.8,
+            transform: `translate(${index * 10}px, ${index * 10}px) scale(${1 - index * 0.05})`,
           }}
         >
           <img
