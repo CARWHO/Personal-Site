@@ -1,6 +1,7 @@
 "use client";
 import { Column, Heading, Text, Flex, Button } from "@/once-ui/components";
 import { ThemeProvider, createTheme } from "@mui/material";
+import LockIcon from "@mui/icons-material/Lock";
 import styles from "./work.module.scss";
 import { work } from "@/app/resources/content";
 
@@ -77,7 +78,12 @@ export default function WorkContent() {
 
               {/* Project Details */}
               <Column gap="m">
-                <Heading variant="display-strong-m">{section.company}</Heading>
+                <Flex gap="8" vertical="center">
+                  <Heading variant="display-strong-m">{section.company}</Heading>
+                  {section.company === "Dawn Aerospace" && (
+                    <LockIcon sx={{ color: 'white', fontSize: '1.5rem' }} />
+                  )}
+                </Flex>
                 <Text variant="body-default-l" onBackground="neutral-weak">
                   {section.summary}
                 </Text>
