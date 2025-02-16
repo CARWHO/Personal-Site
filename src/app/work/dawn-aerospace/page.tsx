@@ -59,6 +59,7 @@ export default function DawnAerospace() {
           backgroundSize: 'cover', // Changed to cover to fill the specified dimensions
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
+          borderRadius: '12px',
           pointerEvents: 'none'
         }} />
         <div style={{ position: 'relative', zIndex: 1 }}>
@@ -83,7 +84,7 @@ export default function DawnAerospace() {
         <img
           src="/images/spaceplane2.jpeg"
           alt="Dawn Aerospace workshop and spaceplane"
-          style={{ width: '100%', height: 'auto' }}
+          style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
         />
       </Column>
 
@@ -102,6 +103,7 @@ export default function DawnAerospace() {
           backgroundSize: 'cover', // Changed to cover to fill the specified dimensions
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
+          borderRadius: '12px',
           pointerEvents: 'none'
         }} />
         <div style={{ position: 'relative', zIndex: 1 }}>
@@ -116,7 +118,7 @@ export default function DawnAerospace() {
         <img
           src="/images/spaceplane2.jpeg"
           alt="Dawn Aerospace workshop and spaceplane"
-          style={{ width: '100%', height: 'auto' }}
+          style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
         />
       </Column>
 
@@ -168,7 +170,7 @@ export default function DawnAerospace() {
         <img
           src="/images/spaceplane2.jpeg"
           alt="Dawn Aerospace workshop and spaceplane"
-          style={{ width: '100%', height: 'auto' }}
+          style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
         />
       </Column>
 
@@ -183,7 +185,7 @@ export default function DawnAerospace() {
         <img
           src="/images/spaceplane2.jpeg"
           alt="Dawn Aerospace workshop and spaceplane"
-          style={{ width: '100%', height: 'auto' }}
+          style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
         />
       </Column>
 
