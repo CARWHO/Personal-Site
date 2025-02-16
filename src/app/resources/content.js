@@ -11,7 +11,7 @@ const person = {
   avatar: "/images/avatar.jpg",
   location: "Pacific/Auckland", // Expecting the IANA time zone identifier
   languages: ["English"], // Optional
-  email: "example@gmail.com", // Added for calendar integration
+  email: "kahuhutton.business@gmail.com", // Added for calendar integration
 };
 
 // Newsletter Configuration
@@ -98,52 +98,84 @@ const about = {
     experiences: [
       {
         company: "Dawn Aerospace",
-        timeframe: "2024 - Present",
-        role: "Spacecraft Propulsion Development Intern (Software team)",
+        timeframe: "Nov 2024 – Feb 2025",
+        role: "Spacecraft Propulsion Development Intern",
         logo: "/images/companies/dawnlogo.png",
         achievements: [
           <>
-            Developed in-house satellite communication tools currently used in flight 
-            and testing
+            Assisted in software and hardware integration for satellite propulsion systems, ensuring smooth communication between thrusters, sensors, and telemetry modules.
           </>,
           <>
-            Hardware and software integration for spacecraft applications (PixxelSpace, Argotec)
+            Enabled cross-platform builds by adapting DawnLink’s codebase to run on Windows, enhancing global team accessibility.
+          </>,
+          <>
+            Developed comprehensive documentation (installation manuals, user guides) for in-house tools, streamlining onboarding for new hires.
+          </>,
+          <>
+            Configured life-cycle testing for satellite electronics by integrating Grafana for real-time monitoring and creating custom GUIs.
           </>,
         ],
         images: [],
       },
       {
         company: "KORA",
-        timeframe: "2024 - Present",
+        timeframe: "2024 – Present",
         role: "Founder, App Developer",
         logo: "/images/companies/kora.png",
         achievements: [
-          <>AI-powered education platform for institutes and students</>,
-          <>200+ Daily active users</>,
+          <>
+            Developed a full-stack web application using React, Next.js, Python, Docker, AWS, and Firebase for deployment and scalability.
+          </>,
+          <>
+            Led a team to design, deploy, and maintain a stand-alone LMS plugin and RAG status-tracking tool, serving 100+ daily users.
+          </>,
+          <>
+            Implemented containerization and cloud hosting solutions to ensure scalability and minimize downtime.
+          </>,
+          <>
+            Managed end-to-end project lifecycles from concept and UI/UX design through deployment and user feedback.
+          </>,
+          <>
+            Maintained ongoing client and stakeholder communication to rapidly iterate on features based on user input.
+          </>,
         ],
         images: [],
       },
       {
-        company: "Halo Vision",
-        timeframe: "2023-2024",
-        role: "Personal project to improve motorcycle safety",
+        company: "HaloVision",
+        timeframe: "Feb 2023 – 2024",
+        role: "Motorcycle Safety HUD Developer",
         logo: "/images/companies/hv.png",
         achievements: [
-          <>Developed an advanced motorcycle navigation system</>,
-          <>Embedded system design, software, PCB manufacturing, app design</>,
+          <>
+            Designed a helmet-mounted heads-up display (HUD) system integrating turn-by-turn navigation and safety indicators.
+          </>,
+          <>
+            Created custom PCBs optimized for power efficiency with a 90% improvement over the prototype.
+          </>,
+          <>
+            Conducted aerodynamic simulations (CFD) and wind tunnel tests to enhance helmet mount stability by 60% at varied riding speeds.
+          </>,
+          <>
+            Oversaw cross-functional collaboration with app developers, hardware engineers, and industry experts to translate concepts into a functional prototype.
+          </>,
         ],
         images: [],
       },
       {
-        company: "Wellington City Council",
-        timeframe: "2024",
-        role: "CFD Engineer (Wind Loading)",
-        logo: "/images/companies/wcc.png",
+        company: "Accent Productions",
+        timeframe: "March 2024",
+        role: "CFD Engineer (Wind Load Analysis)",
+        logo: "/images/companies/hv.png",
         achievements: [
-          <>Conducted wind loading simulations for public event safety</>,
           <>
-            Analyzed Computational Fluid Dynamics (CFD) models for structural
-            safety assessments
+            Performed comprehensive wind load analysis on a stage cover using Autodesk CFD and SolidWorks to determine critical force thresholds.
+          </>,
+          <>
+            Delivered detailed CFD analysis reports—including graphs, visualizations, and risk matrices—highlighting a 19% difference in key safety margins.
+          </>,
+          <>
+            Managed the entire analysis process from geometry development and meshing to simulation setup, convergence studies, post-processing, and report drafting, resulting in actionable design recommendations.
           </>,
         ],
         images: [],
@@ -156,7 +188,7 @@ const about = {
     institutions: [
       {
         name: "University of Canterbury",
-        description: <>Further studies in Electrical Engineering (Graduating 2026)</>,
+        description: <>Bachelor of Electrical Engineering with Honors (2023 – 2026)</>,
       },
     ],
   },
@@ -208,7 +240,7 @@ const work = {
       fullReportLink: "/work/kora",
     },
     {
-      company: "Halo Vision",
+      company: "HaloVision",
       description: "Helmet-mounted display system for motorcycle safety",
       summary:
         "Designed and developed a heads-up display system for motorcycle navigation and indicator notifications. Created custom PCBs, aerodynamic helmet mounts, and a mobile app for real-time, hands-free updates. Conducted safety testing using Computational Fluid Dynamics (CFD) in collaboration with Dr. Finn McIntyre, validating results through wind tunnel experiments at the University of Canterbury.",
@@ -216,12 +248,12 @@ const work = {
       fullReportLink: "/work/halo-vision",
     },
     {
-      company: "Wellington City Council",
-      description: "Wind loading analysis and public safety assessments",
+      company: "Accent Productions",
+      description: "CFD Wind Load Analysis & Safety Validation Report",
       summary:
-        "Conducted Computational Fluid Dynamics (CFD) simulations for wind loading analysis on structures to ensure public safety during large-scale events. Produced technical reports covering structural safety requirements, mathematical analysis, and rendered visualizations.",
-      logo: "/images/companies/wcc.png",
-      fullReportLink: "/work/wellington-city-council",
+        "Performed comprehensive wind load analysis using Autodesk CFD and SolidWorks, delivering detailed reports with graphs, visualizations, and risk matrices that identified critical safety margins and recommended design improvements.",
+      logo: "/images/companies/hv.png",
+      fullReportLink: "/work/accent-productions",
     },
   ],
 };

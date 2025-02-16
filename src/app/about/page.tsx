@@ -148,7 +148,7 @@ export default function About() {
                 <Icon paddingLeft="12" name="calendar" onBackground="brand-weak" />
                 <Flex paddingX="8">Schedule a call</Flex>
                 <IconButton
-                  href={`https://calendar.google.com/calendar/u/0/r/eventedit?text=Meeting+with+${encodeURIComponent(person.name)}&details=Discussion+about+potential+collaboration&add=${encodeURIComponent(person.email)}&location=Google+Meet+(details+will+be+provided)&sprop=&sprop=name:&add=&sf=true&output=xml`}
+                  href={`https://calendar.google.com/calendar/u/0/r/eventedit?text=Meeting+with+${encodeURIComponent(person.name)}&details=Feel+free+to+add+stuff+here+you+want+to+talk+about,+or+just+leave+it+blank!&add=${encodeURIComponent(person.email)}&location=Google+Meet+(details+will+be+provided)&sprop=&sprop=name:&add=&sf=true&output=xml`}
                   data-border="rounded"
                   variant="secondary"
                   icon="chevronRight"
