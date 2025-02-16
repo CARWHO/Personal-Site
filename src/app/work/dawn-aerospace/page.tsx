@@ -49,10 +49,10 @@ export default function DawnAerospace() {
       <Column gap="m" style={{ position: 'relative' }}>
         <div style={{
           position: 'absolute',
-          width: '800px', // Wider to show full plane
-          height: '200px', // Taller to show full plane
-          top: '50%', // Center vertically
-          left: '70%', // Move more to the left
+          width: '600px', // Wider to show full plane
+          height: '150px', // Taller to show full plane
+          top: '20%', // Center vertically
+          left: '83%', // Move more to the left
           transform: 'translate(-50%, -50%) rotate(-5deg)', // Centers the image and adds slight rotation
           opacity: 1.0,
           zIndex: 0,
