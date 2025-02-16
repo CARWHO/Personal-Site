@@ -1,35 +1,36 @@
-// src/app/HomeContent.tsx
 "use client";
 
-import React, { useState } from "react";
-import { Heading, Flex, Text, Button, Avatar, RevealFx, Arrow, Column } from "@/once-ui/components";
+import React, { useState, useRef } from "react";
+import {
+  Heading,
+  Flex,
+  Text,
+  RevealFx,
+  Column,
+} from "@/once-ui/components";
 import SearchBar from "@/components/searchbar";
-import { Projects } from "@/components/work/Projects";
-import { baseURL, routes } from "@/app/resources";
-import { home, about, person, newsletter } from "@/app/resources/content";
-import { Mailchimp } from "@/components";
-import { Posts } from "@/components/blog/Posts";
-import dynamic from 'next/dynamic';
+import { baseURL } from "@/app/resources";
+import { home, person } from "@/app/resources/content";
+import dynamic from "next/dynamic";
+import PortfolioGraph, { PortfolioGraphRef } from "@/components/portfolio/PortfolioGraph";
 
-const PortfolioGraph = dynamic(() => import('@/components/portfolio/PortfolioGraph'), {
-  ssr: false,
-});
-
-interface SearchState {
-  query: string;
-  onSearch: (query: string) => void;
-}
-
+// HomeContent maintains the search query state and holds a ref to PortfolioGraph so that
+// when the user presses enter (submitting the search) we can call the graph’s redirect method.
 export default function HomeContent() {
   const [searchQuery, setSearchQuery] = useState("");
+  const portfolioGraphRef = useRef<PortfolioGraphRef>(null);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
 
   const handleSearchSubmit = (query: string) => {
-    console.log('HomeContent: Received search submit for query:', query);
+    console.log("HomeContent: Received search submit for query:", query);
     setSearchQuery(query);
+    // Ask the PortfolioGraph (via its exposed method) to redirect if a node is highlighted.
+    if (portfolioGraphRef.current) {
+      portfolioGraphRef.current.redirectIfHighlighted();
+    }
   };
 
   return (
@@ -75,11 +76,11 @@ export default function HomeContent() {
                 onSearchChange={handleSearch}
                 onSubmit={handleSearchSubmit}
               />
-              <Text 
-                style={{ 
+              <Text
+                style={{
                   fontSize: "14px",
-                  opacity: 0.6 
-                }} 
+                  opacity: 0.6,
+                }}
                 onBackground="neutral-weak"
               >
                 Try searching: Satellite • Embedded • API • AI
@@ -88,7 +89,11 @@ export default function HomeContent() {
           </RevealFx>
         </Column>
         <Column style={{ marginTop: "-150px", marginLeft: "-40%", zIndex: 0 }}>
-          <PortfolioGraph searchQuery={searchQuery} onSearch={handleSearch} />
+          <PortfolioGraph
+            ref={portfolioGraphRef}
+            searchQuery={searchQuery}
+            onSearch={handleSearch}
+          />
         </Column>
       </Flex>
     </Column>

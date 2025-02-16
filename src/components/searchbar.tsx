@@ -1,4 +1,3 @@
-// src/components/SearchBar.tsx
 import React, { KeyboardEvent } from "react";
 
 interface SearchBarProps {
@@ -7,12 +6,16 @@ interface SearchBarProps {
   onSubmit: (query: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange, onSubmit }) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  searchQuery,
+  onSearchChange,
+  onSubmit,
+}) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && searchQuery.trim()) {
       e.preventDefault();
-      console.log('SearchBar: Enter pressed with query:', searchQuery);
-      console.log('SearchBar: Submitting search to PortfolioGraph for navigation');
+      console.log("SearchBar: Enter pressed with query:", searchQuery);
+      console.log("SearchBar: Submitting search for navigation");
       onSubmit(searchQuery);
     }
   };
