@@ -480,11 +480,6 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
           flexDirection: "column",
         }}
       >
-        <SearchBar
-          searchQuery={searchQuery}
-          onSearchChange={onSearch}
-          onSubmit={redirectIfHighlighted}
-        />
         <ForceGraph3D
           ref={graphRef}
           graphData={graphData}
