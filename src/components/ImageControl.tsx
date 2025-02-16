@@ -30,7 +30,8 @@ export default function ImageControl({ images }: ImageControlProps) {
               objectFit: 'cover',
               borderRadius: '12px',
               zIndex: image.zIndex || images.length - index,
-              boxShadow: '0 20px 30px rgba(0, 0, 0, 0.3)',
+              boxShadow: image.src.includes('spaceplane2') ? '0 20px 40px rgba(0, 0, 0, 0.5)' : '0 10px 20px rgba(0, 0, 0, 0.2)',
+              filter: !image.src.includes('spaceplane2') ? 'brightness(0.7)' : 'none',
             }}
           />
         ))}
