@@ -150,10 +150,14 @@ export default function DawnAerospace() {
               develop a deeper understanding of the feedline’s thermal and electrical performance.
             </Text>
           </Column>
-          <SmartImage
+          <img
             src="/images/1.png"
             alt="Feedline Characterization Banner"
-            style={{ width: '40%' }}
+            style={{ 
+              width: '40%',
+              borderRadius: '12px',
+              objectFit: 'cover'
+            }}
           />
         </Column>
 
@@ -163,10 +167,14 @@ export default function DawnAerospace() {
           gap="l"
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
-          <SmartImage
+          <img
             src="/images/1.png"
             alt="Primary Goals Diagram"
-            style={{ width: '40%' }}
+            style={{ 
+              width: '40%',
+              borderRadius: '12px',
+              objectFit: 'cover'
+            }}
           />
           <Column style={{ width: '55%' }}>
             <Text variant="body-default-l">
@@ -235,10 +243,14 @@ export default function DawnAerospace() {
               </ol>
             </Text>
           </Column>
-          <SmartImage
+          <img
             src="/images/1.png"
             alt="Implementation Diagram"
-            style={{ width: '40%' }}
+            style={{ 
+              width: '40%',
+              borderRadius: '12px',
+              objectFit: 'cover'
+            }}
           />
         </Column>
 
@@ -265,10 +277,14 @@ export default function DawnAerospace() {
               most significant, helping refine insulation and design strategies for improved heat retention.
             </Text>
           </Column>
-          <SmartImage
+          <img
             src="/images/1.png"
             alt="Results Graph 1"
-            style={{ width: '40%' }}
+            style={{ 
+              width: '40%',
+              borderRadius: '12px',
+              objectFit: 'cover'
+            }}
           />
         </Column>
 
@@ -278,10 +294,14 @@ export default function DawnAerospace() {
           gap="l"
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
-          <SmartImage
+          <img
             src="/images/1.png"
             alt="Results Graph 2"
-            style={{ width: '40%' }}
+            style={{ 
+              width: '40%',
+              borderRadius: '12px',
+              objectFit: 'cover'
+            }}
           />
           <Column style={{ width: '55%' }}>
             <Text variant="body-default-l">
@@ -339,10 +359,14 @@ export default function DawnAerospace() {
               but also informs future design optimizations for improved performance and reliability.
             </Text>
           </Column>
-          <SmartImage
+          <img
             src="/images/1.png"
             alt="Conclusions Diagram"
-            style={{ width: '40%' }}
+            style={{ 
+              width: '40%',
+              borderRadius: '12px',
+              objectFit: 'cover'
+            }}
           />
         </Column>
 
@@ -352,15 +376,23 @@ export default function DawnAerospace() {
           gap="l"
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
-          <SmartImage
+          <img
             src="/images/1.png"
             alt="Extra Graph or Diagram"
-            style={{ width: '40%' }}
+            style={{ 
+              width: '40%',
+              borderRadius: '12px',
+              objectFit: 'cover'
+            }}
           />
-          <SmartImage
+          <img
             src="/images/1.png"
             alt="Another Extra Graph or Diagram"
-            style={{ width: '40%' }}
+            style={{ 
+              width: '40%',
+              borderRadius: '12px',
+              objectFit: 'cover'
+            }}
           />
         </Column>
       </Column>
