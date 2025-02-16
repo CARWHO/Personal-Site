@@ -65,7 +65,7 @@ export default function DawnAerospace() {
         }} />
         <div style={{ position: 'relative', zIndex: 1 }}>
           <Heading variant="display-strong-l">
-            Dawn Aerospace Internship: 400 Hours in In-Space Propulsion
+            Dawn Aerospace Electrical Engineering
           </Heading>
           <Text variant="heading-default-m" onBackground="neutral-weak">
             Spacecraft Propulsion Development Intern
@@ -78,7 +78,7 @@ export default function DawnAerospace() {
         <Text variant="body-default-l">
           Over a three-month period, I completed a 400-hour internship at Dawn Aerospace,
           a company dedicated to advancing in-space propulsion technology for satellites
-          and aerospace applications. My role as a Software Engineer Intern allowed me to
+          and aerospace applications. My role as a Electrical Engineering Intern allowed me to
           dive into both software and hardware aspects—bridging theory with real-world
           satellite operations.
         </Text>
@@ -190,7 +190,7 @@ export default function DawnAerospace() {
           These setups allowed us to simulate in-space conditions and continuously iterate on design improvements.
         </Text>
         <img
-          src="/images/spaceplane2.png"
+          src="/images/feedlinetestjig.jpeg"
           alt="Dawn Aerospace workshop and spaceplane"
           style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
         />
@@ -205,9 +205,9 @@ export default function DawnAerospace() {
           every component performed reliably.
         </Text>
         <img
-          src="/images/spaceplane2.png"
+          src="/images/lifecycle.jpeg"
           alt="Dawn Aerospace workshop and spaceplane"
-          style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
+          style={{ width: '50%', height: 'auto', borderRadius: '12px' }}
         />
       </Column>
 
