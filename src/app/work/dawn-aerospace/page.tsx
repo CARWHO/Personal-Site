@@ -89,28 +89,32 @@ export default function DawnAerospace() {
               alt: "Dawn Aerospace workshop and spaceplane",
               position: { x: 130, y: 0 },
               dimensions: { width: 60, height: 350 },
-              opacity: 1
+              opacity: 1,
+              zIndex: 4
+            },
+            {
+              src: "/images/igniter.jpeg",
+              alt: "Igniter setup",
+              position: { x: 400, y: -50 },
+              dimensions: { width: 50, height: 200 },
+              opacity: 0.9,
+              zIndex: 3
             },
             {
               src: "/images/safetygear.png",
               alt: "Wearing safety gear in the workshop",
               position: { x: 0, y: 50 },
               dimensions: { width: 60, height: 350 },
-              opacity: 0.5
+              opacity: 0.5,
+              zIndex: 2
             },
             {
               src: "/images/feedlinetestjig.jpeg",
               alt: "Feedline test jig setup",
               position: { x: 300, y: 300 },
               dimensions: { width: 50, height: 200 },
-              opacity: 0.6
-            },
-            {
-              src: "/images/igniter.jpeg",
-              alt: "Feedline test jig setup",
-              position: { x: 400, y: -50 },
-              dimensions: { width: 50, height: 200 },
-              opacity: 0.9
+              opacity: 0.6,
+              zIndex: 1
             }
           ]}
         />

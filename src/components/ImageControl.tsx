@@ -8,6 +8,7 @@ interface ImageControlProps {
     position: { x: number; y: number };
     dimensions: { width: number; height: number };
     opacity: number;
+    zIndex?: number;
   }[];
 }
 
@@ -28,7 +29,8 @@ export default function ImageControl({ images }: ImageControlProps) {
               opacity: image.opacity,
               objectFit: 'cover',
               borderRadius: '12px',
-              zIndex: images.length - index,
+              zIndex: image.zIndex || images.length - index,
+              boxShadow: '0 4px 15px rgba(0, 123, 255, 0.3)',
             }}
           />
         ))}
