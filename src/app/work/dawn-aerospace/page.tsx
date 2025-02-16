@@ -90,7 +90,8 @@ export default function DawnAerospace() {
               position: { x: 130, y: 60 },
               dimensions: { width: 60, height: 350 },
               opacity: 1,
-              zIndex: 4
+              zIndex: 4,
+              rotation: 0
             },
             {
               src: "/images/igniter.jpeg",
@@ -98,7 +99,8 @@ export default function DawnAerospace() {
               position: { x: 400, y: 20 },
               dimensions: { width: 50, height: 200 },
               opacity: 0.7,
-              zIndex: 3
+              zIndex: 3,
+              rotation: -15
             },
             {
               src: "/images/safetygear.png",
@@ -106,7 +108,8 @@ export default function DawnAerospace() {
               position: { x: -100, y: 100 },
               dimensions: { width: 60, height: 350 },
               opacity: 0.6,
-              zIndex: 2
+              zIndex: 2,
+              rotation: 10
             },
             {
               src: "/images/feedlinetestjig.jpeg",
@@ -114,7 +117,8 @@ export default function DawnAerospace() {
               position: { x: 500, y: 300 },
               dimensions: { width: 50, height: 200 },
               opacity: 0.5,
-              zIndex: 1
+              zIndex: 1,
+              rotation: -5
             }
           ]}
         />

@@ -9,6 +9,7 @@ interface ImageControlProps {
     dimensions: { width: number; height: number };
     opacity: number;
     zIndex?: number;
+    rotation?: number;
   }[];
 }
 
@@ -32,6 +33,7 @@ export default function ImageControl({ images }: ImageControlProps) {
               zIndex: image.zIndex || images.length - index,
               boxShadow: image.src.includes('spaceplane2') ? '0 20px 40px rgba(0, 0, 0, 0.5)' : '0 10px 20px rgba(0, 0, 0, 0.2)',
               filter: !image.src.includes('spaceplane2') ? 'brightness(0.7)' : 'none',
+              transform: `translate(${image.position.x}px, ${image.position.y}px) rotate(${image.rotation || 0}deg)`,
             }}
           />
         ))}
