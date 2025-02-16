@@ -134,37 +134,14 @@ export default function DawnAerospace() {
       </Column>
 
       {/* Company Overview */}
-      <Column gap="l" style={{ position: 'relative' }}>
-        <div style={{
-          position: 'absolute',
-          width: '600px', // Adjust size
-          height: '400px', // Adjust size
-          top: '30%', // Adjust vertical position
-          left: '-30%', // Adjust horizontal position
-          transform: 'translate(-50%, -50%)', // Centers the image at the specified position
-          opacity: 1.0,
-          zIndex: 0,
-          backgroundImage: 'url("/images/1.png")',
-          backgroundSize: 'cover', // Changed to cover to fill the specified dimensions
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          borderRadius: '12px',
-          pointerEvents: 'none'
-        }} />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <Heading variant="display-strong-s">Company Overview</Heading>
-          <Text variant="body-default-l">
-            Dawn Aerospace operates internationally with facilities in New Zealand, the
-            Netherlands, and the United States. The company specializes in developing
-            sustainable, high-performance propulsion systems and satellite communication software.
-            Their products range from green propellant thrusters to suborbital spaceplanes.
-          </Text>
-        </div>
-        <img
-          src="/images/spaceplane2.png"
-          alt="Dawn Aerospace workshop and spaceplane"
-          style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
-        />
+      <Column gap="l">
+        <Heading variant="display-strong-s">Company Overview</Heading>
+        <Text variant="body-default-l">
+          Dawn Aerospace operates internationally with facilities in New Zealand, the
+          Netherlands, and the United States. The company specializes in developing
+          sustainable, high-performance propulsion systems and satellite communication software.
+          Their products range from green propellant thrusters to suborbital spaceplanes.
+        </Text>
       </Column>
 
       {/* Role & Responsibilities */}
