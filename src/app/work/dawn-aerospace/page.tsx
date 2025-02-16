@@ -49,11 +49,11 @@ export default function DawnAerospace() {
         <div style={{
           position: 'absolute',
           width: '600px', // Adjust size
-          height: '400px', // Adjust size
-          top: '50%', // Adjust vertical position
-          left: '50%', // Adjust horizontal position
+          height: '450px', // Adjust size
+          top: '30%', // Adjust vertical position
+          left: '90%', // Adjust horizontal position
           transform: 'translate(-50%, -50%)', // Centers the image at the specified position
-          opacity: 0.9,
+          opacity: 1.0,
           zIndex: 0,
           backgroundImage: 'url("/images/Dawn+Mk-II+Aurora+Flight.png")',
           backgroundSize: 'cover', // Changed to cover to fill the specified dimensions
@@ -92,10 +92,10 @@ export default function DawnAerospace() {
           position: 'absolute',
           width: '600px', // Adjust size
           height: '400px', // Adjust size
-          top: '50%', // Adjust vertical position
-          left: '50%', // Adjust horizontal position
+          top: '30%', // Adjust vertical position
+          left: '-30%', // Adjust horizontal position
           transform: 'translate(-50%, -50%)', // Centers the image at the specified position
-          opacity: 0.9,
+          opacity: 1.0,
           zIndex: 0,
           backgroundImage: 'url("/images/1.png")',
           backgroundSize: 'cover', // Changed to cover to fill the specified dimensions
