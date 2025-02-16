@@ -81,8 +81,8 @@ export default function DawnAerospace() {
           satellite operations.
         </Text>
         <SmartImage
-          src="/images/dawn/safety-gear.jpg"
-          alt="Me wearing safety gear"
+          src="/images/spaceplane2.jpeg"
+          alt="Dawn Aerospace workshop and spaceplane"
         />
       </Column>
 
@@ -113,8 +113,8 @@ export default function DawnAerospace() {
           </Text>
         </div>
         <SmartImage
-          src="/images/dawn/spaceplane.jpg"
-          alt="Me standing next to a spaceplane"
+          src="/images/spaceplane2.jpeg"
+          alt="Dawn Aerospace workshop and spaceplane"
         />
       </Column>
 
@@ -164,12 +164,8 @@ export default function DawnAerospace() {
           These setups allowed us to simulate in-space conditions and continuously iterate on design improvements.
         </Text>
         <SmartImage
-          src="/images/dawn/test-jig-1.jpg"
-          alt="Test jig image 1"
-        />
-        <SmartImage
-          src="/images/dawn/test-jig-2.jpg"
-          alt="Test jig image 2"
+          src="/images/spaceplane2.jpeg"
+          alt="Dawn Aerospace workshop and spaceplane"
         />
       </Column>
 
@@ -182,8 +178,8 @@ export default function DawnAerospace() {
           every component performed reliably.
         </Text>
         <SmartImage
-          src="/images/dawn/cubedrive.jpg"
-          alt="CubeDrive satellite testing"
+          src="/images/spaceplane2.jpeg"
+          alt="Dawn Aerospace workshop and spaceplane"
         />
       </Column>
 
