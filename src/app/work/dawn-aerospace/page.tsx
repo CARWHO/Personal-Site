@@ -151,7 +151,7 @@ export default function DawnAerospace() {
             </Text>
           </Column>
           <SmartImage
-            src="/images/dawn/feedline-1.png"
+            src="/images/1.png"
             alt="Feedline Characterization Banner"
             style={{ width: '40%' }}
           />
@@ -164,7 +164,7 @@ export default function DawnAerospace() {
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
           <SmartImage
-            src="/images/dawn/feedline-2.png"
+            src="/images/1.png"
             alt="Primary Goals Diagram"
             style={{ width: '40%' }}
           />
@@ -236,7 +236,7 @@ export default function DawnAerospace() {
             </Text>
           </Column>
           <SmartImage
-            src="/images/dawn/feedline-3.png"
+            src="/images/1.png"
             alt="Implementation Diagram"
             style={{ width: '40%' }}
           />
@@ -266,7 +266,7 @@ export default function DawnAerospace() {
             </Text>
           </Column>
           <SmartImage
-            src="/images/dawn/feedline-4.png"
+            src="/images/1.png"
             alt="Results Graph 1"
             style={{ width: '40%' }}
           />
@@ -279,7 +279,7 @@ export default function DawnAerospace() {
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
           <SmartImage
-            src="/images/dawn/feedline-5.png"
+            src="/images/1.png"
             alt="Results Graph 2"
             style={{ width: '40%' }}
           />
@@ -340,7 +340,7 @@ export default function DawnAerospace() {
             </Text>
           </Column>
           <SmartImage
-            src="/images/dawn/feedline-6.png"
+            src="/images/1.png"
             alt="Conclusions Diagram"
             style={{ width: '40%' }}
           />
@@ -353,12 +353,12 @@ export default function DawnAerospace() {
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
           <SmartImage
-            src="/images/dawn/feedline-7.png"
+            src="/images/1.png"
             alt="Extra Graph or Diagram"
             style={{ width: '40%' }}
           />
           <SmartImage
-            src="/images/dawn/feedline-8.png"
+            src="/images/1.png"
             alt="Another Extra Graph or Diagram"
             style={{ width: '40%' }}
           />
