@@ -1,5 +1,6 @@
 'use client';
 import { Column, Heading, Text, SmartImage, Input } from "@/once-ui/components";
+import ImageCarousel from "@/components/ImageCarousel";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -81,10 +82,21 @@ export default function DawnAerospace() {
           dive into both software and hardware aspects—bridging theory with real-world
           satellite operations.
         </Text>
-        <img
-          src="/images/spaceplane2.jpeg"
-          alt="Dawn Aerospace workshop and spaceplane"
-          style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
+        <ImageCarousel
+          images={[
+            {
+              src: "/images/spaceplane2.jpeg",
+              alt: "Dawn Aerospace workshop and spaceplane"
+            },
+            {
+              src: "/images/safetygear.png",
+              alt: "Wearing safety gear in the workshop"
+            },
+            {
+              src: "/images/feedlinetestjig.jpeg",
+              alt: "Feedline test jig setup"
+            }
+          ]}
         />
       </Column>
 
