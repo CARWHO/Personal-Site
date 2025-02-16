@@ -87,23 +87,23 @@ export default function DawnAerospace() {
             {
               src: "/images/spaceplane2.png",
               alt: "Dawn Aerospace workshop and spaceplane",
-              initialPosition: { x: 0, y: 50 },
-              initialDimensions: { width: 100, height: 400 },
-              initialOpacity: 1
+              position: { x: -150, y: 0 },
+              dimensions: { width: 140, height: 500 },
+              opacity: 1
             },
             {
               src: "/images/safetygear.png",
               alt: "Wearing safety gear in the workshop",
-              initialPosition: { x: 10, y: 10 },
-              initialDimensions: { width: 100, height: 400 },
-              initialOpacity: 1
+              position: { x: 0, y: 50 },
+              dimensions: { width: 120, height: 450 },
+              opacity: 0.9
             },
             {
               src: "/images/feedlinetestjig.jpeg",
               alt: "Feedline test jig setup",
-              initialPosition: { x: 20, y: 20 },
-              initialDimensions: { width: 100, height: 400 },
-              initialOpacity: 1
+              position: { x: 150, y: 100 },
+              dimensions: { width: 100, height: 400 },
+              opacity: 0.8
             }
           ]}
         />
