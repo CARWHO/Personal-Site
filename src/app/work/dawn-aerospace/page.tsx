@@ -85,7 +85,7 @@ export default function DawnAerospace() {
         <StackedImageShowcase
           images={[
             {
-              src: "/images/spaceplane2.jpeg",
+              src: "/images/spaceplane2.png",
               alt: "Dawn Aerospace workshop and spaceplane"
             },
             {
@@ -128,7 +128,7 @@ export default function DawnAerospace() {
           </Text>
         </div>
         <img
-          src="/images/spaceplane2.jpeg"
+          src="/images/spaceplane2.png"
           alt="Dawn Aerospace workshop and spaceplane"
           style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
         />
@@ -180,7 +180,7 @@ export default function DawnAerospace() {
           These setups allowed us to simulate in-space conditions and continuously iterate on design improvements.
         </Text>
         <img
-          src="/images/spaceplane2.jpeg"
+          src="/images/spaceplane2.png"
           alt="Dawn Aerospace workshop and spaceplane"
           style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
         />
@@ -195,7 +195,7 @@ export default function DawnAerospace() {
           every component performed reliably.
         </Text>
         <img
-          src="/images/spaceplane2.jpeg"
+          src="/images/spaceplane2.png"
           alt="Dawn Aerospace workshop and spaceplane"
           style={{ width: '100%', height: 'auto', borderRadius: '12px' }}
         />
