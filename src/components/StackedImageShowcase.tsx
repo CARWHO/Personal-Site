@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './StackedImageShowcase.module.css';
 
 interface StackedImageShowcaseProps {
@@ -8,10 +8,22 @@ interface StackedImageShowcaseProps {
 
 export default function StackedImageShowcase({ images }: StackedImageShowcaseProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   const handleClick = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    if (mounted) {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }
   };
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className={styles.container} onClick={handleClick}>
