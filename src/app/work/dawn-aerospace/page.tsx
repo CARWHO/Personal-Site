@@ -45,13 +45,29 @@ export default function DawnAerospace() {
   return (
     <Column maxWidth="m" gap="xl" padding="xl">
       {/* Title Section */}
-      <Column gap="m">
-        <Heading variant="display-strong-l">
-          Dawn Aerospace Internship: 400 Hours in In-Space Propulsion
-        </Heading>
-        <Text variant="heading-default-m" onBackground="neutral-weak">
-          Spacecraft Propulsion Development Intern
-        </Text>
+      <Column gap="m" style={{ position: 'relative' }}>
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          opacity: 0.1,
+          zIndex: 0,
+          backgroundImage: 'url("/images/Dawn+Mk-II+Aurora+Flight.png")',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          pointerEvents: 'none'
+        }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <Heading variant="display-strong-l">
+            Dawn Aerospace Internship: 400 Hours in In-Space Propulsion
+          </Heading>
+          <Text variant="heading-default-m" onBackground="neutral-weak">
+            Spacecraft Propulsion Development Intern
+          </Text>
+        </div>
       </Column>
 
       {/* Introduction */}
@@ -70,14 +86,30 @@ export default function DawnAerospace() {
       </Column>
 
       {/* Company Overview */}
-      <Column gap="l">
-        <Heading variant="display-strong-s">Company Overview</Heading>
-        <Text variant="body-default-l">
-          Dawn Aerospace operates internationally with facilities in New Zealand, the
-          Netherlands, and the United States. The company specializes in developing
-          sustainable, high-performance propulsion systems and satellite communication software.
-          Their products range from green propellant thrusters to suborbital spaceplanes.
-        </Text>
+      <Column gap="l" style={{ position: 'relative' }}>
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          opacity: 0.1,
+          zIndex: 0,
+          backgroundImage: 'url("/images/1.png")',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          pointerEvents: 'none'
+        }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <Heading variant="display-strong-s">Company Overview</Heading>
+          <Text variant="body-default-l">
+            Dawn Aerospace operates internationally with facilities in New Zealand, the
+            Netherlands, and the United States. The company specializes in developing
+            sustainable, high-performance propulsion systems and satellite communication software.
+            Their products range from green propellant thrusters to suborbital spaceplanes.
+          </Text>
+        </div>
         <SmartImage
           src="/images/dawn/spaceplane.jpg"
           alt="Me standing next to a spaceplane"
