@@ -48,14 +48,15 @@ export default function DawnAerospace() {
       <Column gap="m" style={{ position: 'relative' }}>
         <div style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
+          width: '600px', // Adjust size
+          height: '400px', // Adjust size
+          top: '50%', // Adjust vertical position
+          left: '50%', // Adjust horizontal position
+          transform: 'translate(-50%, -50%)', // Centers the image at the specified position
           opacity: 0.9,
           zIndex: 0,
           backgroundImage: 'url("/images/Dawn+Mk-II+Aurora+Flight.png")',
-          backgroundSize: 'contain',
+          backgroundSize: 'cover', // Changed to cover to fill the specified dimensions
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           pointerEvents: 'none'
@@ -89,14 +90,15 @@ export default function DawnAerospace() {
       <Column gap="l" style={{ position: 'relative' }}>
         <div style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
+          width: '600px', // Adjust size
+          height: '400px', // Adjust size
+          top: '50%', // Adjust vertical position
+          left: '50%', // Adjust horizontal position
+          transform: 'translate(-50%, -50%)', // Centers the image at the specified position
           opacity: 0.9,
           zIndex: 0,
           backgroundImage: 'url("/images/1.png")',
-          backgroundSize: 'contain',
+          backgroundSize: 'cover', // Changed to cover to fill the specified dimensions
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           pointerEvents: 'none'
