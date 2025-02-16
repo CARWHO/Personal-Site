@@ -112,7 +112,7 @@ export default function About() {
           >
             <Avatar src={person.avatar} size="xl" />
             {person.interests?.length > 0 && (
-              <Flex wrap gap="8">
+              <Flex wrap gap="8" horizontal="center" fitWidth>
                 {person.interests.map((interest, index) => (
                   <Tag key={index} size="l">
                     {interest}
