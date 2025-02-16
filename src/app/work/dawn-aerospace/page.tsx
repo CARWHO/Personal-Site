@@ -87,7 +87,7 @@ export default function DawnAerospace() {
             {
               src: "/images/spaceplane2.png",
               alt: "Dawn Aerospace workshop and spaceplane",
-              initialPosition: { x: 0, y: 0 },
+              initialPosition: { x: 0, y: 50 },
               initialDimensions: { width: 100, height: 400 },
               initialOpacity: 1
             },
