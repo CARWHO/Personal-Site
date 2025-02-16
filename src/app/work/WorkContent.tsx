@@ -81,7 +81,7 @@ export default function WorkContent() {
                 <Flex gap="8" vertical="center">
                   <Heading variant="display-strong-m">{section.company}</Heading>
                   {section.company === "Dawn Aerospace" && (
-                    <LockIcon sx={{ color: 'white', fontSize: '1.5rem' }} />
+                    <LockIcon sx={{ color: 'white', fontSize: '2rem' }} />
                   )}
                 </Flex>
                 <Text variant="body-default-l" onBackground="neutral-weak">

@@ -31,7 +31,7 @@ export default function DawnAerospace() {
           type="password"
           label="Password"
           onChange={(e) => {
-            const response = fetch("/api/authenticate", {
+            fetch("/api/authenticate", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ password: e.target.value }),
@@ -41,31 +41,130 @@ export default function DawnAerospace() {
       </Column>
     );
   }
+
   return (
-    <Column maxWidth="m" gap="xl">
+    <Column maxWidth="m" gap="xl" padding="xl">
+      {/* Title Section */}
       <Column gap="m">
-        <Heading variant="display-strong-l">Dawn Aerospace</Heading>
+        <Heading variant="display-strong-l">
+          Dawn Aerospace Internship: 400 Hours in In-Space Propulsion
+        </Heading>
         <Text variant="heading-default-m" onBackground="neutral-weak">
           Spacecraft Propulsion Development Intern
         </Text>
       </Column>
-      
+
+      {/* Introduction */}
       <Column gap="l">
         <Text variant="body-default-l">
-          At Dawn Aerospace, I work on developing next-generation propulsion systems for CubeSats. 
-          This role involves both hardware and software development, focusing on system integration 
-          and performance optimization.
+          Over a three-month period, I completed a 400-hour internship at Dawn Aerospace,
+          a company dedicated to advancing in-space propulsion technology for satellites
+          and aerospace applications. My role as a Software Engineer Intern allowed me to
+          dive into both software and hardware aspects—bridging theory with real-world
+          satellite operations.
         </Text>
+        <SmartImage
+          src="/images/dawn/safety-gear.jpg"
+          alt="Me wearing safety gear"
+        />
+      </Column>
 
-        <Column gap="m">
-          <Heading variant="display-strong-s">Key Responsibilities</Heading>
-          <Column as="ul" gap="s">
-            <Text as="li">Design and development of propulsion system components</Text>
-            <Text as="li">Integration of control systems and telemetry</Text>
-            <Text as="li">Performance testing and optimization</Text>
-            <Text as="li">Documentation and technical reporting</Text>
-          </Column>
+      {/* Company Overview */}
+      <Column gap="l">
+        <Heading variant="display-strong-s">Company Overview</Heading>
+        <Text variant="body-default-l">
+          Dawn Aerospace operates internationally with facilities in New Zealand, the
+          Netherlands, and the United States. The company specializes in developing
+          sustainable, high-performance propulsion systems and satellite communication software.
+          Their products range from green propellant thrusters to suborbital spaceplanes.
+        </Text>
+        <SmartImage
+          src="/images/dawn/spaceplane.jpg"
+          alt="Me standing next to a spaceplane"
+        />
+      </Column>
+
+      {/* Role & Responsibilities */}
+      <Column gap="l">
+        <Heading variant="display-strong-s">My Role & Responsibilities</Heading>
+        <Text variant="body-default-l">
+          As part of the ISP (in-space propulsion) software team, I worked on testing and
+          developing components critical to satellite propulsion. My key responsibilities
+          included:
+        </Text>
+        <Column as="ul" gap="s">
+          <Text as="li" variant="body-default-l">
+            Working on satellite communication software and hardware to validate propulsion components.
+          </Text>
+          <Text as="li" variant="body-default-l">
+            Participating in code maintenance, software builds, and integration testing.
+          </Text>
+          <Text as="li" variant="body-default-l">
+            Reworking the DawnLink codebase to enable Windows compatibility (previously Linux-only).
+          </Text>
+          <Text as="li" variant="body-default-l">
+            Creating comprehensive documentation—user guides and installation manuals—for internal tools.
+          </Text>
+          <Text as="li" variant="body-default-l">
+            Assisting in the setup and monitoring of thruster test rigs, ensuring precise sensor data capture.
+          </Text>
         </Column>
+      </Column>
+
+      {/* Tools, Workflow & Collaboration */}
+      <Column gap="l">
+        <Heading variant="display-strong-s">Tools, Workflow & Collaboration</Heading>
+        <Text variant="body-default-l">
+          My day-to-day work was highly collaborative. I coordinated with senior software and electrical engineers,
+          data scientists, and project managers through agile stand-ups and daily check-ins. We used tools such as Wrike for
+          project management, Slack for quick communications, and a suite of engineering tools (VS Code, SolidWorks, KiCad,
+          and 3D printers) to prototype and test our systems.
+        </Text>
+      </Column>
+
+      {/* Test Jigs & Equipment */}
+      <Column gap="l">
+        <Heading variant="display-strong-s">Test Jigs & Equipment</Heading>
+        <Text variant="body-default-l">
+          Integral to our quality assurance were custom-built test jigs used for rigorous propulsion component evaluation.
+          These setups allowed us to simulate in-space conditions and continuously iterate on design improvements.
+        </Text>
+        <SmartImage
+          src="/images/dawn/test-jig-1.jpg"
+          alt="Test jig image 1"
+        />
+        <SmartImage
+          src="/images/dawn/test-jig-2.jpg"
+          alt="Test jig image 2"
+        />
+      </Column>
+
+      {/* CubeDrive Satellite Testing */}
+      <Column gap="l">
+        <Heading variant="display-strong-s">CubeDrive Satellite Testing</Heading>
+        <Text variant="body-default-l">
+          One of the most engaging parts of my internship was testing the CubeDrive satellite system. I assisted
+          in the evaluation of propulsion and communication systems under simulated in-space conditions, ensuring that
+          every component performed reliably.
+        </Text>
+        <SmartImage
+          src="/images/dawn/cubedrive.jpg"
+          alt="CubeDrive satellite testing"
+        />
+      </Column>
+
+      {/* Reflections & Key Learnings */}
+      <Column gap="l">
+        <Heading variant="display-strong-s">Reflections & Key Learnings</Heading>
+        <Text variant="body-default-l">
+          This hands-on experience allowed me to bridge the gap between academic theory and practical engineering.
+          I gained valuable insights into hardware-software integration, agile problem-solving, and the importance
+          of detailed documentation and cross-functional collaboration in a fast-paced aerospace environment.
+        </Text>
+        <Text variant="body-default-l">
+          Overall, my time at Dawn Aerospace not only solidified my passion for engineering and innovation but also
+          prepared me for future challenges in the aerospace sector.
+        </Text>
       </Column>
     </Column>
   );
