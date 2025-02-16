@@ -1,5 +1,6 @@
 'use client';
 import { Column, Heading, Text, SmartImage, Input } from "@/once-ui/components";
+import ImageControl from "@/components/ImageControl";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -81,47 +82,31 @@ export default function DawnAerospace() {
           dive into both software and hardware aspects—bridging theory with real-world
           satellite operations.
         </Text>
-        <div style={{ position: 'relative', width: '100%', height: '400px' }}>
-          <img
-            src="/images/spaceplane2.png"
-            alt="Dawn Aerospace workshop and spaceplane"
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              borderRadius: '12px',
-              zIndex: 3,
-              transform: 'translate(0px, 0px)',
-            }}
-          />
-          <img
-            src="/images/safetygear.png"
-            alt="Wearing safety gear in the workshop"
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              borderRadius: '12px',
-              zIndex: 2,
-              transform: 'translate(10px, 10px)',
-            }}
-          />
-          <img
-            src="/images/feedlinetestjig.jpeg"
-            alt="Feedline test jig setup"
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              borderRadius: '12px',
-              zIndex: 1,
-              transform: 'translate(20px, 20px)',
-            }}
-          />
-        </div>
+        <ImageControl
+          images={[
+            {
+              src: "/images/spaceplane2.png",
+              alt: "Dawn Aerospace workshop and spaceplane",
+              initialPosition: { x: 0, y: 0 },
+              initialDimensions: { width: 100, height: 400 },
+              initialOpacity: 1
+            },
+            {
+              src: "/images/safetygear.png",
+              alt: "Wearing safety gear in the workshop",
+              initialPosition: { x: 10, y: 10 },
+              initialDimensions: { width: 100, height: 400 },
+              initialOpacity: 1
+            },
+            {
+              src: "/images/feedlinetestjig.jpeg",
+              alt: "Feedline test jig setup",
+              initialPosition: { x: 20, y: 20 },
+              initialDimensions: { width: 100, height: 400 },
+              initialOpacity: 1
+            }
+          ]}
+        />
       </Column>
 
       {/* Company Overview */}
