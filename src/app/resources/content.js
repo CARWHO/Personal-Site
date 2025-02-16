@@ -11,6 +11,7 @@ const person = {
   avatar: "/images/avatar.jpg",
   location: "Pacific/Auckland", // Expecting the IANA time zone identifier
   languages: ["English"], // Optional
+  email: "example@gmail.com", // Added for calendar integration
 };
 
 // Newsletter Configuration
