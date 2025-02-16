@@ -111,11 +111,11 @@ export default function About() {
             horizontal="center"
           >
             <Avatar src={person.avatar} size="xl" />
-            {person.languages.length > 0 && (
+            {person.interests?.length > 0 && (
               <Flex wrap gap="8">
-                {person.languages.map((language, index) => (
+                {person.interests.map((interest, index) => (
                   <Tag key={index} size="l">
-                    {language}
+                    {interest}
                   </Tag>
                 ))}
               </Flex>

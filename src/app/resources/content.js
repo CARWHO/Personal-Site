@@ -10,7 +10,7 @@ const person = {
   role: "Electrical Engineering Student at UC",
   avatar: "/images/avatar.jpg",
   location: "Pacific/Auckland", // Expecting the IANA time zone identifier
-  languages: ["English"], // Optional
+  interests: ["Enduro Mountain Bike Racing", "Long Distance Running", "Creating Things"],
   email: "kahuhutton.business@gmail.com", // Added for calendar integration
 };
 
