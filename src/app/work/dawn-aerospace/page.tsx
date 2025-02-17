@@ -315,15 +315,6 @@ export default function DawnAerospace() {
           <Column style={{ width: '40%', gap: '30px' }}>
             <img
               src="/images/grafana.png"
-              alt="Results Graph 1"
-              style={{ 
-                width: '100%',
-                borderRadius: '12px',
-                objectFit: 'cover'
-              }}
-            />
-            <img
-              src="/images/grafana.png"
               alt="Results Graph 2"
               style={{ 
                 width: '100%',
