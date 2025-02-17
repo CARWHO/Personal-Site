@@ -144,7 +144,7 @@ export default function DawnAerospace() {
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
           <Column style={{ width: '55%' }}>
-            <Heading variant="display-strong-l" style={{ marginBottom: '16px' }}>
+            <Heading variant="display-strong-l" style={{ marginBottom: '32px' }}>
               Project #1 Feedline Characterization
             </Heading>
             <Text variant="body-default-l">
@@ -154,7 +154,7 @@ export default function DawnAerospace() {
           </Column>
         </Column>
 
-        {/* Row #2: The primary goals were: section */}
+        {/* Row #2: The primary goals were: section (center alignment removed) */}
         <Column style={{ width: '100%' }}>
           <Text variant="display-strong-s" style={{ marginBottom: '16px' }}>
             The primary goals were:
@@ -185,6 +185,13 @@ export default function DawnAerospace() {
           </Text>
         </Column>
 
+        {/* New Row: Moved up the "To achieve these objectives..." text with larger font */}
+        <Column style={{ width: '100%', marginBottom: '40px' }}>
+          <Heading variant="display-strong-m">
+            To achieve these objectives, I undertook the following tasks:
+          </Heading>
+        </Column>
+
         {/* Row #3: Text (left) + Image (right) */}
         <Column
           horizontal="space-between"
@@ -193,19 +200,16 @@ export default function DawnAerospace() {
         >
           <Column style={{ width: '55%' }}>
             <Text variant="body-default-l">
-              <strong>To achieve these objectives, I undertook the following tasks:</strong>
-            </Text>
-            <Text variant="body-default-l">
               <ul style={{ paddingLeft: '1em' }}>
                 <li style={{ transform: 'translateY(-20px)' }}>
                   <strong>Test Jig Development:</strong><br />
                   Designed and built a custom test jig baseplate, incorporating 3D-printed components. All parts were certified for operation within a vacuum chamber, ensuring compatibility with our experimental environment.
                 </li>
-                <li style={{ transform: 'translateY(65px)' }}>
+                <li style={{ transform: 'translateY(120px)' }}>
                   <strong>Safe Integration in Vacuum Environment:</strong><br />
                   Engineered and produced specialized cables designed to safely interface within the vacuum chamber, maintaining system integrity and performance.
                 </li>
-                <li style={{ transform: 'translateY(180px)' }}>
+                <li style={{ transform: 'translateY(250px)' }}>
                   <strong>Software Development &amp; Systems Integration:</strong><br />
                   Developed a bespoke GUI to interface with feedline peripherals (thruster, tank electronics) and the main controller node, and set up a local YAMCS server on Windows by refactoring DawnLink from Linux. Together, these efforts streamlined data collection and control while ensuring seamless system integration.
                 </li>
