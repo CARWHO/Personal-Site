@@ -184,6 +184,16 @@ export default function DawnAerospace() {
               style={{ 
                 width: '100%',
                 borderRadius: '12px',
+                objectFit: 'cover',
+                marginBottom: '16px'
+              }}
+            />
+            <img
+              src="/images/3.png"
+              alt="Sensor Comparison"
+              style={{ 
+                width: '100%',
+                borderRadius: '12px',
                 objectFit: 'cover'
               }}
             />
