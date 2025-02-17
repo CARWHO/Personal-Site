@@ -150,7 +150,7 @@ export default function DawnAerospace() {
               develop a deeper understanding of the feedline’s thermal and electrical performance.
             </Text>
           </Column>
-          <img
+          {/* <img
             src="/images/1.png"
             alt="Feedline Characterization Banner"
             style={{ 
@@ -158,7 +158,7 @@ export default function DawnAerospace() {
               borderRadius: '12px',
               objectFit: 'cover'
             }}
-          />
+          /> */}
         </Column>
 
         {/* Row #2: Image (left) + Text (right) */}
@@ -168,7 +168,7 @@ export default function DawnAerospace() {
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
           <img
-            src="/images/1.png"
+            src="/images/2.png"
             alt="Primary Goals Diagram"
             style={{ 
               width: '40%',
@@ -184,7 +184,7 @@ export default function DawnAerospace() {
               <ul>
                 <li>
                   <strong>Data Acquisition and Control:</strong><br />
-                  Establish a connection from the feedline to a custom GUI to both read data and control the system.
+                  Establish a connection from the feedline to a custom GUI for reading and controlling the system.
                 </li>
                 <li>
                   <strong>Heat Transfer Analysis:</strong><br />
