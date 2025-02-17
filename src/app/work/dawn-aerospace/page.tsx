@@ -265,15 +265,35 @@ export default function DawnAerospace() {
               </ol>
             </Text>
           </Column>
-          <img
-            src="/images/feedlinetestjig.jpeg"
-            alt="Implementation Diagram"
-            style={{ 
-              width: '40%',
-              borderRadius: '12px',
-              objectFit: 'cover'
-            }}
-          />
+          <Column style={{ width: '40%', gap: '10px' }}>
+            <img
+              src="/images/feedlinetestjig.jpeg"
+              alt="Implementation Diagram"
+              style={{ 
+                width: '100%',
+                borderRadius: '12px',
+                objectFit: 'cover'
+              }}
+            />
+            <img
+              src="/images/feedlinetestjig.jpeg"
+              alt="Implementation Diagram"
+              style={{ 
+                width: '100%',
+                borderRadius: '12px',
+                objectFit: 'cover'
+              }}
+            />
+            <img
+              src="/images/feedlinetestjig.jpeg"
+              alt="Implementation Diagram"
+              style={{ 
+                width: '100%',
+                borderRadius: '12px',
+                objectFit: 'cover'
+              }}
+            />
+          </Column>
         </Column>
 
         {/* Row #4: Title & partial text (left) + Image (right) */}
