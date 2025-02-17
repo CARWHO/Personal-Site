@@ -319,15 +319,35 @@ export default function DawnAerospace() {
               most significant, helping refine insulation and design strategies for improved heat retention.
             </Text>
           </Column>
-          <img
-            src="/images/grafana.png"
-            alt="Results Graph 1"
-            style={{ 
-              width: '40%',
-              borderRadius: '12px',
-              objectFit: 'cover'
-            }}
-          />
+          <Column style={{ width: '40%', gap: '30px' }}>
+            <img
+              src="/images/grafana.png"
+              alt="Results Graph 1"
+              style={{ 
+                width: '100%',
+                borderRadius: '12px',
+                objectFit: 'cover'
+              }}
+            />
+            <img
+              src="/images/grafana.png"
+              alt="Results Graph 2"
+              style={{ 
+                width: '100%',
+                borderRadius: '12px',
+                objectFit: 'cover'
+              }}
+            />
+            <img
+              src="/images/grafana.png"
+              alt="Results Graph 3"
+              style={{ 
+                width: '100%',
+                borderRadius: '12px',
+                objectFit: 'cover'
+              }}
+            />
+          </Column>
         </Column>
 
         {/* Row #5: Image (left) + partial text (right) */}
