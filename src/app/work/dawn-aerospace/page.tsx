@@ -137,7 +137,7 @@ export default function DawnAerospace() {
       {/* --- NEW CONTENT BEGINS HERE --- */}
       <Column gap="xl">
 
-        {/* Row #1: Title (left) + (Optional Image on right removed) */}
+        {/* Row #1: Title (left) with sp1.png image (right) */}
         <Column
           horizontal="space-between"
           gap="l"
@@ -152,9 +152,16 @@ export default function DawnAerospace() {
               develop a deeper understanding of the feedline’s thermal and electrical performance.
             </Text>
           </Column>
+          <Column style={{ width: '40%' }}>
+            <SmartImage
+              src="/images/sp1.png"
+              alt="SP1 Image"
+              style={{ width: '100%', transform: 'rotate(0deg)', cursor: 'move' }}
+            />
+          </Column>
         </Column>
 
-        {/* Row #2: The primary goals were: section (center alignment removed) */}
+        {/* Row #2: The primary goals were: section */}
         <Column style={{ width: '100%' }}>
           <Text variant="display-strong-s" style={{ marginBottom: '16px' }}>
             The primary goals were:
