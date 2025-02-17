@@ -197,15 +197,15 @@ export default function DawnAerospace() {
             </Text>
             <Text variant="body-default-l">
               <ul style={{ paddingLeft: '1em' }}>
-                <li>
+                <li style={{ transform: 'translateY(-20px)' }}>
                   <strong>Test Jig Development:</strong><br />
                   Designed and built a custom test jig baseplate, incorporating 3D-printed components. All parts were certified for operation within a vacuum chamber, ensuring compatibility with our experimental environment.
                 </li>
-                <li>
+                <li style={{ transform: 'translateY(10px)' }}>
                   <strong>Safe Integration in Vacuum Environment:</strong><br />
                   Engineered and produced specialized cables designed to safely interface within the vacuum chamber, maintaining system integrity and performance.
                 </li>
-                <li>
+                <li style={{ transform: 'translateY(-15px)' }}>
                   <strong>Software Development &amp; Systems Integration:</strong><br />
                   Developed a bespoke GUI to interface with the feedline peripherals—including the thruster and tank electronics—and the main controller node. Simultaneously, set up a local YAMCS server on Windows, which required refactoring DawnLink from Linux to Windows. These combined efforts streamlined data collection and control operations while ensuring seamless integration with existing systems.
                 </li>
