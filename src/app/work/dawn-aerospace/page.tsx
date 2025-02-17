@@ -177,8 +177,8 @@ export default function DawnAerospace() {
             }}
           />
           <Column style={{ width: '55%' }}>
-            <Text variant="body-default-l">
-              <strong>The primary goals were:</strong>
+            <Text variant="display-strong-s" style={{ marginBottom: '16px' }}>
+              The primary goals were:
             </Text>
             <Text variant="body-default-l">
               <ul>
