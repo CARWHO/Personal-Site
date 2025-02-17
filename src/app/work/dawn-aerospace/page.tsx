@@ -266,7 +266,7 @@ export default function DawnAerospace() {
             </Text>
           </Column>
           <img
-            src="/images/1.png"
+            src="/images/feedlinetestjig.jpeg"
             alt="Implementation Diagram"
             style={{ 
               width: '40%',
