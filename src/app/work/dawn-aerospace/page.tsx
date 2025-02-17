@@ -159,8 +159,8 @@ export default function DawnAerospace() {
               width: '50%',
               borderRadius: '12px',
               objectFit: 'cover',
-              transform: 'translateY(-20px)',
-              // boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
+              transform: 'translateY(-20px) rotate(-5deg)',
+              boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
             }}
           />
         </Column>
@@ -235,7 +235,8 @@ export default function DawnAerospace() {
                 width: '100%',
                 borderRadius: '12px',
                 objectFit: 'cover',
-                transform: 'translateY(-20px)'
+                transform: 'translateY(-20px)',
+                boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
               }}
             />
             <img
@@ -245,7 +246,8 @@ export default function DawnAerospace() {
                 width: '100%',
                 borderRadius: '12px',
                 objectFit: 'cover',
-                transform: 'translateY(-30px)'
+                transform: 'translateY(-30px)',
+                boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
               }}
             />
             <img
@@ -255,7 +257,8 @@ export default function DawnAerospace() {
                 width: '100%',
                 borderRadius: '12px',
                 objectFit: 'cover',
-                transform: 'translateY(-10px)'
+                transform: 'translateY(-10px)',
+                boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
               }}
             />
           </Column>
