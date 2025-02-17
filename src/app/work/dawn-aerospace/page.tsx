@@ -303,15 +303,15 @@ export default function DawnAerospace() {
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
           <Column style={{ width: '55%' }}>
-            <Heading variant="display-strong-m">Results and analysis from testing</Heading>
-            <Text variant="body-default-l">
+            <Heading variant="display-strong-m" style={{ marginBottom: '24px' }}>Results and analysis from testing</Heading>
+            <Text variant="body-default-l" style={{ marginBottom: '24px' }}>
               1. <strong>Fluid Temperature Increase with Heater Activation</strong><br />
               <em>Graph: “Fluid Temperature Increase with Heater Activation”</em><br />
               ○ The graph plots fluid temperature against time, showing a clear increase once the heater is activated.<br />
               ○ <strong>Key Insight:</strong> The temperature curve confirms successful correlation between heater 
               activation and fluid temperature rise, validating our heat transfer analysis goals.
             </Text>
-            <Text variant="body-default-l">
+            <Text variant="body-default-l" style={{ marginTop: '24px', marginBottom: '24px' }}>
               2. <strong>Temperature Losses Along the Feedline</strong><br />
               <em>Graph: “Temperature Losses Along the Feedline”</em><br />
               ○ This plot compares input and output temperatures at multiple points along the straight section.<br />
