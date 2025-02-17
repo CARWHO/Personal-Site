@@ -349,15 +349,26 @@ export default function DawnAerospace() {
           gap="l"
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
-          <img
-            src="/images/3.png"
-            alt="Results Graph 2"
-            style={{ 
-              width: '40%',
-              borderRadius: '12px',
-              objectFit: 'cover'
-            }}
-          />
+          <Column style={{ width: '40%', gap: '10px' }}>
+            <img
+              src="/images/3.png"
+              alt="Results Graph 2"
+              style={{ 
+                width: '100%',
+                borderRadius: '12px',
+                objectFit: 'cover'
+              }}
+            />
+            <img
+              src="/images/3.png"
+              alt="Results Graph 3"
+              style={{ 
+                width: '100%',
+                borderRadius: '12px',
+                objectFit: 'cover'
+              }}
+            />
+          </Column>
           <Column style={{ width: '55%' }}>
             <Text variant="body-default-l">
               <ul>
