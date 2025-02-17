@@ -152,13 +152,17 @@ export default function DawnAerospace() {
               develop a deeper understanding of the feedline’s thermal and electrical performance.
             </Text>
           </Column>
-          <Column style={{ width: '40%' }}>
-            <SmartImage
-              src="/images/sp1.png"
-              alt="SP1 Image"
-              style={{ width: '100%', transform: 'rotate(0deg)', cursor: 'move' }}
-            />
-          </Column>
+          <img
+            src="/images/sp1.png"
+            alt="Feedline System"
+            style={{ 
+              width: '40%',
+              borderRadius: '12px',
+              objectFit: 'cover',
+              transform: 'translateY(-20px)',
+              boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
+            }}
+          />
         </Column>
 
         {/* Row #2: The primary goals were: section */}
