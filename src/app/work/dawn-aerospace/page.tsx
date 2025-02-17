@@ -389,71 +389,31 @@ export default function DawnAerospace() {
           </Column>
         </Column>
 
-        {/* Row #6: Text (left) + Image (right) */}
-        <Column
-          horizontal="space-between"
-          gap="l"
-          style={{ flexDirection: 'row', alignItems: 'flex-start' }}
-        >
-          <Column style={{ width: '55%' }}>
-            <Heading variant="display-strong-m">Conclusions</Heading>
-            <ul>
-              <li>
-                <strong>Data Acquisition &amp; Control:</strong> The custom GUI and vacuum-safe hardware setup enabled seamless data logging and system control, meeting the first project objective.
-              </li>
-              <li>
-                <strong>Thermal Performance:</strong> The fluid temperature profiles and feedline loss measurements confirm that the heater effectively raises fluid temperature, while also pinpointing areas of significant thermal loss.
-              </li>
-              <li>
-                <strong>Sensor Validation:</strong> Simultaneous readings from thermocouples and RTDs validate that both sensor types offer reliable data, with minor variations that can be addressed through calibration.
-              </li>
-              <li>
-                <strong>Power Monitoring:</strong> The integrated monitoring of voltage, current, and power consumption completes a holistic view of the heater’s operational profile, helping refine system-level power management.
-              </li>
-              <li>
-                <strong>Project Integration:</strong> All software and hardware contributions were incorporated into the Dawn Aerospace ISP release, making these capabilities available to internal teams and external customers.
-              </li>
-            </ul>
-            <Text variant="body-default-l">
-              Through this project, we achieved a deeper understanding of the feedline’s behavior under operational conditions. The collected data not only verifies the effectiveness of our thermal management strategies but also informs future design optimizations for improved performance and reliability.
-            </Text>
-          </Column>
-          <img
-            src="/images/1.png"
-            alt="Conclusions Diagram"
-            style={{ 
-              width: '40%',
-              borderRadius: '12px',
-              objectFit: 'cover'
-            }}
-          />
+        {/* Row #6: Full-width Conclusions */}
+        <Column style={{ width: '100%' }}>
+          <Heading variant="display-strong-m">Conclusions</Heading>
+          <ul>
+            <li>
+              <strong>Data Acquisition &amp; Control:</strong> The custom GUI and vacuum-safe hardware setup enabled seamless data logging and system control, meeting the first project objective.
+            </li>
+            <li>
+              <strong>Thermal Performance:</strong> The fluid temperature profiles and feedline loss measurements confirm that the heater effectively raises fluid temperature, while also pinpointing areas of significant thermal loss.
+            </li>
+            <li>
+              <strong>Sensor Validation:</strong> Simultaneous readings from thermocouples and RTDs validate that both sensor types offer reliable data, with minor variations that can be addressed through calibration.
+            </li>
+            <li>
+              <strong>Power Monitoring:</strong> The integrated monitoring of voltage, current, and power consumption completes a holistic view of the heater’s operational profile, helping refine system-level power management.
+            </li>
+            <li>
+              <strong>Project Integration:</strong> All software and hardware contributions were incorporated into the Dawn Aerospace ISP release, making these capabilities available to internal teams and external customers.
+            </li>
+          </ul>
+          <Text variant="body-default-l">
+            Through this project, we achieved a deeper understanding of the feedline’s behavior under operational conditions. The collected data not only verifies the effectiveness of our thermal management strategies but also informs future design optimizations for improved performance and reliability.
+          </Text>
         </Column>
 
-        {/* If you still have images 7.png and 8.png left, add more rows in the same alternating style */}
-        <Column
-          horizontal="space-between"
-          gap="l"
-          style={{ flexDirection: 'row', alignItems: 'flex-start' }}
-        >
-          <img
-            src="/images/1.png"
-            alt="Extra Graph or Diagram"
-            style={{ 
-              width: '40%',
-              borderRadius: '12px',
-              objectFit: 'cover'
-            }}
-          />
-          <img
-            src="/images/1.png"
-            alt="Another Extra Graph or Diagram"
-            style={{ 
-              width: '40%',
-              borderRadius: '12px',
-              objectFit: 'cover'
-            }}
-          />
-        </Column>
       </Column>
     </Column>
   );
