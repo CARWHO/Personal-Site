@@ -159,7 +159,7 @@ export default function DawnAerospace() {
               width: '50%',
               borderRadius: '12px',
               objectFit: 'cover',
-              transform: 'translateY(-20px) rotate(-5deg)',
+              transform: 'translateY(30px) rotate(-15deg)',
               boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
             }}
           />
@@ -197,8 +197,8 @@ export default function DawnAerospace() {
         </Column>
 
         {/* New Row: Moved up the "To achieve these objectives..." text with larger font */}
-        <Column style={{ width: '100%', marginBottom: '40px' }}>
-          <Heading variant="display-strong-m">
+        <Column style={{ width: '100%', marginBottom: '-30px' }}>
+          <Heading variant="display-strong-s">
             To achieve these objectives, I undertook the following tasks:
           </Heading>
         </Column>
@@ -222,7 +222,7 @@ export default function DawnAerospace() {
                 </li>
                 <li style={{ transform: 'translateY(250px)' }}>
                   <strong>Software Development &amp; Systems Integration:</strong><br />
-                  Developed a bespoke GUI to interface with feedline peripherals (thruster, tank electronics) and the main controller node, and set up a local YAMCS server on Windows by refactoring DawnLink from Linux. Together, these efforts streamlined data collection and control while ensuring seamless system integration.
+                  Developed a bespoke GUI to interface with feedline peripherals (thruster, tank electronics) and the main controller node, and set up a local YAMCS server. Together, these efforts streamlined data collection and control while ensuring seamless system integration.
                 </li>
               </ul>
             </Text>
@@ -264,125 +264,148 @@ export default function DawnAerospace() {
           </Column>
         </Column>
 
-        {/* Row #4: Title & partial text (left) + Image (right) */}
-        <Column
-          horizontal="space-between"
-          gap="l"
-          style={{ flexDirection: 'row', alignItems: 'flex-start' }}
-        >
-          <Column style={{ width: '55%' }}>
-            <Heading variant="display-strong-m" style={{ marginBottom: '24px' }}>Results and analysis from testing</Heading>
-            <Text variant="body-default-l" style={{ marginBottom: '24px' }}>
-              <ul>
-                <li>
-                  <strong>Fluid Temperature Increase with Heater Activation</strong><br />
-                  <em>Graph: “Fluid Temperature Increase with Heater Activation”</em><br />
-                  The graph plots fluid temperature against time, showing a clear increase once the heater is activated.<br />
-                  <strong>Key Insight:</strong> The temperature curve confirms successful correlation between heater activation and fluid temperature rise, validating our heat transfer analysis goals.
-                </li>
-                <li style={{ marginTop: '24px', marginBottom: '24px' }}>
-                  <strong>Temperature Losses Along the Feedline</strong><br />
-                  <em>Graph: “Temperature Losses Along the Feedline”</em><br />
-                  This plot compares input and output temperatures at multiple points along the straight section.<br />
-                  <strong>Key Insight:</strong> A progressive drop in temperature indicates where thermal losses are most significant, helping refine insulation and design strategies for improved heat retention.
-                </li>
-              </ul>
-            </Text>
-          </Column>
-          <Column style={{ width: '40%', gap: '30px' }}>
-            <img
-              src="/images/grafana.png"
-              alt="Results Graph 2"
-              style={{ 
-                width: '100%',
-                borderRadius: '12px',
-                objectFit: 'cover'
-              }}
-            />
-            <img
-              src="/images/grafana.png"
-              alt="Results Graph 3"
-              style={{ 
-                width: '100%',
-                borderRadius: '12px',
-                objectFit: 'cover'
-              }}
-            />
-          </Column>
-        </Column>
-
-        {/* Row #5: Image (left) + partial text (right) */}
-        <Column
-          horizontal="space-between"
-          gap="l"
-          style={{ flexDirection: 'row', alignItems: 'flex-start' }}
-        >
-          <Column style={{ width: '40%', gap: '10px' }}>
-            <img
-              src="/images/3.png"
-              alt="Results Graph 2"
-              style={{ 
-                width: '100%',
-                borderRadius: '12px',
-                objectFit: 'cover'
-              }}
-            />
-            <img
-              src="/images/3.png"
-              alt="Results Graph 3"
-              style={{ 
-                width: '100%',
-                borderRadius: '12px',
-                objectFit: 'cover'
-              }}
-            />
-          </Column>
-          <Column style={{ width: '55%' }}>
-            <Text variant="body-default-l">
-              <ul>
-                <li>
-                  <strong>Thermocouple vs. RTD Comparison</strong><br />
-                  <em>Graph: “Thermocouple vs. RTD Comparison”</em><br />
-                  Scatter points show readings from thermocouples versus RTDs, with an ideal 1:1 reference line.<br />
-                  <strong>Key Insight:</strong> The close clustering around the diagonal suggests that both sensor types provide consistent measurements. Minor deviations highlight potential calibration offsets or response time differences, guiding future sensor selection and calibration practices.
-                </li>
-                <li>
-                  <strong>Heater Power Consumption</strong><br />
-                  <em>Graph: “Heater Power Consumption”</em><br />
-                  Voltage, current, and power are plotted over time. Noticeable jumps in current and power align with heater activation.<br />
-                  <strong>Key Insight:</strong> By tracking real-time power usage, we can evaluate the efficiency of the heating system and ensure safe operating parameters. This data is also valuable for refining power budgets in flight systems.
-                </li>
-              </ul>
-            </Text>
-          </Column>
-        </Column>
-
-        {/* Row #6: Full-width Conclusions */}
-        <Column style={{ width: '100%' }}>
-          <Heading variant="display-strong-m">Conclusions</Heading>
+    {/* Row #4: Title & partial text (left) + Image (right) */}
+    <Column
+      horizontal="space-between"
+      gap="l"
+      style={{ flexDirection: 'row', alignItems: 'flex-start' }}
+    >
+      <Column style={{ width: '55%' }}>
+        <Heading variant="display-strong-m" style={{ marginBottom: '24px' }}>
+          Results and analysis from testing
+        </Heading>
+        <Text variant="body-default-l" style={{ marginBottom: '24px' }}>
           <ul>
             <li>
-              <strong>Data Acquisition &amp; Control:</strong> The custom GUI and vacuum-safe hardware setup enabled seamless data logging and system control, meeting the first project objective.
+              <strong>Fluid Temperature Increase with Heater Activation</strong>
+              <br />
+              <em>Graph: “Fluid Temperature Increase with Heater Activation”</em>
+              <br />
+              The graph plots fluid temperature against time, showing a clear increase once the heater is activated.
+              <br />
+              <strong>Key Insight:</strong> The temperature curve confirms successful correlation between heater activation and fluid temperature rise, validating our heat transfer analysis goals.
             </li>
-            <li>
-              <strong>Thermal Performance:</strong> The fluid temperature profiles and feedline loss measurements confirm that the heater effectively raises fluid temperature, while also pinpointing areas of significant thermal loss.
-            </li>
-            <li>
-              <strong>Sensor Validation:</strong> Simultaneous readings from thermocouples and RTDs validate that both sensor types offer reliable data, with minor variations that can be addressed through calibration.
-            </li>
-            <li>
-              <strong>Power Monitoring:</strong> The integrated monitoring of voltage, current, and power consumption completes a holistic view of the heater’s operational profile, helping refine system-level power management.
-            </li>
-            <li>
-              <strong>Project Integration:</strong> All software and hardware contributions were incorporated into the Dawn Aerospace ISP release, making these capabilities available to internal teams and external customers.
+            <li style={{ marginTop: '24px', marginBottom: '24px' }}>
+              <strong>Temperature Losses Along the Feedline</strong>
+              <br />
+              <em>Graph: “Temperature Losses Along the Feedline”</em>
+              <br />
+              This plot compares input and output temperatures at multiple points along the straight section.
+              <br />
+              <strong>Key Insight:</strong> A progressive drop in temperature indicates where thermal losses are most significant, helping refine insulation and design strategies for improved heat retention.
             </li>
           </ul>
-          <Text variant="body-default-l">
-            Through this project, we achieved a deeper understanding of the feedline’s behavior under operational conditions. The collected data not only verifies the effectiveness of our thermal management strategies but also informs future design optimizations for improved performance and reliability.
-          </Text>
-        </Column>
-
+        </Text>
       </Column>
+      <Column style={{ width: '40%', gap: '30px' }}>
+        <SmartImage
+          src="/images/grafana.png"
+          alt="Results Graph 2"
+          draggable
+          style={{
+            width: '100%',
+            borderRadius: '12px',
+            objectFit: 'cover'
+          }}
+          customPosition={{ top: '0px' }}  // Editable vertical position from backend
+          customSize={{ width: '100%' }}   // Editable size from backend
+        />
+        <SmartImage
+          src="/images/grafana.png"
+          alt="Results Graph 3"
+          draggable
+          style={{
+            width: '100%',
+            borderRadius: '12px',
+            objectFit: 'cover'
+          }}
+          customPosition={{ top: '0px' }}  // Editable vertical position from backend
+          customSize={{ width: '100%' }}   // Editable size from backend
+        />
+      </Column>
+    </Column>
+
+    {/* Row #5: Image (left) + partial text (right) */}
+    <Column
+      horizontal="space-between"
+      gap="l"
+      style={{ flexDirection: 'row', alignItems: 'flex-start' }}
+    >
+      <Column style={{ width: '40%', gap: '10px' }}>
+        <SmartImage
+          src="/images/3.png"
+          alt="Results Graph 2"
+          draggable
+          style={{
+            width: '100%',
+            borderRadius: '12px',
+            objectFit: 'cover'
+          }}
+          customPosition={{ top: '0px' }}
+          customSize={{ width: '100%' }}
+        />
+        <SmartImage
+          src="/images/3.png"
+          alt="Results Graph 3"
+          draggable
+          style={{
+            width: '100%',
+            borderRadius: '12px',
+            objectFit: 'cover'
+          }}
+          customPosition={{ top: '0px' }}
+          customSize={{ width: '100%' }}
+        />
+      </Column>
+      <Column style={{ width: '55%' }}>
+        <Text variant="body-default-l">
+          <ul>
+            <li>
+              <strong>Thermocouple vs. RTD Comparison</strong>
+              <br />
+              <em>Graph: “Thermocouple vs. RTD Comparison”</em>
+              <br />
+              Scatter points show readings from thermocouples versus RTDs, with an ideal 1:1 reference line.
+              <br />
+              <strong>Key Insight:</strong> The close clustering around the diagonal suggests that both sensor types provide consistent measurements. Minor deviations highlight potential calibration offsets or response time differences, guiding future sensor selection and calibration practices.
+            </li>
+            <li>
+              <strong>Heater Power Consumption</strong>
+              <br />
+              <em>Graph: “Heater Power Consumption”</em>
+              <br />
+              Voltage, current, and power are plotted over time. Noticeable jumps in current and power align with heater activation.
+              <br />
+              <strong>Key Insight:</strong> By tracking real-time power usage, we can evaluate the efficiency of the heating system and ensure safe operating parameters. This data is also valuable for refining power budgets in flight systems.
+            </li>
+          </ul>
+        </Text>
+      </Column>
+    </Column>
+
+    {/* Row #6: Full-width Conclusions */}
+    <Column style={{ width: '100%' }}>
+      <Heading variant="display-strong-m">Conclusions</Heading>
+      <ul>
+        <li>
+          <strong>Data Acquisition &amp; Control:</strong> The custom GUI and vacuum-safe hardware setup enabled seamless data logging and system control, meeting the first project objective.
+        </li>
+        <li>
+          <strong>Thermal Performance:</strong> The fluid temperature profiles and feedline loss measurements confirm that the heater effectively raises fluid temperature, while also pinpointing areas of significant thermal loss.
+        </li>
+        <li>
+          <strong>Sensor Validation:</strong> Simultaneous readings from thermocouples and RTDs validate that both sensor types offer reliable data, with minor variations that can be addressed through calibration.
+        </li>
+        <li>
+          <strong>Power Monitoring:</strong> The integrated monitoring of voltage, current, and power consumption completes a holistic view of the heater’s operational profile, helping refine system-level power management.
+        </li>
+        <li>
+          <strong>Project Integration:</strong> All software and hardware contributions were incorporated into the Dawn Aerospace ISP release, making these capabilities available to internal teams and external customers.
+        </li>
+      </ul>
+      <Text variant="body-default-l">
+        Through this project, we achieved a deeper understanding of the feedline’s behavior under operational conditions. The collected data not only verifies the effectiveness of our thermal management strategies but also informs future design optimizations for improved performance and reliability.
+      </Text>
     </Column>
   );
 }
