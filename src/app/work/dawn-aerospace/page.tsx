@@ -167,15 +167,27 @@ export default function DawnAerospace() {
           gap="l"
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
-          <img
-            src="/images/2.png"
-            alt="Primary Goals Diagram"
-            style={{ 
-              width: '40%',
-              borderRadius: '12px',
-              objectFit: 'cover'
-            }}
-          />
+          <Column style={{ width: '40%' }}>
+            <img
+              src="/images/2.png"
+              alt="Primary Goals Diagram"
+              style={{ 
+                width: '100%',
+                borderRadius: '12px',
+                objectFit: 'cover',
+                marginBottom: '16px'
+              }}
+            />
+            <img
+              src="/images/1.png"
+              alt="Temperature Graph"
+              style={{ 
+                width: '100%',
+                borderRadius: '12px',
+                objectFit: 'cover'
+              }}
+            />
+          </Column>
           <Column style={{ width: '55%' }}>
             <Text variant="display-strong-s" style={{ marginBottom: '16px' }}>
               The primary goals were:
