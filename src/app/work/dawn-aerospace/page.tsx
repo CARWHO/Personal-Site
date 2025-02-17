@@ -1,45 +1,22 @@
 'use client';
-import { Column, Heading, Text, Input } from "@/once-ui/components";
+import { Column, Heading, Text } from "@/once-ui/components";
 import ImageControl from "@/components/ImageControl";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Project1 from "./project1";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function DawnAerospace() {
-  const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/work/dawn-aerospace/login');
+    },
+  });
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const response = await fetch("/api/check-auth");
-      if (response.ok) {
-        setIsAuthenticated(true);
-      }
-    };
-    checkAuth();
-  }, [router]);
-
-  if (!isAuthenticated) {
+  if (status === "loading") {
     return (
       <Column maxWidth="xs" gap="xl" horizontal="center" paddingY="xl">
-        <Column gap="m">
-          <Heading variant="display-strong-l">Protected Content</Heading>
-          <Text variant="heading-default-m" onBackground="neutral-weak">
-            Please enter the password to view this content
-          </Text>
-        </Column>
-        <Input
-          id="password"
-          type="password"
-          label="Password"
-          onChange={(e) => {
-            fetch("/api/authenticate", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ password: e.target.value }),
-            });
-          }}
-        />
+        <Text>Loading...</Text>
       </Column>
     );
   }
