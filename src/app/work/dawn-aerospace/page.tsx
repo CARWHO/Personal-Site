@@ -240,29 +240,20 @@ export default function DawnAerospace() {
               <strong>To achieve these objectives, I undertook the following tasks:</strong>
             </Text>
             <Text variant="body-default-l">
-              <ol style={{ paddingLeft: '1em' }}>
+              <ul style={{ paddingLeft: '1em' }}>
                 <li>
                   <strong>Test Jig Development:</strong><br />
-                  ○ Designed and built a custom test jig baseplate, incorporating 3D-printed components. 
-                  All parts were certified for operation within a vacuum chamber, ensuring compatibility 
-                  with our experimental environment.
+                  Designed and built a custom test jig baseplate, incorporating 3D-printed components. All parts were certified for operation within a vacuum chamber, ensuring compatibility with our experimental environment.
                 </li>
-                <br />
                 <li>
                   <strong>Safe Integration in Vacuum Environment:</strong><br />
-                  ○ Engineered and produced specialized cables designed to safely interface within 
-                  the vacuum chamber, maintaining system integrity and performance.
+                  Engineered and produced specialized cables designed to safely interface within the vacuum chamber, maintaining system integrity and performance.
                 </li>
-                <br />
                 <li>
                   <strong>Software Development &amp; Systems Integration:</strong><br />
-                  Developed a bespoke GUI to interface with the feedline peripherals—including the thruster 
-                  and tank electronics—and the main controller node. Simultaneously, set up a local YAMCS server 
-                  on Windows, which required refactoring DawnLink from Linux to Windows. These combined efforts 
-                  streamlined data collection and control operations while ensuring seamless integration with 
-                  existing systems.
+                  Developed a bespoke GUI to interface with the feedline peripherals—including the thruster and tank electronics—and the main controller node. Simultaneously, set up a local YAMCS server on Windows, which required refactoring DawnLink from Linux to Windows. These combined efforts streamlined data collection and control operations while ensuring seamless integration with existing systems.
                 </li>
-              </ol>
+              </ul>
             </Text>
           </Column>
           <Column style={{ width: '40%', gap: '70px' }}>
@@ -305,18 +296,20 @@ export default function DawnAerospace() {
           <Column style={{ width: '55%' }}>
             <Heading variant="display-strong-m" style={{ marginBottom: '24px' }}>Results and analysis from testing</Heading>
             <Text variant="body-default-l" style={{ marginBottom: '24px' }}>
-              1. <strong>Fluid Temperature Increase with Heater Activation</strong><br />
-              <em>Graph: “Fluid Temperature Increase with Heater Activation”</em><br />
-              ○ The graph plots fluid temperature against time, showing a clear increase once the heater is activated.<br />
-              ○ <strong>Key Insight:</strong> The temperature curve confirms successful correlation between heater 
-              activation and fluid temperature rise, validating our heat transfer analysis goals.
-            </Text>
-            <Text variant="body-default-l" style={{ marginTop: '24px', marginBottom: '24px' }}>
-              2. <strong>Temperature Losses Along the Feedline</strong><br />
-              <em>Graph: “Temperature Losses Along the Feedline”</em><br />
-              ○ This plot compares input and output temperatures at multiple points along the straight section.<br />
-              ○ <strong>Key Insight:</strong> A progressive drop in temperature indicates where thermal losses are 
-              most significant, helping refine insulation and design strategies for improved heat retention.
+              <ul>
+                <li>
+                  <strong>Fluid Temperature Increase with Heater Activation</strong><br />
+                  <em>Graph: “Fluid Temperature Increase with Heater Activation”</em><br />
+                  The graph plots fluid temperature against time, showing a clear increase once the heater is activated.<br />
+                  <strong>Key Insight:</strong> The temperature curve confirms successful correlation between heater activation and fluid temperature rise, validating our heat transfer analysis goals.
+                </li>
+                <li style={{ marginTop: '24px', marginBottom: '24px' }}>
+                  <strong>Temperature Losses Along the Feedline</strong><br />
+                  <em>Graph: “Temperature Losses Along the Feedline”</em><br />
+                  This plot compares input and output temperatures at multiple points along the straight section.<br />
+                  <strong>Key Insight:</strong> A progressive drop in temperature indicates where thermal losses are most significant, helping refine insulation and design strategies for improved heat retention.
+                </li>
+              </ul>
             </Text>
           </Column>
           <Column style={{ width: '40%', gap: '30px' }}>
@@ -357,7 +350,7 @@ export default function DawnAerospace() {
           style={{ flexDirection: 'row', alignItems: 'flex-start' }}
         >
           <img
-            src="/images/1.png"
+            src="/images/3.png"
             alt="Results Graph 2"
             style={{ 
               width: '40%',
@@ -367,21 +360,20 @@ export default function DawnAerospace() {
           />
           <Column style={{ width: '55%' }}>
             <Text variant="body-default-l">
-              3. <strong>Thermocouple vs. RTD Comparison</strong><br />
-              <em>Graph: “Thermocouple vs. RTD Comparison”</em><br />
-              ○ Scatter points show readings from thermocouples versus RTDs, with an ideal 1:1 reference line.<br />
-              ○ <strong>Key Insight:</strong> The close clustering around the diagonal suggests that both sensor 
-              types provide consistent measurements. Minor deviations highlight potential calibration offsets 
-              or response time differences, guiding future sensor selection and calibration practices.
-            </Text>
-            <Text variant="body-default-l">
-              4. <strong>Heater Power Consumption</strong><br />
-              <em>Graph: “Heater Power Consumption”</em><br />
-              ○ Voltage, current, and power are plotted over time. Noticeable jumps in current and power 
-              align with heater activation.<br />
-              ○ <strong>Key Insight:</strong> By tracking real-time power usage, we can evaluate the efficiency 
-              of the heating system and ensure safe operating parameters. This data is also valuable for 
-              refining power budgets in flight systems.
+              <ul>
+                <li>
+                  <strong>Thermocouple vs. RTD Comparison</strong><br />
+                  <em>Graph: “Thermocouple vs. RTD Comparison”</em><br />
+                  Scatter points show readings from thermocouples versus RTDs, with an ideal 1:1 reference line.<br />
+                  <strong>Key Insight:</strong> The close clustering around the diagonal suggests that both sensor types provide consistent measurements. Minor deviations highlight potential calibration offsets or response time differences, guiding future sensor selection and calibration practices.
+                </li>
+                <li>
+                  <strong>Heater Power Consumption</strong><br />
+                  <em>Graph: “Heater Power Consumption”</em><br />
+                  Voltage, current, and power are plotted over time. Noticeable jumps in current and power align with heater activation.<br />
+                  <strong>Key Insight:</strong> By tracking real-time power usage, we can evaluate the efficiency of the heating system and ensure safe operating parameters. This data is also valuable for refining power budgets in flight systems.
+                </li>
+              </ul>
             </Text>
           </Column>
         </Column>
@@ -394,31 +386,25 @@ export default function DawnAerospace() {
         >
           <Column style={{ width: '55%' }}>
             <Heading variant="display-strong-m">Conclusions</Heading>
+            <ul>
+              <li>
+                <strong>Data Acquisition &amp; Control:</strong> The custom GUI and vacuum-safe hardware setup enabled seamless data logging and system control, meeting the first project objective.
+              </li>
+              <li>
+                <strong>Thermal Performance:</strong> The fluid temperature profiles and feedline loss measurements confirm that the heater effectively raises fluid temperature, while also pinpointing areas of significant thermal loss.
+              </li>
+              <li>
+                <strong>Sensor Validation:</strong> Simultaneous readings from thermocouples and RTDs validate that both sensor types offer reliable data, with minor variations that can be addressed through calibration.
+              </li>
+              <li>
+                <strong>Power Monitoring:</strong> The integrated monitoring of voltage, current, and power consumption completes a holistic view of the heater’s operational profile, helping refine system-level power management.
+              </li>
+              <li>
+                <strong>Project Integration:</strong> All software and hardware contributions were incorporated into the Dawn Aerospace ISP release, making these capabilities available to internal teams and external customers.
+              </li>
+            </ul>
             <Text variant="body-default-l">
-              • <strong>Data Acquisition &amp; Control:</strong> The custom GUI and vacuum-safe hardware setup enabled 
-              seamless data logging and system control, meeting the first project objective.
-            </Text>
-            <Text variant="body-default-l">
-              • <strong>Thermal Performance:</strong> The fluid temperature profiles and feedline loss measurements 
-              confirm that the heater effectively raises fluid temperature, while also pinpointing areas of significant 
-              thermal loss.
-            </Text>
-            <Text variant="body-default-l">
-              • <strong>Sensor Validation:</strong> Simultaneous readings from thermocouples and RTDs validate that both 
-              sensor types offer reliable data, with minor variations that can be addressed through calibration.
-            </Text>
-            <Text variant="body-default-l">
-              • <strong>Power Monitoring:</strong> The integrated monitoring of voltage, current, and power consumption 
-              completes a holistic view of the heater’s operational profile, helping refine system-level power management.
-            </Text>
-            <Text variant="body-default-l">
-              • <strong>Project Integration:</strong> All software and hardware contributions were incorporated into the 
-              Dawn Aerospace ISP release, making these capabilities available to internal teams and external customers.
-            </Text>
-            <Text variant="body-default-l">
-              Through this project, we achieved a deeper understanding of the feedline’s behavior under operational 
-              conditions. The collected data not only verifies the effectiveness of our thermal management strategies 
-              but also informs future design optimizations for improved performance and reliability.
+              Through this project, we achieved a deeper understanding of the feedline’s behavior under operational conditions. The collected data not only verifies the effectiveness of our thermal management strategies but also informs future design optimizations for improved performance and reliability.
             </Text>
           </Column>
           <img
