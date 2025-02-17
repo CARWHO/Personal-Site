@@ -265,7 +265,7 @@ export default function DawnAerospace() {
               </ol>
             </Text>
           </Column>
-          <Column style={{ width: '40%', gap: '10px' }}>
+          <Column style={{ width: '40%', gap: '70px' }}>
             <img
               src="/images/feedlinetestjig.jpeg"
               alt="Implementation Diagram"
@@ -320,7 +320,7 @@ export default function DawnAerospace() {
             </Text>
           </Column>
           <img
-            src="/images/1.png"
+            src="/images/grafana.png"
             alt="Results Graph 1"
             style={{ 
               width: '40%',
