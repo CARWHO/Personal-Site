@@ -201,13 +201,13 @@ export default function DawnAerospace() {
                   <strong>Test Jig Development:</strong><br />
                   Designed and built a custom test jig baseplate, incorporating 3D-printed components. All parts were certified for operation within a vacuum chamber, ensuring compatibility with our experimental environment.
                 </li>
-                <li style={{ transform: 'translateY(10px)' }}>
+                <li style={{ transform: 'translateY(65px)' }}>
                   <strong>Safe Integration in Vacuum Environment:</strong><br />
                   Engineered and produced specialized cables designed to safely interface within the vacuum chamber, maintaining system integrity and performance.
                 </li>
-                <li style={{ transform: 'translateY(-15px)' }}>
+                <li style={{ transform: 'translateY(180px)' }}>
                   <strong>Software Development &amp; Systems Integration:</strong><br />
-                  Developed a bespoke GUI to interface with the feedline peripherals—including the thruster and tank electronics—and the main controller node. Simultaneously, set up a local YAMCS server on Windows, which required refactoring DawnLink from Linux to Windows. These combined efforts streamlined data collection and control operations while ensuring seamless integration with existing systems.
+                  Developed a bespoke GUI to interface with feedline peripherals (thruster, tank electronics) and the main controller node, and set up a local YAMCS server on Windows by refactoring DawnLink from Linux. Together, these efforts streamlined data collection and control while ensuring seamless system integration.
                 </li>
               </ul>
             </Text>
@@ -230,7 +230,7 @@ export default function DawnAerospace() {
                 width: '100%',
                 borderRadius: '12px',
                 objectFit: 'cover',
-                transform: 'translateY(-150px)'
+                transform: 'translateY(-30px)'
               }}
             />
             <img
@@ -240,7 +240,7 @@ export default function DawnAerospace() {
                 width: '100%',
                 borderRadius: '12px',
                 objectFit: 'cover',
-                transform: 'translateY(-50px)'
+                transform: 'translateY(-10px)'
               }}
             />
           </Column>
