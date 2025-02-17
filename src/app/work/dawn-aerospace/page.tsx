@@ -224,13 +224,13 @@ export default function DawnAerospace() {
               }}
             />
             <img
-              src="/images/feedlinetestjig.jpeg"
+              src="/images/cable.png"
               alt="Implementation Diagram"
               style={{ 
                 width: '100%',
                 borderRadius: '12px',
                 objectFit: 'cover',
-                transform: 'translateY(20px)'
+                transform: 'translateY(-150px)'
               }}
             />
             <img
@@ -240,7 +240,7 @@ export default function DawnAerospace() {
                 width: '100%',
                 borderRadius: '12px',
                 objectFit: 'cover',
-                transform: 'translateY(-30px)'
+                transform: 'translateY(-50px)'
               }}
             />
           </Column>
