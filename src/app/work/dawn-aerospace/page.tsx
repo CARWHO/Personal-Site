@@ -156,11 +156,11 @@ export default function DawnAerospace() {
             src="/images/sp1.png"
             alt="Feedline System"
             style={{ 
-              width: '40%',
+              width: '50%',
               borderRadius: '12px',
               objectFit: 'cover',
               transform: 'translateY(-20px)',
-              boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
+              // boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
             }}
           />
         </Column>
