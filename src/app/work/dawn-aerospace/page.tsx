@@ -407,5 +407,6 @@ export default function DawnAerospace() {
         Through this project, we achieved a deeper understanding of the feedline’s behavior under operational conditions. The collected data not only verifies the effectiveness of our thermal management strategies but also informs future design optimizations for improved performance and reliability.
       </Text>
     </Column>
+    </Column>
   );
 }
