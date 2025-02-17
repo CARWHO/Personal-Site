@@ -154,12 +154,12 @@ export default function DawnAerospace() {
           </Column>
         </Column>
 
-        {/* Row #2: The primary goals were: section (images removed, centered) */}
-        <Column horizontal="center" style={{ width: '100%' }}>
-          <Text variant="display-strong-s" style={{ marginBottom: '16px', textAlign: 'center' }}>
+        {/* Row #2: The primary goals were: section */}
+        <Column style={{ width: '100%' }}>
+          <Text variant="display-strong-s" style={{ marginBottom: '16px' }}>
             The primary goals were:
           </Text>
-          <Text variant="body-default-l" style={{ textAlign: 'center' }}>
+          <Text variant="body-default-l">
             <ul style={{ listStyleType: 'disc', margin: '0 auto', paddingLeft: '20px' }}>
               <li>
                 <strong>Data Acquisition and Control:</strong><br />
@@ -219,7 +219,8 @@ export default function DawnAerospace() {
               style={{ 
                 width: '100%',
                 borderRadius: '12px',
-                objectFit: 'cover'
+                objectFit: 'cover',
+                transform: 'translateY(-20px)'
               }}
             />
             <img
@@ -228,7 +229,8 @@ export default function DawnAerospace() {
               style={{ 
                 width: '100%',
                 borderRadius: '12px',
-                objectFit: 'cover'
+                objectFit: 'cover',
+                transform: 'translateY(20px)'
               }}
             />
             <img
@@ -237,7 +239,8 @@ export default function DawnAerospace() {
               style={{ 
                 width: '100%',
                 borderRadius: '12px',
-                objectFit: 'cover'
+                objectFit: 'cover',
+                transform: 'translateY(-30px)'
               }}
             />
           </Column>
