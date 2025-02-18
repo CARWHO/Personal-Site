@@ -1,32 +1,92 @@
 'use client';
+import { useState } from "react";
 import { Column, Heading, Text } from "@/once-ui/components";
 
 export default function HaloVision() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Column maxWidth="m" gap="xl">
-      <Column gap="m">
-        <Heading variant="display-strong-l">Halo Vision</Heading>
-        <Text variant="heading-default-m" onBackground="neutral-weak">
-          Founder
+    <Column gap="xl" style={{ alignItems: 'center' }}>
+      {/* Always visible header */}
+      <Column style={{ width: '100%', maxWidth: '1000px', textAlign: 'left' }}>
+        <Heading variant="display-strong-l" style={{ marginBottom: '16px' }}>
+          HaloVision: Enhancing Motorcycle Safety and Navigation
+        </Heading>
+        <Text variant="body-default-l">
+          December 2023 - August 2024
+        </Text>
+        <Text variant="body-default-l" style={{ marginTop: '16px' }}>
+          HaloVision is a heads-up display system designed to improve motorcycle safety by providing turn-by-turn navigation and indicator notifications on a helmet-mounted display. Inspired by personal experiences with motorcycle safety, HaloVision evolved from a simple indicator broadcaster into a full display system with custom-designed PCBs and a mobile app for real-time, hands-free updates.
         </Text>
       </Column>
-      
-      <Column gap="l">
-        <Text variant="body-default-l">
-          Halo Vision is an innovative motorcycle navigation system that combines hardware 
-          and software solutions to enhance rider safety and navigation experience.
-        </Text>
 
-        <Column gap="m">
-          <Heading variant="display-strong-s">Development Areas</Heading>
-          <Column as="ul" gap="s">
-            <Text as="li">Custom PCB design and manufacturing</Text>
-            <Text as="li">Embedded systems development</Text>
-            <Text as="li">Mobile app development and integration</Text>
-            <Text as="li">User interface design and testing</Text>
+      {/* Image placed below the text */}
+      <img
+        src="/images/HV_top.jpg"
+        alt="HaloVision Display"
+        style={{
+          width: '60%',
+          borderRadius: '12px',
+          objectFit: 'cover',
+          transform: 'translateY(30px) rotate(-2deg)',
+          boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
+        }}
+      />
+
+      {/* Toggle button */}
+      <button
+        onClick={() => setOpen(!open)}
+        style={{
+          padding: '8px 16px',
+          fontSize: '16px',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          alignSelf: 'center'
+        }}
+      >
+        {open ? "Hide Details" : "Show Details"}
+      </button>
+
+      {/* Accordion content - only rendered when open */}
+      {open && (
+        <Column gap="xl" style={{ width: '100%', maxWidth: '1000px' }}>
+          {/* Download link moved into details section */}
+          <Text
+            variant="body-default-l"
+            style={{ textDecoration: 'underline', cursor: 'pointer', marginBottom: '16px' }}
+          >
+            Download the full HaloVision Report
+          </Text>
+          {/* Key Highlights Section */}
+          <Column style={{ width: '100%' }}>
+            <Text variant="display-strong-s" style={{ marginBottom: '16px' }}>
+              Key Highlights:
+            </Text>
+            <Text variant="body-default-l">
+              <ul
+                style={{
+                  listStyleType: 'disc',
+                  margin: '0 auto',
+                  paddingLeft: '20px'
+                }}
+              >
+                <li>
+                  <strong>Custom PCBs:</strong> Designed custom PCBs for optimal power efficiency and compactness.
+                </li>
+                <li>
+                  <strong>Mounts &amp; Enclosures:</strong> Developed helmet mounts for varied riding speeds, balancing aerodynamics and ease of use.
+                </li>
+                <li>
+                  <strong>Safety Testing with CFD:</strong> Conducted simulations to analyze aerodynamic forces, refining the mount design for stability and user safety. Collaborated with Dr. Finn McIntyre, Ph.D. in fluid mechanics, to validate CFD results, utilizing the University of Canterbury’s wind tunnel for comparison.
+                </li>
+                <li>
+                  <strong>Collaboration:</strong> Worked alongside app developers, engineers, and industry professionals to bring HaloVision from concept to prototype.
+                </li>
+              </ul>
+            </Text>
           </Column>
         </Column>
-      </Column>
+      )}
     </Column>
   );
 }
