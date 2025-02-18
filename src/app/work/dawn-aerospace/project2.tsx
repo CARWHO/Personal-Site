@@ -99,7 +99,7 @@ export default function Project2() {
             <Column style={{ width: "55%" }}>
               <Heading
                 variant="display-strong-s"
-                style={{ marginBottom: "16px" }}
+                style={{ marginBottom: "100px" }}
               >
                 Implementation Approach:
               </Heading>
@@ -113,7 +113,7 @@ export default function Project2() {
                 >
                   <li>
                     <strong>Custom Data Packaging:</strong> Developed software for an
-                    igniter text box that packages data into fixed-size packets
+                    igniter test box that packages data into fixed-size packets
                     (header, payload, etc.) with precise timing control.
                   </li>
                   <li>
@@ -134,8 +134,9 @@ export default function Project2() {
                 src="/images/lifecycle.jpeg"
                 alt="Test Setup Diagram"
                 style={{
-                  width: "100%",
+                  width: "120%",
                   borderRadius: "12px",
+                  transform: 'translate(0%, 20%)',
                   objectFit: "cover",
                   boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
                 }}
@@ -152,7 +153,7 @@ export default function Project2() {
             <Column style={{ width: "55%" }}>
               <Heading
                 variant="display-strong-s"
-                style={{ marginBottom: "16px" }}
+                style={{ marginBottom: "30px" }}
               >
                 Data Visualization &amp; Integration:
               </Heading>
@@ -165,16 +166,13 @@ export default function Project2() {
                   }}
                 >
                   <li>
-                    Set up a local Grafana dashboard using YAMCS as a data source for
-                    real-time monitoring.
+                    Grafana Dashboard: Set up a local Grafana dashboard using YAMCS as a data source for real-time monitoring.
                   </li>
                   <li>
-                    Configured TCP settings in Docker to ensure 100% successful packet
-                    delivery.
+                    Robust TCP Communication: Configured the Docker environment to support stable TCP channels for reliable data transfer between the test system and the YAMCS server.
                   </li>
                   <li>
-                    Integrated hardware and software components to enable seamless
-                    command injection and telemetry gathering.
+                    Seamless Integration: Integrated hardware and software components to enable smooth command injection and effective telemetry gathering.
                   </li>
                 </ul>
               </Text>
