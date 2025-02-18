@@ -116,6 +116,7 @@ export default function Project2() {
                     igniter test box that packages data into fixed-size packets
                     (header, payload, etc.) with precise timing control.
                   </li>
+                  <div style={{ height: "100px" }}></div>
                   <li>
                     <strong>Sideloading &amp; Test Suite:</strong> Created a sideloading
                     script and a GUI for test suite creation to directly load commands
@@ -130,6 +131,18 @@ export default function Project2() {
               </Text>
             </Column>
             <Column style={{ width: "40%" }}>
+              <img
+                src="/images/igniter.jpeg"
+                alt="Igniter Setup"
+                style={{
+                  width: "120%",
+                  borderRadius: "12px",
+                  transform: 'translate(0%, -30%)',
+                  objectFit: "cover",
+                  boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+                  marginBottom: "20px"
+                }}
+              />
               <img
                 src="/images/lifecycle.jpeg"
                 alt="Test Setup Diagram"
