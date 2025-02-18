@@ -1,6 +1,6 @@
 'use client';
 import { useState } from "react";
-import { Column, Heading, Text } from "@/once-ui/components";
+import { Column, Heading, Text, Button } from "@/once-ui/components";
 
 export default function HaloVision() {
   const [open, setOpen] = useState(false);
@@ -50,13 +50,14 @@ export default function HaloVision() {
       {/* Accordion content - only rendered when open */}
       {open && (
         <Column gap="xl" style={{ width: '100%', maxWidth: '1000px' }}>
-          {/* Download link moved into details section */}
-          <Text
-            variant="body-default-l"
-            style={{ textDecoration: 'underline', cursor: 'pointer', marginBottom: '16px' }}
+          <Button
+            variant="tertiary"
+            size="s"
+            suffixIcon="arrowRight"
+            href="/reports/halovision-report.pdf"
           >
-            Download the full HaloVision Report
-          </Text>
+            View Full Report
+          </Button>
           {/* Key Highlights Section */}
           <Column style={{ width: '100%' }}>
             <Text variant="display-strong-s" style={{ marginBottom: '16px' }}>
