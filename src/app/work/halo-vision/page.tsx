@@ -56,7 +56,7 @@ export default function HaloVision() {
             suffixIcon="arrowRight"
             href="/reports/halovision-report.pdf"
           >
-            View Full Report
+            Download Full Report
           </Button>
           {/* Key Highlights Section */}
           <Column style={{ width: '100%' }}>
