@@ -19,6 +19,18 @@ export default function HaloVision() {
         <Text variant="body-default-l" style={{ marginTop: '16px' }}>
           HaloVision is a heads-up display system designed to improve motorcycle safety by providing turn-by-turn navigation and indicator notifications on a helmet-mounted display. Inspired by personal experiences with motorcycle safety, HaloVision evolved from a simple indicator broadcaster into a full display system with custom-designed PCBs and a mobile app for real-time, hands-free updates.
         </Text>
+
+        <Button 
+          href="/reports/halovision-report.pdf"
+          variant="secondary"
+          size="m"
+          arrowIcon
+          style={{ marginTop: '24px' }}
+        >
+          <Text variant="heading-strong-l">
+            Download Full Report
+          </Text>
+        </Button>
       </Column>
 
       {/* Image placed below the text */}
@@ -79,17 +91,6 @@ export default function HaloVision() {
               </ul>
             </Text>
           </Column>
-          
-          <Button 
-            href="/reports/halovision-report.pdf"
-            variant="secondary"
-            size="m"
-            arrowIcon
-          >
-            <Text variant="heading-strong-l">
-              Download Full Report
-            </Text>
-          </Button>
         </Column>
       )}
     </Column>
