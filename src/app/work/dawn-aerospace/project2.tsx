@@ -162,20 +162,7 @@ export default function Project2() {
   gap="l"
   style={{ flexDirection: "row", alignItems: "flex-start", marginTop: "70px" }}
 >
-  <Column style={{ width: "40%", gap: "20px" }}>
-    <img
-      src="/images/grafana2.png"
-      alt="Grafana Dashboard"
-      style={{
-        width: "170%",
-        borderRadius: "12px",
-        objectFit: "cover",
-        transform: "translate(-30%, 40%)",
-        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)"
-      }}
-    />
-  </Column>
-  <Column style={{ width: "55%", marginLeft: "60px" }}>
+  <Column style={{ width: "55%", paddingRight: "40px" }}>
     <Heading
       variant="display-strong-s"
       style={{ marginBottom: "30px" }}
@@ -187,7 +174,7 @@ export default function Project2() {
         style={{
           listStyleType: "disc",
           margin: "0 auto",
-          paddingLeft: "100px",
+          paddingLeft: "20px",
         }}
       >
         <li>
@@ -201,6 +188,19 @@ export default function Project2() {
         </li>
       </ul>
     </Text>
+  </Column>
+  <Column style={{ width: "40%", gap: "20px" }}>
+    <img
+      src="/images/grafana2.png"
+      alt="Grafana Dashboard"
+      style={{
+        width: "170%",
+        borderRadius: "12px",
+        objectFit: "cover",
+        transform: "translate(-30%, 40%)",
+        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)"
+      }}
+    />
   </Column>
 </Column>
 
