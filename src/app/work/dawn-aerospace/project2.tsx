@@ -163,7 +163,7 @@ export default function Project2() {
             style={{ flexDirection: "row", alignItems: "flex-start", marginTop: "70px" }}
           >
             <Column style={{ width: "40%", gap: "20px" }}>
-              <img
+              {/* <img
                 src="/images/grafanaTHR.png"
                 alt="Grafana Thruster Data"
                 style={{
@@ -173,14 +173,15 @@ export default function Project2() {
                   boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
                   marginBottom: "20px"
                 }}
-              />
+              /> */}
               <img
                 src="/images/grafana2.png"
                 alt="Grafana Dashboard"
                 style={{
-                  width: "100%",
+                  width: "200%",
                   borderRadius: "12px",
                   objectFit: "cover",
+                  transform: "translate(-50%, 20%) rotate(-0deg)",
                   boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)"
                 }}
               />
