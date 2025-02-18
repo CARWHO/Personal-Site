@@ -160,7 +160,7 @@ export default function Project2() {
           <Column
             horizontal="space-between"
             gap="l"
-            style={{ flexDirection: "row", alignItems: "flex-start" }}
+            style={{ flexDirection: "row", alignItems: "flex-start", marginTop: "30px" }}
           >
             <Column style={{ width: "55%" }}>
               <Heading
