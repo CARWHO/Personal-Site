@@ -132,12 +132,12 @@ export default function Project2() {
             </Column>
             <Column style={{ width: "40%" }}>
               <img
-                src="/images/igniter.jpeg"
+                src="/images/igniter2.png"
                 alt="Igniter Setup"
                 style={{
-                  width: "120%",
+                  width: "80%",
                   borderRadius: "12px",
-                  transform: 'translate(0%, -30%)',
+                  transform: "translateY(30px) translatex(80px) rotate(90deg)",
                   objectFit: "cover",
                   boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
                   marginBottom: "20px"
