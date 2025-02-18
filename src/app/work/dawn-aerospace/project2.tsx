@@ -257,6 +257,16 @@ export default function Project2() {
                   objectFit: "cover",
                 }}
               />
+              <img
+                src="/images/grafanaADCIN.png"
+                alt="ADC Input Readings"
+                style={{
+                  width: "150%",
+                  borderRadius: "12px",
+                  transform: "translateY(80px)",
+                  objectFit: "cover",
+                }}
+              />
             </Column>
           </Column>
 
