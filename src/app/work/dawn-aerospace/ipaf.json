@@ -1,0 +1,193 @@
+{
+    "node_list": [
+      {
+        "name": "Node1",
+        "scid": 5,
+        "com": "COM3"
+      },
+      {
+        "name": "Node2",
+        "scid": 6,
+        "com": "COM4"
+      }
+    ],
+    "test_sequence": [
+      {
+        "type": "command",
+        "command": "enable_can",
+        "nodes": [
+          {
+            "name": "Node1",
+            "scid": 5,
+            "com": "COM3"
+          },
+          {
+            "name": "Node2",
+            "scid": 6,
+            "com": "COM4"
+          }
+        ]
+      },
+      {
+        "type": "delay",
+        "seconds": 2
+      },
+      {
+        "type": "command",
+        "command": "idle",
+        "nodes": [
+          {
+            "name": "Node1",
+            "scid": 5,
+            "com": "COM3"
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "command": "prepare",
+        "nodes": [
+          {
+            "name": "Node2",
+            "scid": 6,
+            "com": "COM4"
+          }
+        ]
+      },
+      {
+        "type": "delay",
+        "seconds": 1
+      },
+      {
+        "type": "loop",
+        "count": 2,
+        "tasks": [
+          {
+            "type": "command",
+            "command": "arm",
+            "nodes": [
+              {
+                "name": "Node1",
+                "scid": 5,
+                "com": "COM3"
+              }
+            ]
+          },
+          {
+            "type": "delay",
+            "seconds": 1
+          },
+          {
+            "type": "command",
+            "command": "fire",
+            "nodes": [
+              {
+                "name": "Node2",
+                "scid": 6,
+                "com": "COM4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "command": "disable_can",
+        "nodes": [
+          {
+            "name": "Node1",
+            "scid": 5,
+            "com": "COM3"
+          }
+        ]
+      },
+      {
+        "type": "delay",
+        "seconds": 2
+      },
+      {
+        "type": "command",
+        "command": "run_tlm_src",
+        "nodes": [
+          {
+            "name": "Node1",
+            "scid": 5,
+            "com": "COM3"
+          }
+        ]
+      },
+      {
+        "type": "delay",
+        "seconds": 3
+      },
+      {
+        "type": "command",
+        "command": "stop_tlm_src",
+        "nodes": []
+      },
+      {
+        "type": "command",
+        "command": "switch_can",
+        "nodes": [
+          {
+            "name": "Node1",
+            "scid": 5,
+            "com": "COM3"
+          },
+          {
+            "name": "Node2",
+            "scid": 6,
+            "com": "COM4"
+          }
+        ]
+      },
+      {
+        "type": "delay",
+        "seconds": 1
+      },
+      {
+        "type": "loop",
+        "count": 3,
+        "tasks": [
+          {
+            "type": "command",
+            "command": "prepare",
+            "nodes": [
+              {
+                "name": "Node1",
+                "scid": 5,
+                "com": "COM3"
+              }
+            ]
+          },
+          {
+            "type": "delay",
+            "seconds": 2
+          },
+          {
+            "type": "command",
+            "command": "idle",
+            "nodes": [
+              {
+                "name": "Node2",
+                "scid": 6,
+                "com": "COM4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "command",
+        "command": "fire",
+        "nodes": [
+          {
+            "name": "Node1",
+            "scid": 5,
+            "com": "COM3"
+          }
+        ]
+      }
+    ]
+  }
+  

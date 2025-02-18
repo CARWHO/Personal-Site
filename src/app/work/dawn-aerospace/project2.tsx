@@ -142,12 +142,12 @@ export default function Project2() {
                 }}
               />
               <img
-                src="/images/lifecycle.jpeg"
+                src="/images/GUI.png"
                 alt="Test Setup Diagram"
                 style={{
-                  width: "100%",
+                  width: "200%",
                   borderRadius: "12px",
-                  transform: "translate(20%, 60%) rotate(0deg)",
+                  transform: "translate(0%, 90%) rotate(0deg)",
                   objectFit: "cover",
                   boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
                 }}
@@ -176,13 +176,13 @@ export default function Project2() {
                     paddingLeft: "20px",
                   }}
                 >
-                  <li>
+                  <li style={{ marginBottom: "12px" }}>
                     <strong>Grafana Dashboard &amp; Alerting:</strong> Set up a local Grafana dashboard using YAMCS as a data source for real-time monitoring. Configured automated alerts to trigger when critical conditions were met (e.g., igniter LDR ADC voltage not changing as expected), indicating potential igniter failure.
                   </li>
-                  <li>
+                  <li style={{ marginBottom: "12px" }}>
                     <strong>Robust TCP Communication:</strong> Configured the Docker environment to support stable TCP channels for reliable data transfer between the test system and the YAMCS server.
                   </li>
-                  <li>
+                  <li style={{ marginBottom: "12px" }}>
                     <strong>Seamless Integration:</strong> Integrated hardware and software components to enable smooth command injection and effective telemetry gathering.
                   </li>
                 </ul>
@@ -193,7 +193,7 @@ export default function Project2() {
                 src="/images/grafana2.png"
                 alt="Grafana Dashboard"
                 style={{
-                  width: "170%",
+                  width: "200%",
                   borderRadius: "12px",
                   objectFit: "cover",
                   transform: "translate(-8%, 42%)",
@@ -218,17 +218,17 @@ export default function Project2() {
               </Heading>
               <Text variant="body-default-l" style={{ marginTop: "40px" }}>
                 <ul>
-                  <li>
+                  <li style={{ marginBottom: "100px" }}>
                     <strong>Reliable Data Transmission:</strong>
                     <br />
                     Achieved consistent, low-latency communication through precise data packaging and robust networking. Continuous monitoring via Grafana—with automated alerts when sensor values (such as igniter LDR ADC voltage) remain static—ensured immediate detection of anomalies.
                   </li>
-                  <li style={{ marginTop: "24px" }}>
+                  <li style={{ marginBottom: "100px", marginTop: "24px" }}>
                     <strong>Robust Integration &amp; Monitoring:</strong>
                     <br />
                     The seamless blend of custom software, specialized hardware, and real-time visualization provided by Grafana ensured system reliability under extreme conditions. Alerts configured in Grafana further enhanced our ability to promptly address potential failures.
                   </li>
-                  <li style={{ marginTop: "24px" }}>
+                  <li style={{ marginBottom: "12px", marginTop: "24px" }}>
                     <strong>Scalable &amp; Cost-Effective Testing:</strong>
                     <br />
                     Innovative use of CAN and RS422 in a daisy-chained configuration enabled us to scale testing efficiently while keeping costs to a minimum.
@@ -243,7 +243,7 @@ export default function Project2() {
                 style={{
                   width: "150%",
                   borderRadius: "12px",
-                  transform: "translateY(80px)",
+                  transform: "translateY(160px)",
                   objectFit: "cover",
                 }}
               />
@@ -253,7 +253,7 @@ export default function Project2() {
                 style={{
                   width: "150%",
                   borderRadius: "12px",
-                  transform: "translateY(80px)",
+                  transform: "translateY(200px)",
                   objectFit: "cover",
                 }}
               />
@@ -263,7 +263,7 @@ export default function Project2() {
                 style={{
                   width: "150%",
                   borderRadius: "12px",
-                  transform: "translateY(80px)",
+                  transform: "translateY(230px)",
                   objectFit: "cover",
                 }}
               />
