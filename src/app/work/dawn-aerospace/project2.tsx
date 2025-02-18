@@ -197,7 +197,7 @@ export default function Project2() {
         width: "170%",
         borderRadius: "12px",
         objectFit: "cover",
-        transform: "translate(-30%, 40%)",
+        transform: "translate(-8%, 42%)",
         boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)"
       }}
     />
