@@ -116,8 +116,7 @@ export default function Project2() {
                     igniter test box that packages data into fixed-size packets
                     (header, payload, etc.) with precise timing control.
                   </li>
-                  <div style={{ height: "100px" }}></div>
-                  <li>
+                  <li style={{ marginTop: "100px" }}>
                     <strong>Sideloading &amp; Test Suite:</strong> Created a sideloading
                     script and a GUI for test suite creation to directly load commands
                     into a YAMCS server, enabling real-time telemetry via RS422 and CAN.
@@ -132,12 +131,12 @@ export default function Project2() {
             </Column>
             <Column style={{ width: "40%" }}>
               <img
-                src="/images/igniter2.png"
+                src="/images/igniter.jpeg"
                 alt="Igniter Setup"
                 style={{
-                  width: "80%",
+                  width: "100%",
                   borderRadius: "12px",
-                  transform: "translateY(30px) translatex(80px) rotate(90deg)",
+                  transform: "translateY(-20px)",
                   objectFit: "cover",
                   boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
                   marginBottom: "20px"
