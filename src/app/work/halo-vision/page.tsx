@@ -80,14 +80,15 @@ export default function HaloVision() {
             </Text>
           </Column>
           
-          <Button
+          <Button 
             href="/reports/halovision-report.pdf"
-            variant="tertiary"
-            size="s"
-            suffixIcon="arrowRight"
-            className={styles.projectLink}
+            variant="secondary"
+            size="m"
+            arrowIcon
           >
-            View Case Study
+            <Text variant="heading-strong-l">
+              Download Full Report
+            </Text>
           </Button>
         </Column>
       )}
