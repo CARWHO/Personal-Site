@@ -216,7 +216,7 @@ export default function Project2() {
               >
                 Results &amp; Conclusions
               </Heading>
-              <Text variant="body-default-l">
+              <Text variant="body-default-l" style={{ marginTop: "40px" }}>
                 <ul>
                   <li>
                     <strong>Reliable Data Transmission:</strong>
