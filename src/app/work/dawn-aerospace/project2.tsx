@@ -91,38 +91,56 @@ export default function Project2() {
           </Column>
 
           {/* Section: Implementation Approach */}
-          <Column style={{ width: "100%" }}>
-            <Heading
-              variant="display-strong-s"
-              style={{ marginBottom: "16px" }}
-            >
-              Implementation Approach:
-            </Heading>
-            <Text variant="body-default-l">
-              <ul
-                style={{
-                  listStyleType: "disc",
-                  margin: "0 auto",
-                  paddingLeft: "20px",
-                }}
+          <Column
+            horizontal="space-between"
+            gap="l"
+            style={{ flexDirection: "row", alignItems: "flex-start" }}
+          >
+            <Column style={{ width: "55%" }}>
+              <Heading
+                variant="display-strong-s"
+                style={{ marginBottom: "16px" }}
               >
-                <li>
-                  <strong>Custom Data Packaging:</strong> Developed software for an
-                  igniter text box that packages data into fixed-size packets
-                  (header, payload, etc.) with precise timing control.
-                </li>
-                <li>
-                  <strong>Sideloading &amp; Test Suite:</strong> Created a sideloading
-                  script and a GUI for test suite creation to directly load commands
-                  into a YAMCS server, enabling real-time telemetry via RS422 and CAN.
-                </li>
-                <li>
-                  <strong>Cost-Efficient Communication:</strong> Optimized testing by
-                  daisy-chaining 10 controller nodes with a single CAN cable and using
-                  RS422 cables (non-daisy chained) to switch communication busses.
-                </li>
-              </ul>
-            </Text>
+                Implementation Approach:
+              </Heading>
+              <Text variant="body-default-l">
+                <ul
+                  style={{
+                    listStyleType: "disc",
+                    margin: "0 auto",
+                    paddingLeft: "20px",
+                  }}
+                >
+                  <li>
+                    <strong>Custom Data Packaging:</strong> Developed software for an
+                    igniter text box that packages data into fixed-size packets
+                    (header, payload, etc.) with precise timing control.
+                  </li>
+                  <li>
+                    <strong>Sideloading &amp; Test Suite:</strong> Created a sideloading
+                    script and a GUI for test suite creation to directly load commands
+                    into a YAMCS server, enabling real-time telemetry via RS422 and CAN.
+                  </li>
+                  <li>
+                    <strong>Cost-Efficient Communication:</strong> Optimized testing by
+                    daisy-chaining 10 controller nodes with a single CAN cable and using
+                    RS422 cables (non-daisy chained) to switch communication busses.
+                  </li>
+                </ul>
+              </Text>
+            </Column>
+            <Column style={{ width: "40%" }}>
+              <img
+                src="/images/lifecycle.jpeg"
+                alt="Test Setup Diagram"
+                style={{
+                  width: "100%",
+                  borderRadius: "12px",
+                  objectFit: "cover",
+                  boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+                }}
+              />
+            </Column>
           </Column>
 
           {/* Section: Data Visualization & Integration */}
@@ -162,28 +180,6 @@ export default function Project2() {
               </Text>
             </Column>
             <Column style={{ width: "40%", gap: "20px" }}>
-              <img
-                src="/images/lifecycle.jpeg"
-                alt="Test Setup Diagram"
-                style={{
-                  width: "100%",
-                  borderRadius: "12px",
-                  objectFit: "cover",
-                  transform: "translateY(-10px)",
-                  boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
-                }}
-            //   />
-            //   <img
-            //     src="/images/cable.png"
-            //     alt="Communication Setup"
-            //     style={{
-            //       width: "100%",
-            //       borderRadius: "12px",
-            //       objectFit: "cover",
-            //       transform: "translateY(-20px)",
-            //       boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
-            //     }}
-              />
             </Column>
           </Column>
 
