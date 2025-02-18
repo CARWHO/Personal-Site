@@ -112,9 +112,10 @@ export default function Project2() {
                   }}
                 >
                   <li>
-                    <strong>Custom Igniter Test Box &amp; Data Packaging:</strong><br />
-                    <strong>Hardware:</strong> Designed and built an igniter test box for testing each thruster igniter. The box utilized two LDR sensors to verify spark generation and two gas discharge tubes to emulate a spark gap, providing a controlled environment for performance evaluation.<br />
-                    <strong>Software:</strong> Developed custom software to interface with the test box, packaging sensor readings and test data into fixed-size packets (including headers and payloads) with precise timing control. This ensured accurate, real-time data capture and reliable communication for detailed analysis of igniter performance.
+                    <strong>Hardware Development:</strong> Designed and built an igniter test box for testing each thruster igniter. The box utilized two LDR sensors to verify spark generation and two gas discharge tubes to emulate a spark gap, providing a controlled environment for performance evaluation.
+                  </li>
+                  <li>
+                    <strong>Software Integration:</strong> Developed custom software to interface with the test box, packaging sensor readings and test data into fixed-size packets (including headers and payloads) with precise timing control. This ensured accurate, real-time data capture and reliable communication for detailed analysis of igniter performance.
                   </li>
                   <li style={{ marginTop: "230px" }}>
                     <strong>Sideloading &amp; Test Suite:</strong> Created a sideloading
