@@ -157,63 +157,53 @@ export default function Project2() {
           </Column>
 
           {/* Section: Data Visualization & Integration */}
-          <Column
-            horizontal="space-between"
-            gap="l"
-            style={{ flexDirection: "row", alignItems: "flex-start", marginTop: "70px" }}
-          >
-            <Column style={{ width: "40%", gap: "20px" }}>
-              {/* <img
-                src="/images/grafanaTHR.png"
-                alt="Grafana Thruster Data"
-                style={{
-                  width: "100%",
-                  borderRadius: "12px",
-                  objectFit: "cover",
-                  boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
-                  marginBottom: "20px"
-                }}
-              /> */}
-              <img
-                src="/images/grafana2.png"
-                alt="Grafana Dashboard"
-                style={{
-                  width: "200%",
-                  borderRadius: "12px",
-                  objectFit: "cover",
-                  transform: "translate(-50%, 20%) rotate(-0deg)",
-                  boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)"
-                }}
-              />
-            </Column>
-            <Column style={{ width: "55%" }}>
-              <Heading
-                variant="display-strong-s"
-                style={{ marginBottom: "30px" }}
-              >
-                Data Visualization &amp; Integration:
-              </Heading>
-              <Text variant="body-default-l">
-                <ul
-                  style={{
-                    listStyleType: "disc",
-                    margin: "0 auto",
-                    paddingLeft: "20px",
-                  }}
-                >
-                  <li>
-                    Grafana Dashboard: Set up a local Grafana dashboard using YAMCS as a data source for real-time monitoring.
-                  </li>
-                  <li>
-                    Robust TCP Communication: Configured the Docker environment to support stable TCP channels for reliable data transfer between the test system and the YAMCS server.
-                  </li>
-                  <li>
-                    Seamless Integration: Integrated hardware and software components to enable smooth command injection and effective telemetry gathering.
-                  </li>
-                </ul>
-              </Text>
-            </Column>
-          </Column>
+<Column
+  horizontal="space-between"
+  gap="l"
+  style={{ flexDirection: "row", alignItems: "flex-start", marginTop: "70px" }}
+>
+  <Column style={{ width: "40%", gap: "20px" }}>
+    <img
+      src="/images/grafana2.png"
+      alt="Grafana Dashboard"
+      style={{
+        width: "170%",
+        borderRadius: "12px",
+        objectFit: "cover",
+        transform: "translate(-30%, 40%)",
+        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)"
+      }}
+    />
+  </Column>
+  <Column style={{ width: "55%", marginLeft: "60px" }}>
+    <Heading
+      variant="display-strong-s"
+      style={{ marginBottom: "30px" }}
+    >
+      Data Visualization &amp; Integration:
+    </Heading>
+    <Text variant="body-default-l">
+      <ul
+        style={{
+          listStyleType: "disc",
+          margin: "0 auto",
+          paddingLeft: "100px",
+        }}
+      >
+        <li>
+          <strong>Grafana Dashboard:</strong> Set up a local Grafana dashboard using YAMCS as a data source for real-time monitoring.
+        </li>
+        <li>
+          <strong>Robust TCP Communication:</strong> Configured the Docker environment to support stable TCP channels for reliable data transfer between the test system and the YAMCS server.
+        </li>
+        <li>
+          <strong>Seamless Integration:</strong> Integrated hardware and software components to enable smooth command injection and effective telemetry gathering.
+        </li>
+      </ul>
+    </Text>
+  </Column>
+</Column>
+
 
           {/* Section: Results & Conclusions */}
           <Column
