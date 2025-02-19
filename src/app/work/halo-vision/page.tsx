@@ -38,10 +38,10 @@ export default function HaloVision() {
         src="/images/HV_top.jpg"
         alt="HaloVision Display"
         style={{
-          width: '60%',
+          width: '50%',
           borderRadius: '12px',
           objectFit: 'cover',
-          transform: 'translateY(30px) rotate(-2deg)',
+          transform: 'translateY(-30px) rotate(-2deg)',
           boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
         }}
       />
