@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Column, Heading, Text } from "@/once-ui/components";
+import { Column, Heading, Text, Button } from "@/once-ui/components";
 
 export default function Project1() {
   const [open, setOpen] = useState(false);
