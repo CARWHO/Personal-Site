@@ -47,7 +47,7 @@ export default function HaloVision() {
       />
 
       {/* Show/Hide Details Button */}
-      <Column style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <Column style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingLeft: '300px' }}>
         <Button 
           onClick={() => setOpen(!open)}
           variant="secondary"
