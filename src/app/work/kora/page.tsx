@@ -134,8 +134,8 @@ export default function Kora() {
         </Column>
       </div>
 
-      {/* Show/Hide Details Button - centered */}
-      <Column style={{ width: '100%', textAlign: 'center' }}>
+      {/* Show/Hide Details Button - centered and shifted right */}
+      <Column style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingLeft: '50px' }}>
         <Button 
           onClick={() => setOpen(!open)}
           variant="secondary"
