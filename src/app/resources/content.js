@@ -253,7 +253,7 @@ const work = {
       summary:
         "Performed comprehensive wind load analysis using Autodesk CFD and SolidWorks, delivering detailed reports with graphs, visualizations, and risk matrices that identified critical safety margins and recommended design improvements.",
       logo: "/images/companies/hv.png",
-      fullReportLink: "/work/accent-productions",
+      fullReportLink: "/images/PreliminaryDesignReportAccentProductionsR1.1.pdf",
     },
   ],
 };
