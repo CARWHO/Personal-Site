@@ -41,13 +41,13 @@ export default function HaloVision() {
           width: '50%',
           borderRadius: '12px',
           objectFit: 'cover',
-          transform: 'translateY(-30px) rotate(-2deg)',
+          transform: 'translateY(-40px) rotate(-2deg)',
           boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
         }}
       />
 
       {/* Show/Hide Details Button */}
-      <Column style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingLeft: '300px' }}>
+      <Column style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingLeft: '650px' }}>
         <Button 
           onClick={() => setOpen(!open)}
           variant="secondary"
