@@ -40,19 +40,17 @@ export default function Project2() {
         />
       </Column>
 
-      {/* Toggle Details Button */}
-      <button
-        onClick={() => setOpen(!open)}
-        style={{
-          padding: "8px 16px",
-          fontSize: "16px",
-          borderRadius: "4px",
-          cursor: "pointer",
-          alignSelf: "center",
-        }}
-      >
-        {open ? "Hide Details" : "Show Details"}
-      </button>
+      {/* Show/Hide Details Button */}
+      <Column style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <Button 
+          onClick={() => setOpen(!open)}
+          variant="secondary"
+          size="m"
+          arrowIcon
+        >
+          {open ? "Hide Details" : "Show Details"}
+        </Button>
+      </Column>
 
       {/* Accordion Content */}
       {open && (
