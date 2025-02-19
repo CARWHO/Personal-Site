@@ -21,7 +21,7 @@ export default function HaloVision() {
         </Text>
 
         <Button 
-          href="/reports/halovision-report.pdf"
+          href="/images/halovision.pdf"
           variant="secondary"
           size="m"
           arrowIcon
