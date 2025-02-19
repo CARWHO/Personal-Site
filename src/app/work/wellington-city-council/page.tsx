@@ -23,6 +23,19 @@ export default function AccentProductions() {
           At Accent Productions, I conducted a detailed wind load analysis on a stage cover using Autodesk CFD and SolidWorks. The study assessed whether critical force thresholds were exceeded, ensuring safety and compliance.
         </Text>
 
+        {/* Download report button */}
+        <Button 
+          href="/images/PreliminaryDesignReportAccentProductionsR1.1.pdf"
+          variant="secondary"
+          size="m"
+          arrowIcon
+          style={{ marginTop: '24px', marginBottom: '24px' }}
+        >
+          <Text variant="heading-strong-l">
+            Download Full Report
+          </Text>
+        </Button>
+
         {/* Image below the text */}
         <div style={{ marginTop: '80px', textAlign: 'center' }}>
           <img
@@ -39,18 +52,6 @@ export default function AccentProductions() {
           />
         </div>
 
-        {/* Download report button */}
-        <Button 
-          href="/reports/accent-productions-report.pdf"
-          variant="secondary"
-          size="m"
-          arrowIcon
-          style={{ marginTop: '24px' }}
-        >
-          <Text variant="heading-strong-l">
-            Download Full Report
-          </Text>
-        </Button>
       </Column>
 
       {/* Details Section */}
