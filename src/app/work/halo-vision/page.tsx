@@ -13,7 +13,7 @@ export default function HaloVision() {
         <Heading variant="display-strong-l" style={{ marginBottom: '16px' }}>
           HaloVision: Enhancing Motorcycle Safety and Navigation
         </Heading>
-        <Text variant="body-default-l">
+        <Text variant="heading-default-m" onBackground="neutral-weak" style={{ marginTop: '8px' }}>
           December 2023 - August 2024
         </Text>
         <Text variant="body-default-l" style={{ marginTop: '16px' }}>
