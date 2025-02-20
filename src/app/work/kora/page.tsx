@@ -67,7 +67,7 @@ export default function Kora() {
         </Column>
 
         {/* Right Column: Meet the Team (shifted 50px left and moved up) */}
-        <Column gap="l" style={{ flex: 1, marginLeft: '50px', marginTop: '-30px' }}>
+        <Column gap="l" style={{ flex: 1, marginLeft: '50px', marginTop: '-120px' }}>
           <Heading variant="display-strong-m">Meet the Team</Heading>
           <Column gap="s">
             {/* Team Member 1 */}
@@ -107,7 +107,7 @@ export default function Kora() {
               />
               <div>
                 <Heading variant="heading-default-m">Joel Bannister</Heading>
-                <Text variant="body-default-m">Co-founder, Lead RAG &amp; Dev-ops Engineer</Text>
+                <Text variant="body-default-m">Co-founder, Backend &amp; Dev-ops Engineer</Text>
               </div>
             </Column>
             {/* Team Member 3 */}
@@ -135,7 +135,7 @@ export default function Kora() {
       </div>
 
       {/* Show/Hide Details Button - centered and shifted right */}
-      <Column style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingLeft: '50px' }}>
+      <Column style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingLeft: '370px' }}>
         <Button 
           onClick={() => setOpen(!open)}
           variant="secondary"
@@ -154,12 +154,12 @@ export default function Kora() {
             <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
               <li>
                 <strong>Developed full-stack web app:</strong> built the front-end with React and Next.js,
-                engineered the back-end in Python, and utilized Docker, AWS, and Firebase for deployment
+                engineered the back-end in Python, and utilized Docker, AWS, DigitalOcean, and Supabase for deployment
                 and scalability.
               </li>
               <li>
                 <strong>Led a team</strong> to design, deploy, and maintain a stand-alone LMS plugin and RAG
-                status-tracking tool, serving 100+ daily users.
+                status-tracking tool, serving 300+ daily users.
               </li>
               <li>
                 <strong>Implemented containerization</strong> and cloud hosting (Docker, AWS, Digital Ocean, Azure)

@@ -94,7 +94,7 @@ export default function WorkContent() {
                   suffixIcon="arrowRight"
                   className={styles.projectLink}
                 >
-                  View Case Study
+                  View Work.
                 </Button>
               </Column>
             </Flex>

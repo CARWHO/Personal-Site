@@ -58,9 +58,7 @@ const home = {
   headline: <>Kahu Hutton</>,
   subline: (
     <>
-      Hi, I'm the founder of KORA. Welcome to my personal site—feel free to
-      explore by clicking and dragging on the graph... or just searching stuff! 
-      Have fun.
+      Hi, I'm the founder of KORA. Welcome to my personal site—feel free to search for content, or explore the live, interactive graph by clicking on one of the main nodes to learn more about them. Have fun!
     </>
   ),
 };
@@ -253,7 +251,7 @@ const work = {
       summary:
         "Performed comprehensive wind load analysis using Autodesk CFD and SolidWorks, delivering detailed reports with graphs, visualizations, and risk matrices that identified critical safety margins and recommended design improvements.",
       logo: "/images/companies/hv.png",
-      fullReportLink: "/images/PreliminaryDesignReportAccentProductionsR1.1.pdf",
+      fullReportLink: "/work/accent-productions",
     },
   ],
 };

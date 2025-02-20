@@ -104,7 +104,7 @@ export default function Project1() {
                     <strong>Safe Integration in Vacuum Environment:</strong><br />
                     Engineered and produced specialized cables designed to safely interface within the vacuum chamber, maintaining system integrity and performance.
                   </li>
-                  <li style={{ transform: 'translateY(250px)' }}>
+                  <li style={{ transform: 'translateY(325px)' }}>
                     <strong>Software Development &amp; Systems Integration:</strong><br />
                     Developed a bespoke GUI to interface with feedline peripherals (thruster, tank electronics) and the main controller node, and set up a local YAMCS server. Together, these efforts streamlined data collection and control while ensuring seamless system integration.
                   </li>
@@ -135,7 +135,7 @@ export default function Project1() {
                 }}
               />
               <img
-                src="/images/feedlinetestjig.jpeg"
+                src="/images/software.jpeg"
                 alt="Implementation Diagram"
                 style={{ 
                   width: '100%',
