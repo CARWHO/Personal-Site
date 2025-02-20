@@ -11,6 +11,7 @@ interface BlogParams {
   params: {
     slug: string;
   };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
