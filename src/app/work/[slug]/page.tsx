@@ -8,9 +8,8 @@ import { formatDate } from "@/app/utils/formatDate";
 import ScrollToHash from "@/components/ScrollToHash";
 
 interface WorkParams {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }> | { slug: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
