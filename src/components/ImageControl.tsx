@@ -26,14 +26,13 @@ export default function ImageControl({ images }: ImageControlProps) {
               position: 'absolute',
               width: `${image.dimensions.width}%`,
               height: `${image.dimensions.height}px`,
-              transform: `translate(${image.position.x}px, ${image.position.y}px)`,
+              transform: `translate(${image.position.x}px, ${image.position.y}px) rotate(${image.rotation || 0}deg)`,
               opacity: image.opacity,
               objectFit: 'cover',
               borderRadius: '12px',
               zIndex: image.zIndex || images.length - index,
               boxShadow: image.src.includes('spaceplane2') ? '0 20px 40px rgba(0, 0, 0, 0.5)' : '0 10px 20px rgba(0, 0, 0, 0.2)',
               filter: !image.src.includes('spaceplane2') ? 'brightness(0.7)' : 'none',
-              transform: `translate(${image.position.x}px, ${image.position.y}px) rotate(${image.rotation || 0}deg)`,
             }}
           />
         ))}
