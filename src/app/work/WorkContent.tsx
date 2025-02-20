@@ -59,7 +59,7 @@ export default function WorkContent() {
         </Column>
 
         {/* Projects List */}
-        <Column gap="3xl">
+        <Column gap="xl">
           {work.sections.map((section, index) => (
             // Use a horizontal flex so the number stays on the left,
             // while the details remain on the right. We center them
