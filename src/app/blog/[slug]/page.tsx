@@ -8,9 +8,7 @@ import { formatDate } from "@/app/utils/formatDate";
 import ScrollToHash from "@/components/ScrollToHash";
 
 interface BlogParams {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }> | { slug: string };
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
