@@ -1,6 +1,5 @@
 import { InlineCode } from "@/once-ui/components";
 
-// Person Information
 const person = {
   firstName: "Kahu",
   lastName: "Hutton",
@@ -53,7 +52,7 @@ const social = [
 // Home Page
 const home = {
   label: "Home",
-  title: `${person.name}'s Portfolio`,
+  title: `${person.name}'s Portfoli0`,
   description: `Portfolio website showcasing my work as an ${person.role}`,
   headline: <>Kahu Hutton</>,
   subline: (
