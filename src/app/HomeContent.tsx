@@ -14,8 +14,6 @@ import { home, person } from "@/app/resources/content";
 import dynamic from "next/dynamic";
 import PortfolioGraph, { PortfolioGraphRef } from "@/components/portfolio/PortfolioGraph";
 
-// HomeContent maintains the search query state and holds a ref to PortfolioGraph
-// so that when the user presses enter (submitting the search) we can call the graph’s redirect method.
 export default function HomeContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const portfolioGraphRef = useRef<PortfolioGraphRef>(null);
@@ -39,7 +37,6 @@ export default function HomeContent() {
   const handleSearchSubmit = (query: string) => {
     console.log("HomeContent: Received search submit for query:", query);
     setSearchQuery(query);
-
     // Ask the PortfolioGraph (via its exposed method) to redirect if a node is highlighted.
     if (portfolioGraphRef.current) {
       portfolioGraphRef.current.redirectIfHighlighted();
@@ -75,7 +72,6 @@ export default function HomeContent() {
         FLEX container:
         - "row" on desktop (side by side),
         - "column" on mobile (text above graph).
-        gap="none" so we can control spacing with marginBottom on the text column.
       */}
       <Flex
         fillWidth
@@ -85,11 +81,12 @@ export default function HomeContent() {
           flexDirection: isMobile ? "column" : "row",
         }}
       >
-        {/* --- TEXT COLUMN --- */}
+        {/* --- TEXT/SEARCH COLUMN --- */}
         <Column
           maxWidth="s"
           style={{
-            // Add extra space under the text only on mobile
+            position: "relative",
+            zIndex: 2,
             marginBottom: isMobile ? "-170px" : 0,
           }}
         >
@@ -110,10 +107,7 @@ export default function HomeContent() {
                 onSearchChange={handleSearch}
                 onSubmit={handleSearchSubmit}
               />
-              <Text
-                style={{ fontSize: "14px", opacity: 0.6 }}
-                onBackground="neutral-weak"
-              >
+              <Text style={{ fontSize: "14px", opacity: 0.6 }} onBackground="neutral-weak">
                 Try searching: Satellite • Embedded • API • AI
               </Text>
             </Column>
@@ -123,10 +117,10 @@ export default function HomeContent() {
         {/* --- GRAPH COLUMN --- */}
         <Column
           style={{
-            // Keep negative margins for desktop, remove on mobile
+            position: "relative",
+            zIndex: 1,
             marginTop: isMobile ? "0" : "-150px",
             marginLeft: isMobile ? "0" : "-40%",
-            zIndex: 0,
           }}
         >
           <PortfolioGraph

@@ -21,6 +21,7 @@
     "classnames": "^2.5.1",
     "cookie": "^1.0.1",
     "d3": "^7.9.0",
+    "framer-motion": "^12.4.7",
     "gray-matter": "^4.0.3",
     "gsap": "^3.12.7",
     "next": "^15.1.6",

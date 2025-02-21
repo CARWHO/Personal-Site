@@ -58,7 +58,22 @@ const home = {
   headline: <>Kahu Hutton</>,
   subline: (
     <>
-      Hi, I'm the founder of KORA. Welcome to my personal site—feel free to search for content, or explore the live, interactive graph by clicking on one of the main nodes to learn more about them. Have fun!
+      {/* Inline <style> so we don't have to edit any external CSS file */}
+      <style>{`
+        @media (max-width: 768px) {
+          .mobile-smaller {
+            font-size: 14px;     /* Smaller font size on mobile */
+            line-height: 1.3;    /* Decrease line spacing as well */
+          }
+        }
+      `}</style>
+
+      {/* Wrapped in a <p> with the class "mobile-smaller" */}
+      <p className="mobile-smaller">
+        Hi, I'm the founder of KORA. Welcome to my personal site—feel free to
+        search for content, or explore the live, interactive graph by clicking
+        on one of the main nodes to learn more about them. Have fun!
+      </p>
     </>
   ),
 };
@@ -84,9 +99,9 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        My latest venture was an internship at Dawn Aerospace, where I worked in the 
-        software team, developing satellite communication software and contributing 
-        to spacecraft life-cycle testing.
+        My latest venture was an internship at Dawn Aerospace, where I worked in
+        the software team, developing satellite communication software and
+        contributing to spacecraft life-cycle testing.
       </>
     ),
   },
@@ -101,16 +116,22 @@ const about = {
         logo: "/images/companies/dawnlogo.png",
         achievements: [
           <>
-            Assisted in software and hardware integration for satellite propulsion systems, ensuring smooth communication between thrusters, sensors, and telemetry modules.
+            Assisted in software and hardware integration for satellite
+            propulsion systems, ensuring smooth communication between thrusters,
+            sensors, and telemetry modules.
           </>,
           <>
-            Enabled cross-platform builds by adapting DawnLink’s codebase to run on Windows, enhancing global team accessibility.
+            Enabled cross-platform builds by adapting DawnLink’s codebase to run
+            on Windows, enhancing global team accessibility.
           </>,
           <>
-            Developed comprehensive documentation (installation manuals, user guides) for in-house tools, streamlining onboarding for new hires.
+            Developed comprehensive documentation (installation manuals, user
+            guides) for in-house tools, streamlining onboarding for new hires.
           </>,
           <>
-            Configured life-cycle testing for satellite electronics by integrating Grafana for real-time monitoring and creating custom GUIs.
+            Configured life-cycle testing for satellite electronics by
+            integrating Grafana for real-time monitoring and creating custom
+            GUIs.
           </>,
         ],
         images: [],
@@ -122,40 +143,50 @@ const about = {
         logo: "/images/companies/kora.png",
         achievements: [
           <>
-            Developed a full-stack web application using React, Next.js, Python, Docker, AWS, and Firebase for deployment and scalability.
+            Developed a full-stack web application using React, Next.js, Python,
+            Docker, AWS, and Firebase for deployment and scalability.
           </>,
           <>
-            Led a team to design, deploy, and maintain a stand-alone LMS plugin and RAG status-tracking tool, serving 100+ daily users.
+            Led a team to design, deploy, and maintain a stand-alone LMS plugin
+            and RAG status-tracking tool, serving 100+ daily users.
           </>,
           <>
-            Implemented containerization and cloud hosting solutions to ensure scalability and minimize downtime.
+            Implemented containerization and cloud hosting solutions to ensure
+            scalability and minimize downtime.
           </>,
           <>
-            Managed end-to-end project lifecycles from concept and UI/UX design through deployment and user feedback.
+            Managed end-to-end project lifecycles from concept and UI/UX design
+            through deployment and user feedback.
           </>,
           <>
-            Maintained ongoing client and stakeholder communication to rapidly iterate on features based on user input.
+            Maintained ongoing client and stakeholder communication to rapidly
+            iterate on features based on user input.
           </>,
         ],
         images: [],
       },
       {
-        company: "HaloVision",
+        company: "Halo-Vision",
         timeframe: "Feb 2023 – 2024",
         role: "Motorcycle Safety HUD Developer",
         logo: "/images/companies/hv.png",
         achievements: [
           <>
-            Designed a helmet-mounted heads-up display (HUD) system integrating turn-by-turn navigation and safety indicators.
+            Designed a helmet-mounted heads-up display (HUD) system integrating
+            turn-by-turn navigation and safety indicators.
           </>,
           <>
-            Created custom PCBs optimized for power efficiency with a 90% improvement over the prototype.
+            Created custom PCBs optimized for power efficiency with a 90%
+            improvement over the prototype.
           </>,
           <>
-            Conducted aerodynamic simulations (CFD) and wind tunnel tests to enhance helmet mount stability by 60% at varied riding speeds.
+            Conducted aerodynamic simulations (CFD) and wind tunnel tests to
+            enhance helmet mount stability by 60% at varied riding speeds.
           </>,
           <>
-            Oversaw cross-functional collaboration with app developers, hardware engineers, and industry experts to translate concepts into a functional prototype.
+            Oversaw cross-functional collaboration with app developers, hardware
+            engineers, and industry experts to translate concepts into a
+            functional prototype.
           </>,
         ],
         images: [],
@@ -167,13 +198,18 @@ const about = {
         logo: "/images/companies/hv.png",
         achievements: [
           <>
-            Performed comprehensive wind load analysis on a stage cover using Autodesk CFD and SolidWorks to determine critical force thresholds.
+            Performed comprehensive wind load analysis on a stage cover using
+            Autodesk CFD and SolidWorks to determine critical force thresholds.
           </>,
           <>
-            Delivered detailed CFD analysis reports—including graphs, visualizations, and risk matrices—highlighting a 19% difference in key safety margins.
+            Delivered detailed CFD analysis reports—including graphs,
+            visualizations, and risk matrices—highlighting a 19% difference in
+            key safety margins.
           </>,
           <>
-            Managed the entire analysis process from geometry development and meshing to simulation setup, convergence studies, post-processing, and report drafting, resulting in actionable design recommendations.
+            Managed the entire analysis process from geometry development and
+            meshing to simulation setup, convergence studies, post-processing,
+            and report drafting, resulting in actionable design recommendations.
           </>,
         ],
         images: [],
@@ -186,7 +222,9 @@ const about = {
     institutions: [
       {
         name: "University of Canterbury",
-        description: <>Bachelor of Electrical Engineering with Honors (2023 – 2026)</>,
+        description: (
+          <>Bachelor of Electrical Engineering with Honors (2023 – 2026)</>
+        ),
       },
     ],
   },
@@ -196,12 +234,16 @@ const about = {
     skills: [
       {
         title: "Hardware Development",
-        description: <>Design and development of electrical systems for spacecraft applications.</>,
+        description: (
+          <>Design and development of electrical systems for spacecraft applications.</>
+        ),
         images: [],
       },
       {
         title: "Software Development",
-        description: <>Integration of hardware and software systems for space applications.</>,
+        description: (
+          <>Integration of hardware and software systems for space applications.</>
+        ),
         images: [],
       },
     ],

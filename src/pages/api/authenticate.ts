@@ -4,7 +4,7 @@ import * as cookie from "cookie";
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { password } = req.body;
-    const correctPassword = 'test';
+    const correctPassword = 'R9k#u43ZR9k#u43Z!t@2LmX!t@2LmX';
     
     console.log('Authentication attempt:', {
       providedPassword: password,
