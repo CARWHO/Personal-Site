@@ -22,7 +22,7 @@ export default function DawnAerospace() {
 
 
   return (
-    <>
+    <Column maxWidth="m" gap="xl" padding="xl">
       {!isAuthenticated && (
         <div style={{
           position: 'fixed',
@@ -59,7 +59,6 @@ export default function DawnAerospace() {
           </Column>
         </div>
       )}
-      <Column maxWidth="m" gap="xl" padding="xl">
       {/* --- Existing content remains unchanged --- */}
       {/* Title Section */}
       <Column gap="m" style={{ position: 'relative' }}>
