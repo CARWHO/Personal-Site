@@ -42,7 +42,7 @@ export default function Kora() {
         {/* Left Column: Two main text sections */}
         <Column gap="l" style={{ flex: 1 }}>
           <Text variant="body-default-l">
-            KORA is an AI-powered platform revolutionizing education with its smart LMS plugin. Powered by cutting-edge Retrieval-Augmented Generation (RAG), KORA delivers laser-precise, up-to-date content by tapping directly into university databases—keeping curriculum dynamic for over 200 daily active users.
+            KORA is an AI-powered platform revolutionizing education with its smart LMS plugin. Powered by cutting-edge Retrieval-Augmented Generation (RAG), KORA delivers laser-precise, up-to-date content by tapping directly into university databases.
           </Text>
           <Text variant="body-default-l">
             Explore more:&nbsp;
