@@ -1,5 +1,5 @@
 import { baseURL } from "@/app/resources";
-import { home } from "@/app/resources/content";
+import { home, person } from "@/app/resources/content";
 import HomeContent from "./HomeContent";
 
 export async function generateMetadata() {
