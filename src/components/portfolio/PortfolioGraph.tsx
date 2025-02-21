@@ -78,7 +78,7 @@ const majorProjects = [
     ],
   },
   {
-    id: "Wellington City Council",
+    id: "CFD Engineering",
     color: 0xffffff,
     tags: ["Engineering", "Analysis", "Safety"],
     skills: [

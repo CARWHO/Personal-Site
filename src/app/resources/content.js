@@ -192,7 +192,7 @@ const about = {
         images: [],
       },
       {
-        company: "Accent Productions",
+        company: "CFD-Engineering",
         timeframe: "March 2024",
         role: "CFD Engineer (Wind Load Analysis)",
         logo: "/images/companies/hv.png",
@@ -293,7 +293,7 @@ const work = {
       summary:
         "Performed comprehensive wind load analysis using Autodesk CFD and SolidWorks, delivering detailed reports with graphs, visualizations, and risk matrices that identified critical safety margins and recommended design improvements.",
       logo: "/images/companies/hv.png",
-      fullReportLink: "/work/accent-productions",
+      fullReportLink: "/work/cfd-engineering",
     },
   ],
 };
