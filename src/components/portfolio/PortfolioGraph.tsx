@@ -475,9 +475,11 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
         className="portfolio-graph"
         style={{
           height: "800px",
-          width: "800px",
+          width: "100%",
+          maxWidth: "800px",
           display: "flex",
           flexDirection: "column",
+          order: window.innerWidth <= 768 ? 2 : 0, // Changes order on mobile
         }}
       >
         <ForceGraph3D
