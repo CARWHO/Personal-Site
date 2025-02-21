@@ -20,30 +20,6 @@ export default function DawnAerospace() {
     checkAuth();
   }, [router]);
 
-  if (!isAuthenticated) {
-    return (
-      <Column maxWidth="xs" gap="xl" horizontal="center" paddingY="xl">
-        <Column gap="m">
-          <Heading variant="display-strong-l">Protected Content</Heading>
-          <Text variant="heading-default-m" onBackground="neutral-weak">
-            Please enter the password to view this content
-          </Text>
-        </Column>
-        <Input
-          id="password"
-          type="password"
-          label="Password"
-          onChange={(e) => {
-            fetch("/api/authenticate", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ password: e.target.value }),
-            });
-          }}
-        />
-      </Column>
-    );
-  }
 
   return (
     <Column maxWidth="m" gap="xl" padding="xl">
