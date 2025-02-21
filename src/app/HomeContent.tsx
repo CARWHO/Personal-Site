@@ -80,7 +80,7 @@ export default function HomeContent() {
       <Flex
         fillWidth
         paddingY="l"
-        gap="none"
+        gap="0"
         style={{
           flexDirection: isMobile ? "column" : "row",
         }}
