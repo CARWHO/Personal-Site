@@ -11,14 +11,14 @@ export async function generateMetadata() {
     title,
     description,
     openGraph: {
-      title,
-      description,
+      title: `${person.name}'s Portfolio`,
+      description: person.role,
       type: "website",
       url: `https://${baseURL}`,
       images: [
         {
           url: ogImage,
-          alt: title,
+          alt: `${person.name}'s Portfolio`,
         },
       ],
     },
