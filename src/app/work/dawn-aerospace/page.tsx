@@ -22,7 +22,44 @@ export default function DawnAerospace() {
 
 
   return (
-    <Column maxWidth="m" gap="xl" padding="xl">
+    <>
+      {!isAuthenticated && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          backdropFilter: 'blur(8px)',
+          zIndex: 1000,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <Column maxWidth="xs" gap="xl" horizontal="center" paddingY="xl">
+            <Column gap="m">
+              <Heading variant="display-strong-l">Protected Content</Heading>
+              <Text variant="heading-default-m" onBackground="neutral-weak">
+                Please enter the password to view this content
+              </Text>
+            </Column>
+            <Input
+              id="password"
+              type="password"
+              label="Password"
+              onChange={(e) => {
+                fetch("/api/authenticate", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ password: e.target.value }),
+                });
+              }}
+            />
+          </Column>
+        </div>
+      )}
+      <Column maxWidth="m" gap="xl" padding="xl">
       {/* --- Existing content remains unchanged --- */}
       {/* Title Section */}
       <Column gap="m" style={{ position: 'relative' }}>
