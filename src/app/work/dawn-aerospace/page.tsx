@@ -1,5 +1,6 @@
 'use client';
-import { Column, Heading, Text, SmartImage, Input } from "@/once-ui/components";
+import { Column, Heading, Text, SmartImage } from "@/once-ui/components";
+import { motion, AnimatePresence } from "framer-motion";
 import ImageControl from "@/components/ImageControl";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -22,7 +23,34 @@ export default function DawnAerospace() {
 
 
   return (
-    <Column maxWidth="m" gap="xl" padding="xl">
+    <AnimatePresence mode="wait">
+      {!isAuthenticated ? (
+        <motion.div
+          key="password"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          style={{ width: '100%', height: '100vh' }}
+        >
+          <div style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            backdropFilter: 'blur(8px)'
+          }} />
+        </motion.div>
+      ) : (
+        <motion.div
+          key="content"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Column maxWidth="m" gap="xl" padding="xl">
       {/* --- Existing content remains unchanged --- */}
       {/* Title Section */}
       <Column gap="m" style={{ position: 'relative' }}>
@@ -115,6 +143,9 @@ export default function DawnAerospace() {
       {/* --- NEW CONTENT BEGINS HERE --- */}
       <Project1 />
       <Project2 />
-    </Column>
+          </Column>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
