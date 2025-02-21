@@ -159,7 +159,7 @@ export default function Kora() {
               </li>
               <li>
                 <strong>Led a team</strong> to design, deploy, and maintain a stand-alone LMS plugin utilizing RAG 
-                (Retrival Augmented Generation), serving 300+ daily users.
+                (Retrival Augmented Generation).
               </li>
               <li>
                 <strong>Implemented containerization</strong> and cloud hosting (Docker, AWS, Digital Ocean, Azure)
