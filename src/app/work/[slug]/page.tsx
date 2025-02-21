@@ -8,8 +8,10 @@ import { formatDate } from "@/app/utils/formatDate";
 import ScrollToHash from "@/components/ScrollToHash";
 
 interface WorkParams {
-  params: Promise<{ slug: string }> | { slug: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
+  // Declare params as a Promise resolving to an object with a slug property.
+  params: Promise<{ slug: string }>;
+  // Declare searchParams as a Promise resolving to a plain object (or undefined).
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
@@ -19,7 +21,9 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
   }));
 }
 
-export function generateMetadata({ params: { slug } }: WorkParams) {
+export async function generateMetadata({ params }: WorkParams) {
+  // Await params so we have the resolved object.
+  const { slug } = await params;
   let post = getPosts(["src", "app", "work", "projects"]).find((post) => post.slug === slug);
 
   if (!post) {
@@ -62,8 +66,10 @@ export function generateMetadata({ params: { slug } }: WorkParams) {
   };
 }
 
-export default function Project({ params }: WorkParams) {
-  let post = getPosts(["src", "app", "work", "projects"]).find((post) => post.slug === params.slug);
+export default async function Project({ params }: WorkParams) {
+  // Await params to extract the slug value.
+  const { slug } = await params;
+  let post = getPosts(["src", "app", "work", "projects"]).find((post) => post.slug === slug);
 
   if (!post) {
     notFound();

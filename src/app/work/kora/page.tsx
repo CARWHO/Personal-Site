@@ -158,8 +158,8 @@ export default function Kora() {
                 and scalability.
               </li>
               <li>
-                <strong>Led a team</strong> to design, deploy, and maintain a stand-alone LMS plugin and RAG
-                status-tracking tool, serving 300+ daily users.
+                <strong>Led a team</strong> to design, deploy, and maintain a stand-alone LMS plugin utilizing RAG 
+                (Retrival Augmented Generation), serving 300+ daily users.
               </li>
               <li>
                 <strong>Implemented containerization</strong> and cloud hosting (Docker, AWS, Digital Ocean, Azure)
