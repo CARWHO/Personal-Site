@@ -13,14 +13,12 @@ import ForceGraph3D from "react-force-graph-3d";
 import { Column } from "@/once-ui/components";
 import * as THREE from "three";
 
-// ----- Graph Types -----
 interface GraphNode {
   id: string;
   type: "major" | "skill";
   project?: string;
   color: number;
   link?: string;
-  // These are set by the simulation.
   x?: number;
   y?: number;
   z?: number;
@@ -31,7 +29,6 @@ interface GraphLink {
   target: string;
 }
 
-// ----- Utility Function -----
 const lightenColor = (color: number, percent: number): number => {
   const r = (color >> 16) & 0xff;
   const g = (color >> 8) & 0xff;
@@ -97,7 +94,6 @@ const majorProjects = [
   },
 ];
 
-// ----- Build Graph Data -----
 const generateGraphData = () => {
   const nodes: GraphNode[] = [];
   const links: GraphLink[] = [];
@@ -112,7 +108,7 @@ const generateGraphData = () => {
     });
   });
 
-  // Add skill nodes.
+  // Add skill nodes + link them back.
   majorProjects.forEach((project) => {
     project.skills.forEach((skill) => {
       const node: GraphNode = {
@@ -144,6 +140,7 @@ const generateGraphData = () => {
       });
     }
   }
+
   return { nodes, links };
 };
 
@@ -191,19 +188,15 @@ function makeTextSprite(message: string, parameters: any) {
   return sprite;
 }
 
-// ----- Main Component -----
-// Define the props for the PortfolioGraph component.
-interface PortfolioGraphProps {
+export interface PortfolioGraphProps {
   searchQuery: string;
   onSearch: (query: string) => void;
 }
 
-// Define the ref interface so parent components can call the redirect method.
 export interface PortfolioGraphRef {
   redirectIfHighlighted: () => void;
 }
 
-// Wrap the component in forwardRef to expose internal methods.
 const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
   ({ searchQuery, onSearch }, ref) => {
     const graphRef = useRef<any>();
@@ -212,27 +205,15 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
     );
     const graphData = useMemo(() => generateGraphData(), []);
 
-    // Helper: returns the associated major project id for the query.
-    // (If a matching skill is found, its parent project is used.)
     const getHighlightedProjectId = (query: string): string | null => {
       const lowerQuery = query.toLowerCase();
-      console.log("PortfolioGraph: Searching for query:", lowerQuery);
       if (!lowerQuery) return null;
 
       const matchingNodes = graphData.nodes.filter((node) => {
         const project = majorProjects.find((p) => p.id === node.id);
         const matches =
-          project?.tags?.some((tag) =>
-            tag.toLowerCase().includes(lowerQuery)
-          ) || node.id.toLowerCase().includes(lowerQuery);
-        if (matches) {
-          console.log(
-            "PortfolioGraph: Found matching node:",
-            node.id,
-            "of type:",
-            node.type
-          );
-        }
+          project?.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery)) ||
+          node.id.toLowerCase().includes(lowerQuery);
         return matches;
       });
 
@@ -242,50 +223,31 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
           firstMatch.type === "skill" && firstMatch.project
             ? firstMatch.project
             : firstMatch.id;
-        console.log("PortfolioGraph: Selected project ID:", resultId);
         return resultId;
       }
-      console.log("PortfolioGraph: No matching nodes found");
       return null;
     };
 
-    // --- Search Highlighting Effect ---
     useEffect(() => {
       const projectId = getHighlightedProjectId(searchQuery);
       setHighlightedNodeId(projectId);
     }, [searchQuery, graphData.nodes]);
 
-    // --- Redirection Method ---
-    // This function will be called when the user presses enter.
     const redirectIfHighlighted = () => {
-      console.log(
-        "PortfolioGraph: Attempting redirect with search query:",
-        searchQuery
-      );
       if (highlightedNodeId) {
-        // Find the major project node that matches the highlighted id.
         const projectNode = graphData.nodes.find(
           (node) => node.id === highlightedNodeId && node.type === "major"
         );
         if (projectNode && projectNode.link) {
-          console.log(
-            "PortfolioGraph: Navigating to highlighted project:",
-            projectNode.link
-          );
           window.location.href = projectNode.link;
         }
       }
     };
+    useImperativeHandle(ref, () => ({ redirectIfHighlighted }));
 
-    // Expose the redirectIfHighlighted method to parent components.
-    useImperativeHandle(ref, () => ({
-      redirectIfHighlighted,
-    }));
-
-    // --- Track User Interaction ---
     const userInteractingRef = useRef(false);
 
-    // --- Initial Camera Setup ---
+    // Initial camera setup
     useEffect(() => {
       const initGraph = () => {
         if (graphRef.current) {
@@ -307,7 +269,6 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
               RIGHT: THREE.MOUSE.PAN,
             };
 
-            // Listen for interaction events.
             controls.addEventListener("start", () => {
               userInteractingRef.current = true;
             });
@@ -323,20 +284,20 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
       setTimeout(initGraph, 100);
     }, []);
 
-    // --- Enforce Constant Camera Distance, Center on the Graph, and Auto-Rotate ---
+    // Keep camera distance fixed and auto-rotate if user not interacting
     useEffect(() => {
       let animationFrameId: number;
-      const desiredDistance = 500; // fixed camera distance
-      const rotationSpeed = 0.001; // radians per frame
+      const desiredDistance = 500;
+      const rotationSpeed = 0.001;
 
       const updateCameraDistance = () => {
         if (graphRef.current) {
           const camera = graphRef.current.camera();
           const controls = graphRef.current.controls();
 
-          // Compute center of all nodes with defined positions.
           const validNodes = graphData.nodes.filter(
-            (n) => n.x !== undefined && n.y !== undefined && n.z !== undefined
+            (n) =>
+              n.x !== undefined && n.y !== undefined && n.z !== undefined
           );
           const target = new THREE.Vector3();
           if (validNodes.length > 0) {
@@ -348,23 +309,17 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
             target.copy(controls.target);
           }
 
-          // Compute the vector from the target to the camera.
-          const offset = new THREE.Vector3().subVectors(
-            camera.position,
-            target
-          );
+          const offset = new THREE.Vector3().subVectors(camera.position, target);
           if (offset.length() < 0.001) {
             offset.set(desiredDistance, 0, 0);
           } else {
             offset.normalize().multiplyScalar(desiredDistance);
           }
 
-          // Apply slow auto-rotation when the user is not interacting.
           if (!userInteractingRef.current) {
             offset.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotationSpeed);
           }
 
-          // Update the camera position and the controls’ target.
           camera.position.copy(target).add(offset);
           controls.target.copy(target);
           controls.update();
@@ -376,7 +331,7 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
       return () => cancelAnimationFrame(animationFrameId);
     }, [graphData.nodes]);
 
-    // --- Animate Node Color Transitions for a Smooth Highlight ---
+    // Animate color transitions for highlighted node
     useEffect(() => {
       let frameId: number;
       const animate = () => {
@@ -389,7 +344,6 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
               object.userData.sphereMaterial
             ) {
               const nodeId = object.userData.nodeId;
-              // Find corresponding node data.
               const nodeData = graphData.nodes.find((n) => n.id === nodeId);
               if (nodeData) {
                 let targetColorInt: number;
@@ -400,7 +354,6 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
                   targetColorInt = nodeData.color;
                 }
                 const targetColor = new THREE.Color(targetColorInt);
-                // Smoothly interpolate from the current color to the target color.
                 object.userData.sphereMaterial.color.lerp(targetColor, 0.1);
               }
             }
@@ -412,18 +365,17 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
       return () => cancelAnimationFrame(frameId);
     }, [graphData.nodes, highlightedNodeId]);
 
-    // --- Node Rendering ---
+    // Node render
     const nodeThreeObject = (node: GraphNode) => {
       const group = new THREE.Group();
       group.userData.nodeId = node.id;
 
-      // Determine the initial color based on whether this node is highlighted.
-      let initialColor: number;
-      if (highlightedNodeId) {
-        initialColor = node.id === highlightedNodeId ? 0xffffff : 0x444444;
-      } else {
-        initialColor = node.color;
-      }
+      let initialColor = highlightedNodeId
+        ? node.id === highlightedNodeId
+          ? 0xffffff
+          : 0x444444
+        : node.color;
+
       const sphereRadius = node.type === "major" ? 15 : 5;
       const geometry = new THREE.SphereGeometry(sphereRadius, 16, 16);
       const material = new THREE.MeshBasicMaterial({
@@ -433,7 +385,6 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
       group.userData.sphereMaterial = material;
       group.add(sphere);
 
-      // Create text sprite.
       let sprite: THREE.Sprite;
       if (node.type === "major") {
         sprite = makeTextSprite(node.id, {
@@ -474,12 +425,11 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
       <Column
         className="portfolio-graph"
         style={{
-          height: "800px",
+          // Remove the fixed height if you want it to shrink on mobile
           width: "100%",
           maxWidth: "800px",
           display: "flex",
           flexDirection: "column",
-          order: window.innerWidth <= 768 ? 2 : 0, // Changes order on mobile
         }}
       >
         <ForceGraph3D
@@ -497,13 +447,10 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
           enableNodeDrag={true}
           enableNavigationControls={true}
           onNodeClick={(node: GraphNode) => {
-            // Prevent event propagation.
             const event = window.event;
             if (event) {
               event.stopPropagation();
             }
-
-            // Navigate to the project page if it's a major node.
             if (node.type === "major" && node.link) {
               window.location.href = node.link;
             }
