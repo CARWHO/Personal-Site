@@ -211,7 +211,7 @@ export default function About() {
                   <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
                     <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="4">
                       <Button 
-                        href={`/work/${experience.company.toLowerCase().replace(/\s+/g, '-')}`}
+                        href={experience.company === "Accent Productions" ? "/work/cfd-engineering" : `/work/${experience.company.toLowerCase().replace(/\s+/g, '-')}`}
                         variant="secondary"
                         size="m"
                         arrowIcon
