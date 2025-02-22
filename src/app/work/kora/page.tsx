@@ -37,7 +37,7 @@ export default function Kora() {
           </Text>
         </Column>
         <img
-          src="/images/KoraSymbol23.png"
+          src="/images/KoraSymbol23.svg"
           alt="KORA Logo"
           style={{
             width: "120px",
