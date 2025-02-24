@@ -80,7 +80,7 @@ const home = {
 // About Page
 const about = {
   label: "About",
-  title: "",
+  title: " ",
   description: `Meet ${person.name}, ${person.role} from ${person.location}`,
   tableOfContent: {
     display: true,
