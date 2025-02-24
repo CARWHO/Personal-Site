@@ -19,7 +19,7 @@ import { person, about, social } from "@/app/resources/content";
 export async function generateMetadata() {
   const title = about.title;
   const description = about.description;
-  const ogImage = "/images/avatar.jpg";
+  const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
 
   return {
     title,

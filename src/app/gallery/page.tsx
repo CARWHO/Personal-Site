@@ -6,7 +6,7 @@ import { gallery, person } from "@/app/resources/content";
 export async function generateMetadata() {
   const title = gallery.title;
   const description = gallery.description;
-  const ogImage = "/images/avatar.jpg";
+  const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
 
   return {
     title,
