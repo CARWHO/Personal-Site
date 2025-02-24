@@ -52,7 +52,7 @@ const social = [
 // Home Page
 const home = {
   label: "Home",
-  title: `${person.name}'s Portfoli0`,
+  title: `${person.name}'s Portfoli`,
   description: `Portfolio website showcasing my work as an ${person.role}`,
   headline: <>Kahu Hutton</>,
   subline: (
