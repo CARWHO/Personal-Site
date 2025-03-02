@@ -80,7 +80,7 @@ export default function HaloVision() {
 
       {/* Show/Hide Details Button */}
       <Column style={{ width: "100%", maxWidth: "1000px", textAlign: "left" }}>
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "24px" }}>
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "8px" }}>
           <Button onClick={() => setOpen(!open)} variant="secondary" size="m" arrowIcon>
             {open ? "Hide Details" : "Show Details"}
           </Button>
