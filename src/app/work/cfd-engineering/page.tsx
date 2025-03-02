@@ -40,7 +40,7 @@ export default function AccentProductions() {
             variant="secondary"
             size="m"
             arrowIcon
-            style={{ marginTop: "24px", marginBottom: "70px" }}
+            style={{ marginTop: "24px", marginBottom: "40px" }}
           >
             <Text variant="heading-strong-l">Download Full Report</Text>
           </Button>
