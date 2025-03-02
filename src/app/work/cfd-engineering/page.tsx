@@ -45,37 +45,33 @@ export default function AccentProductions() {
         </Button>
 
         {/* Image below the text */}
-        <div style={{ marginTop: "60px", textAlign: "center" }}>
-          {isMobile ? (
-            // MOBILE: narrower image, no rotation, plus maxWidth
-            <img
-              src="/images/cfdimagetop.png"
-              alt="Accent Productions CFD Analysis"
-              style={{
-                width: "90%",
-                maxWidth: "400px",
-                borderRadius: "12px",
-                objectFit: "cover",
-                transform: "none",
-                boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
-              }}
-            />
-          ) : (
-            // DESKTOP: original styling
-            <img
-              src="/images/cfdimagetop.png"
-              alt="Accent Productions CFD Analysis"
-              style={{
-                width: "250%",
-                maxWidth: "800px",
-                borderRadius: "12px",
-                transform: "translateY(-30px) rotate(-2deg)",
-                objectFit: "cover",
-                boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
-              }}
-            />
-          )}
-        </div>
+        {isMobile ? (
+          // MOBILE STYLES: ensure it doesn't get cut off
+          <img
+            src="/images/cfdimagetop.png"
+            alt="Accent Productions CFD Analysis"
+            style={{
+              width: "90%",
+              borderRadius: "12px",
+              objectFit: "cover",
+              transform: "none",
+              boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+            }}
+          />
+        ) : (
+          // DESKTOP STYLES: matched with HaloVision
+          <img
+            src="/images/cfdimagetop.png"
+            alt="Accent Productions CFD Analysis"
+            style={{
+              width: "50%",
+              borderRadius: "12px",
+              objectFit: "cover",
+              transform: "translateY(-30px) rotate(-2deg)",
+              boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+            }}
+          />
+        )}
       </Column>
 
       {/* Details Section */}
