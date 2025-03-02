@@ -67,7 +67,7 @@ export default function AccentProductions() {
               width: "100%",
               borderRadius: "12px",
               objectFit: "cover",
-              transform: "translateY(-30px) rotate(-2deg)",
+              transform: "translateY(-30px)",
               boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
             }}
           />
