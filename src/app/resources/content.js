@@ -45,7 +45,7 @@ const social = [
   {
     name: "Email",
     icon: "email",
-    link: "kahuhutton.business@gmail.com",
+    link: "mailto:kahuhutton.business@gmail.com",
   },
 ];
 
