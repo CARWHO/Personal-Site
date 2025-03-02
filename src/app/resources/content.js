@@ -30,12 +30,12 @@ const social = [
   {
     name: "GitHub",
     icon: "github",
-    link: "https://github.com/kahuHutton",
+    link: "https://github.com/carwho",
   },
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/in/kahuHutton/",
+    link: "https://www.linkedin.com/in/kahuhutton/",
   },
   {
     name: "X",
