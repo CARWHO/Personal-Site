@@ -18,7 +18,14 @@ export default function AccentProductions() {
   return (
     <Column gap="xl" style={{ alignItems: "center" }}>
       {/* Header section */}
-      <Column style={{ width: "100%", maxWidth: "1000px", textAlign: "left", alignItems: "center" }}>
+      <Column
+        style={{
+          width: "100%",
+          maxWidth: "1000px",
+          textAlign: "left",
+          alignItems: "center",
+        }}
+      >
         <Heading variant="display-strong-l" style={{ marginBottom: "16px" }}>
           Accent Productions – CFD Engineer
         </Heading>
@@ -40,41 +47,41 @@ export default function AccentProductions() {
             variant="secondary"
             size="m"
             arrowIcon
-            style={{ marginTop: "24px", marginBottom: "40px" }}
+            style={{ marginTop: "24px" }}
           >
             <Text variant="heading-strong-l">Download Full Report</Text>
           </Button>
         </div>
-
-        {/* Image below the text */}
-        {isMobile ? (
-          // MOBILE STYLES: ensure it doesn't get cut off
-          <img
-            src="/images/cfdimagetop.png"
-            alt="Accent Productions CFD Analysis"
-            style={{
-              width: "90%",
-              borderRadius: "12px",
-              objectFit: "cover",
-              transform: "none",
-              boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
-            }}
-          />
-        ) : (
-          // DESKTOP STYLES: matched with HaloVision
-          <img
-            src="/images/cfdimagetop.png"
-            alt="Accent Productions CFD Analysis"
-            style={{
-              width: "90%",
-              borderRadius: "12px",
-              objectFit: "cover",
-              transform: "translateY(-30px)",
-              boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
-            }}
-          />
-        )}
       </Column>
+
+      {/* Image placed below the header section */}
+      {isMobile ? (
+        // MOBILE STYLES: ensure it doesn't get cut off
+        <img
+          src="/images/cfdimagetop.png"
+          alt="Accent Productions CFD Analysis"
+          style={{
+            width: "90%",
+            borderRadius: "12px",
+            objectFit: "cover",
+            transform: "none",
+            boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+          }}
+        />
+      ) : (
+        // DESKTOP STYLES: matched with HaloVision
+        <img
+          src="/images/cfdimagetop.png"
+          alt="Accent Productions CFD Analysis"
+          style={{
+            width: "50%",
+            borderRadius: "12px",
+            objectFit: "cover",
+            transform: "translateY(-30px) rotate(-2deg)",
+            boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+          }}
+        />
+      )}
 
       {/* Details Section */}
       <Column
@@ -82,7 +89,7 @@ export default function AccentProductions() {
           width: "100%",
           maxWidth: "1000px",
           textAlign: "left",
-          marginTop: "00px",
+          marginTop: "0px",
         }}
       >
         <div style={{ display: "flex", justifyContent: "center" }}>
