@@ -18,7 +18,7 @@ export default function AccentProductions() {
   return (
     <Column gap="xl" style={{ alignItems: "center" }}>
       {/* Header section */}
-      <Column style={{ width: "100%", maxWidth: "1000px", textAlign: "left" }}>
+      <Column style={{ width: "100%", maxWidth: "1000px", textAlign: "left", alignItems: "center" }}>
         <Heading variant="display-strong-l" style={{ marginBottom: "16px" }}>
           Accent Productions – CFD Engineer
         </Heading>
@@ -34,15 +34,17 @@ export default function AccentProductions() {
         </Text>
 
         {/* Download report button */}
-        <Button
-          href="/images/PreliminaryDesignReportAccentProductionsR1.1.pdf"
-          variant="secondary"
-          size="m"
-          arrowIcon
-          style={{ marginTop: "24px", marginBottom: "50px" }}
-        >
-          <Text variant="heading-strong-l">Download Full Report</Text>
-        </Button>
+        <div style={{ width: "100%" }}>
+          <Button
+            href="/images/PreliminaryDesignReportAccentProductionsR1.1.pdf"
+            variant="secondary"
+            size="m"
+            arrowIcon
+            style={{ marginTop: "24px", marginBottom: "50px" }}
+          >
+            <Text variant="heading-strong-l">Download Full Report</Text>
+          </Button>
+        </div>
 
         {/* Image below the text */}
         {isMobile ? (
