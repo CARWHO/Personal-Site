@@ -64,7 +64,7 @@ export default function AccentProductions() {
             src="/images/cfdimagetop.png"
             alt="Accent Productions CFD Analysis"
             style={{
-              width: "100%",
+              width: "90%",
               borderRadius: "12px",
               objectFit: "cover",
               transform: "translateY(-30px)",
@@ -80,7 +80,7 @@ export default function AccentProductions() {
           width: "100%",
           maxWidth: "1000px",
           textAlign: "left",
-          marginTop: "-20px",
+          marginTop: "-40px",
         }}
       >
         <div style={{ display: "flex", justifyContent: "center" }}>
