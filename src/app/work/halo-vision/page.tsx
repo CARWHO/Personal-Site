@@ -59,7 +59,6 @@ export default function HaloVision() {
             width: "90%",
             borderRadius: "12px",
             objectFit: "cover",
-            // remove big transform on mobile
             transform: "none",
             boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
           }}
@@ -80,18 +79,12 @@ export default function HaloVision() {
       )}
 
       {/* Show/Hide Details Button */}
-      <Column
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          // Only apply paddingLeft on desktop
-          paddingLeft: isMobile ? "0" : "650px",
-        }}
-      >
-        <Button onClick={() => setOpen(!open)} variant="secondary" size="m" arrowIcon>
-          {open ? "Hide Details" : "Show Details"}
-        </Button>
+      <Column style={{ width: "100%", maxWidth: "1000px", textAlign: "left" }}>
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "24px" }}>
+          <Button onClick={() => setOpen(!open)} variant="secondary" size="m" arrowIcon>
+            {open ? "Hide Details" : "Show Details"}
+          </Button>
+        </div>
       </Column>
 
       {/* Accordion content - only rendered when open */}
