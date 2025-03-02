@@ -64,7 +64,7 @@ export default function AccentProductions() {
             src="/images/cfdimagetop.png"
             alt="Accent Productions CFD Analysis"
             style={{
-              width: "50%",
+              width: "100%",
               borderRadius: "12px",
               objectFit: "cover",
               transform: "translateY(-30px) rotate(-2deg)",
