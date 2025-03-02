@@ -29,7 +29,7 @@ export default function AccentProductions() {
         <Heading variant="display-strong-l" style={{ marginBottom: "16px" }}>
           Accent Productions – CFD Engineer
         </Heading>
-        <Text variant="heading-default-m" onBackground="neutral-weak">
+        <Text variant="heading-default-m" onBackground="neutral-weak" style={{ alignSelf: "flex-start" }}>
           Accent Productions, March 2024
         </Text>
         <Text variant="body-default-l" style={{ marginTop: "16px" }}>
