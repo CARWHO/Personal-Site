@@ -55,7 +55,14 @@ export default function Kora() {
         <Column gap="l">
           {/* Text section */}
           <Text variant="body-default-l">
-            KORA is an AI-powered platform revolutionizing education with its smart LMS plugin. Powered by cutting-edge Retrieval-Augmented Generation (RAG), KORA delivers laser-precise, up-to-date content by tapping directly into university databases.
+            KORA is an AI-powered platform revolutionizing education with its smart LMS
+            plugin. Powered by cutting-edge Retrieval-Augmented Generation (RAG), KORA
+            delivers laser-precise, up-to-date content by tapping directly into university
+            databases.
+          </Text>
+          <Text variant="body-default-l">
+            Funded by Google Cloud, we harness advanced cloud technologies to build a
+            robust and scalable platform.
           </Text>
           <Text variant="body-default-l">
             Explore more:&nbsp;
@@ -170,6 +177,10 @@ export default function Kora() {
               databases.
             </Text>
             <Text variant="body-default-l">
+              Funded by Google Cloud, we harness advanced cloud technologies to build a
+              robust and scalable platform.
+            </Text>
+            <Text variant="body-default-l">
               Explore more:&nbsp;
               <a
                 href="https://kora.ac"
@@ -276,16 +287,15 @@ export default function Kora() {
           <ul style={{ listStyleType: "disc", paddingLeft: "20px" }}>
             <li>
               <strong>Developed full-stack web app:</strong> built the front-end with
-              React and Next.js, engineered the back-end in Python, and utilized Docker,
-              AWS, DigitalOcean, and Supabase for deployment and scalability.
+              React and Next.js, engineered the back-end in Python, and leveraged
+              containerization with Docker alongside a cloud-hosted database with authentication to ensure scalability and reliability.
             </li>
             <li>
               <strong>Led a team</strong> to design, deploy, and maintain a stand-alone
-              LMS plugin utilizing RAG (Retrival Augmented Generation).
+              LMS plugin utilizing Retrieval-Augmented Generation (RAG).
             </li>
             <li>
-              <strong>Implemented containerization</strong> and cloud hosting (Docker,
-              AWS, Digital Ocean, Azure) to ensure scalability and minimize downtime.
+              <strong>Implemented containerization and cloud deployment</strong> to ensure scalability and minimize downtime.
             </li>
             <li>
               <strong>Managed end-to-end project lifecycles:</strong> from initial

@@ -98,9 +98,16 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        My latest venture was an internship at Dawn Aerospace, where I worked in
-        the software team, developing satellite communication software and
-        contributing to spacecraft life-cycle testing.
+        <p>
+          My latest venture was an internship at Dawn Aerospace, where I worked in
+          the software team, developing satellite communication software and
+          contributing to spacecraft life-cycle testing.
+        </p>
+        <p>
+          I also founded KORA, an innovative AI-powered education platform that streamlines content
+          creation, grading, and learning management for institutes and students.
+          Funded by Google Startups.
+        </p>
       </>
     ),
   },
@@ -143,23 +150,24 @@ const about = {
         achievements: [
           <>
             Developed a full-stack web application using React, Next.js, Python,
-            Docker, AWS, and Firebase for deployment and scalability.
+            and Docker, leveraging cloud services funded by Google Cloud for
+            deployment and scalability.
           </>,
           <>
             Led a team to design, deploy, and maintain a stand-alone LMS plugin
             and RAG status-tracking tool, serving 100+ daily users.
           </>,
           <>
+            Configured and set up a robust database with integrated authentication
+            and authorization, ensuring secure access to the platform.
+          </>,
+          <>
             Implemented containerization and cloud hosting solutions to ensure
-            scalability and minimize downtime.
+            high availability and performance.
           </>,
           <>
             Managed end-to-end project lifecycles from concept and UI/UX design
-            through deployment and user feedback.
-          </>,
-          <>
-            Maintained ongoing client and stakeholder communication to rapidly
-            iterate on features based on user input.
+            through deployment and continuous user feedback.
           </>,
         ],
         images: [],
@@ -245,6 +253,13 @@ const about = {
         ),
         images: [],
       },
+      {
+        title: "Cloud Infrastructure",
+        description: (
+          <>Setting up databases with integrated authentication and authorization, leveraging modern cloud services.</>
+        ),
+        images: [],
+      },
     ],
   },
 };
@@ -274,7 +289,7 @@ const work = {
       company: "KORA",
       description: "AI-powered education platform for institutes and students",
       summary:
-        "Developed a learning management system (LMS) plugin that enables AI-driven content generation and grading, including automated exam creation, flashcards, and programming question generation. Models trained specifically around the New Zealand university curriculum.",
+        "Developed a learning management system (LMS) plugin that enables AI-driven content generation and grading, including automated exam creation, flashcards, and programming question generation. Built on robust cloud infrastructure funded by Google Cloud, with a focus on setting up secure databases with integrated authentication.",
       logo: "/images/companies/kora.png",
       fullReportLink: "/work/kora",
     },

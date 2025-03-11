@@ -302,7 +302,7 @@ export default function Project2() {
               </Column>
               <Column style={{ width: "40%", gap: "20px" }}>
                 <img
-                  src="/images/grafana2.png"
+                  src="/images/GRAFANA2.png"
                   alt="Grafana Dashboard"
                   style={{
                     width: "200%",
