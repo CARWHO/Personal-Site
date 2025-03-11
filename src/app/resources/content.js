@@ -104,9 +104,8 @@ const about = {
           contributing to spacecraft life-cycle testing.
         </p>
         <p>
-          I also founded KORA, an innovative AI-powered education platform that streamlines content
+          I also founded KORA, an innovative AI-powered education platform funded by Google Cloud that streamlines content
           creation, grading, and learning management for institutes and students.
-          Funded by Google.
         </p>
       </>
     ),
