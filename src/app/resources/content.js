@@ -106,7 +106,7 @@ const about = {
         <p>
           I also founded KORA, an innovative AI-powered education platform that streamlines content
           creation, grading, and learning management for institutes and students.
-          Funded by Google Startups.
+          Funded by Google.
         </p>
       </>
     ),
