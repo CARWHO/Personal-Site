@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import { Column, Heading, Text, Button } from "@/once-ui/components";
 
 export default function Kora() {
-  const [open, setOpen] = useState(false);
-
   // We detect if the user is on mobile (<768px).
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -271,58 +269,37 @@ export default function Kora() {
         </div>
       )}
 
-      {/* Show/Hide Details Button - centered and shifted right */}
-      <Column
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          paddingLeft: "370px",
-        }}
-      >
-        <Button
-          onClick={() => setOpen(!open)}
-          variant="secondary"
-          size="m"
-          arrowIcon
-        >
-          {open ? "Hide Details" : "Show Details"}
-        </Button>
+      {/* My Contributions Section - Always visible */}
+      <Column gap="l">
+        <Heading variant="display-strong-s">My Contributions</Heading>
+        <Text variant="body-default-l">
+          <ul style={{ listStyleType: "disc", paddingLeft: "20px" }}>
+            <li>
+              <strong>Developed full-stack web app:</strong> built the front-end with
+              React and Next.js, engineered the back-end in Python, and utilized Docker,
+              AWS, DigitalOcean, and Supabase for deployment and scalability.
+            </li>
+            <li>
+              <strong>Led a team</strong> to design, deploy, and maintain a stand-alone
+              LMS plugin utilizing RAG (Retrival Augmented Generation).
+            </li>
+            <li>
+              <strong>Implemented containerization</strong> and cloud hosting (Docker,
+              AWS, Digital Ocean, Azure) to ensure scalability and minimize downtime.
+            </li>
+            <li>
+              <strong>Managed end-to-end project lifecycles:</strong> from initial
+              concept and UI/UX design through deployment and user feedback, ensuring
+              alignment with business objectives.
+            </li>
+            <li>
+              <strong>Maintained ongoing client and stakeholder communication:</strong>{" "}
+              gathering requirements, providing updates, and rapidly iterating on
+              features based on user input.
+            </li>
+          </ul>
+        </Text>
       </Column>
-
-      {/* Details Section */}
-      {open && (
-        <Column gap="l">
-          <Heading variant="display-strong-s">My Contributions</Heading>
-          <Text variant="body-default-l">
-            <ul style={{ listStyleType: "disc", paddingLeft: "20px" }}>
-              <li>
-                <strong>Developed full-stack web app:</strong> built the front-end with
-                React and Next.js, engineered the back-end in Python, and utilized Docker,
-                AWS, DigitalOcean, and Supabase for deployment and scalability.
-              </li>
-              <li>
-                <strong>Led a team</strong> to design, deploy, and maintain a stand-alone
-                LMS plugin utilizing RAG (Retrival Augmented Generation).
-              </li>
-              <li>
-                <strong>Implemented containerization</strong> and cloud hosting (Docker,
-                AWS, Digital Ocean, Azure) to ensure scalability and minimize downtime.
-              </li>
-              <li>
-                <strong>Managed end-to-end project lifecycles:</strong> from initial
-                concept and UI/UX design through deployment and user feedback, ensuring
-                alignment with business objectives.
-              </li>
-              <li>
-                <strong>Maintained ongoing client and stakeholder communication:</strong>{" "}
-                gathering requirements, providing updates, and rapidly iterating on
-                features based on user input.
-              </li>
-            </ul>
-          </Text>
-        </Column>
-      )}
     </Column>
   );
 }
