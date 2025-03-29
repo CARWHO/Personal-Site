@@ -148,7 +148,7 @@ const about = {
         logo: "/images/companies/kora.png",
         achievements: [
           <>
-            Developed a full-stack web application using React, Next.js, Python,
+            Developed a full-stack web application using React, Next.js,
             and Docker, leveraging cloud services funded by Google Cloud for
             deployment and scalability.
           </>,
