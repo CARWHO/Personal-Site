@@ -286,8 +286,8 @@ export default function Kora() {
         <Text variant="body-default-l">
           <ul style={{ listStyleType: "disc", paddingLeft: "20px" }}>
             <li>
-              <strong>Developed full-stack web app:</strong> built the front-end with
-              React and Next.js, engineered the back-end in Python, and leveraged
+              <strong>Developed full-stack web app:</strong> built with
+              React and Next.js, and leveraged
               containerization with Docker alongside a cloud-hosted database with authentication to ensure scalability and reliability.
             </li>
             <li>
