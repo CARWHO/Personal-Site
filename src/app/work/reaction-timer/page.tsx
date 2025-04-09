@@ -129,7 +129,7 @@ export default function ReactionTimer() {
         isOpen={showReportDialog}
         onClose={() => setShowReportDialog(false)}
         title="Report in Progress"
-        width="500px"
+        width={500}
       >
         <Column gap="m" padding="m">
           <Text variant="body-default-l">
