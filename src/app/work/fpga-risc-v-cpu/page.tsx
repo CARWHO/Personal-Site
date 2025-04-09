@@ -129,11 +129,12 @@ export default function FpgaRiscvCpu() {
         isOpen={showReportDialog}
         onClose={() => setShowReportDialog(false)}
         title="Report in Progress"
-        width="500px"
+        width={100}
       >
         <Column gap="m" padding="m">
           <Text variant="body-default-l">
-            I'm still working on this report. Feel free to email me at kahu.hutton@gmail.com to ask for any current updates or additional information about this project.
+            I'm still working on this report. Feel free to email me at{" "}
+            <a href="mailto:kahuhutton.business@gmail.com">kahuhutton.business@gmail.com</a> to ask for any current updates or additional information about this project.
           </Text>
           <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
             <Button variant="primary" onClick={() => setShowReportDialog(false)}>
