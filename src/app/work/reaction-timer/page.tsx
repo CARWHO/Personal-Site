@@ -35,6 +35,19 @@ export default function ReactionTimer() {
         <Text variant="body-default-l" style={{ marginTop: "16px" }}>
           Designed a reaction timer in VHDL on a Nexys-4 DDR FPGA board. The system measures user reaction times with high precision using a finite state machine architecture, displays statistics on seven-segment displays, and includes configurable test parameters with random delay mechanisms to enhance interactivity.
         </Text>
+
+        {/* Download report button */}
+        <div style={{ width: "100%" }}>
+          <Button
+            href="/images/halovision.pdf"
+            variant="secondary"
+            size="m"
+            arrowIcon
+            style={{ marginTop: "24px" }}
+          >
+            <Text variant="heading-strong-l">Download Full Report</Text>
+          </Button>
+        </div>
       </Column>
 
       {/* Image placed below the header section */}
@@ -44,7 +57,7 @@ export default function ReactionTimer() {
           src="/images/FPGA.jpeg"
           alt="FPGA Reaction Timer"
           style={{
-            width: "90%",
+            width: "72%", // Reduced by 20% from 90%
             borderRadius: "12px",
             objectFit: "cover",
             transform: "none",
@@ -57,7 +70,7 @@ export default function ReactionTimer() {
           src="/images/FPGA.jpeg"
           alt="FPGA Reaction Timer"
           style={{
-            width: "50%",
+            width: "40%", // Reduced by 20% from 50%
             borderRadius: "12px",
             objectFit: "cover",
             transform: "translateY(-30px) rotate(-2deg)",
