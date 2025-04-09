@@ -133,6 +133,7 @@ const categories = [
     id: "FPGA Projects",
     color: 0x6366F1,
     tags: ["FPGA", "Hardware", "Digital Design"],
+    link: "/work/reaction-timer" // Add link to the reaction-timer page as an entry point
   }
 ];
 
@@ -146,6 +147,7 @@ const generateGraphData = () => {
       id: category.id,
       type: "category",
       color: category.color,
+      link: category.link
     });
   });
 
@@ -523,6 +525,19 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
       return group;
     };
 
+    // Function to get the appropriate node label based on node type
+    const getNodeLabel = (node: GraphNode) => {
+      if (node.type === "category") {
+        // Check if the category has a link
+        const category = categories.find(cat => cat.id === node.id);
+        if (category && category.link) {
+          return `${node.id} - Click to view projects`;
+        }
+        return node.id;
+      }
+      return node.type === "major" ? `Click to view ${node.id}` : node.id;
+    };
+
     return (
       <Column
         className="portfolio-graph"
@@ -537,10 +552,7 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
         <ForceGraph3D
           ref={graphRef}
           graphData={graphData}
-          nodeLabel={(node: GraphNode) => {
-            if (node.type === "category") return `${node.id} - Click to explore`;
-            return node.type === "major" ? `Click to view ${node.id}` : node.id;
-          }}
+          nodeLabel={getNodeLabel}
           nodeThreeObject={nodeThreeObject}
           linkWidth={2}
           linkColor={() => "#666666"}
