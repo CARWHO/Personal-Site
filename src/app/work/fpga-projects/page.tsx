@@ -25,61 +25,28 @@ export default function FpgaProjects() {
 
   return (
     <Column gap="xl" style={{ alignItems: "center" }}>
-      {/* Hero section */}
-      <div
-        style={{
-          width: "100%",
-          position: "relative",
-          height: "300px",
-          overflow: "hidden",
-          borderRadius: "12px",
-          marginBottom: "40px",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundImage: "linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/images/fpga-hero.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "0 20px",
-          }}
-        >
-          <Heading variant="display-strong-xl" style={{ color: "#fff", textAlign: "center" }}>
-            FPGA Projects
-          </Heading>
-          <Text
-            variant="heading-default-l"
-            style={{
-              color: "rgba(255,255,255,0.8)",
-              textAlign: "center",
-              maxWidth: "800px",
-              marginTop: "16px",
-            }}
-          >
-            Digital design and hardware implementation expertise
-          </Text>
-        </div>
-      </div>
-
-      {/* Introduction section */}
+      {/* Compact header section */}
       <Column
         style={{
           width: "100%",
           maxWidth: "1000px",
-          textAlign: "left",
-          marginBottom: "40px",
+          textAlign: "center",
+          marginBottom: "20px",
         }}
       >
-        <Text variant="body-default-l" style={{ lineHeight: "1.6" }}>
+        <Heading variant="display-strong-xl" style={{ marginBottom: "8px" }}>
+          FPGA Projects
+        </Heading>
+        <Text
+          variant="heading-default-l"
+          style={{
+            color: "rgba(255,255,255,0.8)",
+            marginBottom: "24px",
+          }}
+        >
+          Digital design and hardware implementation expertise
+        </Text>
+        <Text variant="body-default-l" style={{ lineHeight: "1.6", textAlign: "left" }}>
           My FPGA projects showcase my expertise in digital design, hardware description languages, and embedded systems.
           I've developed a range of applications from precise timing systems to complex processor implementations,
           demonstrating my ability to bridge theoretical computer architecture concepts with practical hardware solutions.
@@ -311,61 +278,6 @@ export default function FpgaProjects() {
           )}
         </Column>
       </Grid>
-
-      {/* Technical Skills Section */}
-      <Column
-        style={{
-          width: "100%",
-          maxWidth: "1000px",
-          textAlign: "left",
-          marginTop: "60px",
-          padding: "30px",
-          borderRadius: "16px",
-          backgroundColor: "rgba(20, 20, 30, 0.6)",
-          backdropFilter: "blur(10px)",
-          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.25)",
-          border: "1px solid rgba(100, 100, 255, 0.1)",
-        }}
-      >
-        <Heading variant="display-strong-m" style={{ marginBottom: "24px" }}>
-          Technical Skills Demonstrated
-        </Heading>
-        
-        <Grid columns={isMobile ? "1" : "3"} gap="l">
-          <Column gap="s">
-            <Heading variant="heading-strong-s">Hardware Design</Heading>
-            <Text variant="body-default-m" style={{ lineHeight: "1.6" }}>
-              • VHDL Programming<br />
-              • Verilog HDL<br />
-              • Digital Logic Design<br />
-              • FPGA Development<br />
-              • Hardware Debugging
-            </Text>
-          </Column>
-          
-          <Column gap="s">
-            <Heading variant="heading-strong-s">Architecture</Heading>
-            <Text variant="body-default-m" style={{ lineHeight: "1.6" }}>
-              • Finite State Machines<br />
-              • RISC-V Architecture<br />
-              • SoC Design<br />
-              • Memory Interfaces<br />
-              • Arithmetic Logic Units
-            </Text>
-          </Column>
-          
-          <Column gap="s">
-            <Heading variant="heading-strong-s">Tools & Platforms</Heading>
-            <Text variant="body-default-m" style={{ lineHeight: "1.6" }}>
-              • Xilinx Vivado<br />
-              • Nexys-4 DDR<br />
-              • Avnet Zuboard 1CG<br />
-              • SiFive RISC-V Toolchain<br />
-              • UART Communication
-            </Text>
-          </Column>
-        </Grid>
-      </Column>
 
       {/* Report Dialog - Redesigned */}
       <Dialog
