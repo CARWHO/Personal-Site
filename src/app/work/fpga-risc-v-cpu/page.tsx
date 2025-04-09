@@ -70,7 +70,7 @@ export default function FpgaRiscvCpu() {
           src="/images/CPUfpgaKahu.png"
           alt="FPGA RISC-V CPU"
           style={{
-            width: "40%",
+            width: "60%",
             borderRadius: "12px",
             objectFit: "cover",
             transform: "translateY(-30px) rotate(-2deg)",
@@ -96,7 +96,7 @@ export default function FpgaRiscvCpu() {
 
         {open && (
           <Column gap="xl" style={{ marginTop: "16px" }}>
-            <Heading variant="display-strong-s">Key Achievements</Heading>
+            <Heading variant="display-strong-s">Key Achievements (so far)</Heading>
             <Text variant="body-default-l">
               <ul
                 style={{
