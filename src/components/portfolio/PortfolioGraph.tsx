@@ -482,4 +482,76 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
               : "rgba(150,150,150,1)"
             : "rgba(255,255,255,1)",
           borderThickness: 2,
-          borderColor: { r: 50, g: 50,
+          borderColor: { r: 50, g: 50, b: 50, a: 1 },
+          backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
+          scaleFactor: 0.5,
+        });
+        sprite.position.set(0, sphereRadius + 15, 0);
+      } else {
+        // Skill label
+        sprite = makeTextSprite(`${node.id} (Skill)`, {
+          fontsize: 12,
+          fontface: "Arial",
+          textColor: highlightedNodeId
+            ? node.id === highlightedNodeId
+              ? "rgba(255,255,255,1)"
+              : "rgba(150,150,150,1)"
+            : "rgba(200,200,200,1)",
+          borderThickness: 1,
+          borderColor: { r: 50, g: 50, b: 50, a: 1 },
+          backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
+          scaleFactor: 0.3,
+        });
+        sprite.position.set(0, sphereRadius + 8, 0);
+      }
+      group.add(sprite);
+      return group;
+    };
+
+    // Function to get the appropriate node label based on node type
+    const getNodeLabel = (node: GraphNode) => {
+      if (node.type === "category") {
+        return `${node.id} - Click to view projects`;
+      }
+      return node.type === "major" ? `Click to view ${node.id}` : node.id;
+    };
+
+    return (
+      <Column
+        className="portfolio-graph"
+        style={{
+          // Remove the fixed height if you want it to shrink on mobile
+          width: "100%",
+          maxWidth: "800px",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <ForceGraph3D
+          ref={graphRef}
+          graphData={graphData}
+          nodeLabel={getNodeLabel}
+          nodeThreeObject={nodeThreeObject}
+          linkWidth={2}
+          linkColor={() => "#666666"}
+          linkOpacity={0.5}
+          backgroundColor="rgba(0,0,0,0)"
+          controlType="orbit"
+          enableNodeDrag={true}
+          enableNavigationControls={true}
+          onNodeClick={(node: GraphNode) => {
+            const event = window.event;
+            if (event) {
+              event.stopPropagation();
+            }
+            if ((node.type === "major" || node.type === "category") && node.link) {
+              window.location.href = node.link;
+            }
+          }}
+        />
+      </Column>
+    );
+  }
+);
+
+export default PortfolioGraph;
