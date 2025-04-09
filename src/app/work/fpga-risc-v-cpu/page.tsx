@@ -129,7 +129,7 @@ export default function FpgaRiscvCpu() {
         isOpen={showReportDialog}
         onClose={() => setShowReportDialog(false)}
         title="Report in Progress"
-        width={100}
+        width={75} // Reduced by 25% from 100
       >
         <Column gap="m" padding="m">
           <Text variant="body-default-l">

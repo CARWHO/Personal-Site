@@ -15,7 +15,7 @@ import * as THREE from "three";
 
 interface GraphNode {
   id: string;
-  type: "major" | "skill";
+  type: "major" | "skill" | "category";
   project?: string;
   color: number;
   link?: string;
@@ -106,45 +106,93 @@ const majorProjects = [
       "User Interface Design",
       "Vivado Simulation",
     ],
+    category: "FPGA Projects"
   },
+  {
+    id: "RISC-V CPU",
+    color: 0xffffff,
+    tags: ["FPGA", "CPU", "RISC-V", "Hardware"],
+    skills: [
+      "Verilog HDL",
+      "RISC-V Architecture",
+      "SoC Design",
+      "Memory Interface Design",
+      "UART Communication",
+      "FPGA Development",
+      "Hardware Debugging",
+      "Firmware Development",
+    ],
+    category: "FPGA Projects",
+    link: "/work/fpga-risc-v-cpu"
+  },
+];
+
+// Categories for grouping projects
+const categories = [
+  {
+    id: "FPGA Projects",
+    color: 0x6366F1,
+    tags: ["FPGA", "Hardware", "Digital Design"],
+  }
 ];
 
 const generateGraphData = () => {
   const nodes: GraphNode[] = [];
   const links: GraphLink[] = [];
 
-  // Add major project nodes.
+  // Add category nodes first
+  categories.forEach((category) => {
+    nodes.push({
+      id: category.id,
+      type: "category",
+      color: category.color,
+    });
+  });
+
+  // Add major project nodes
   majorProjects.forEach((project) => {
     nodes.push({
       id: project.id,
       type: "major",
       color: project.color,
-      link: `/work/${project.id.toLowerCase().replace(/\s+/g, "-")}`,
+      link: project.link || `/work/${project.id.toLowerCase().replace(/\s+/g, "-")}`,
     });
+    
+    // Link projects to their categories if defined
+    if (project.category) {
+      links.push({ source: project.category, target: project.id });
+    }
   });
 
-  // Add skill nodes + link them back.
+  // Add skill nodes + link them back
   majorProjects.forEach((project) => {
     project.skills.forEach((skill) => {
-      const node: GraphNode = {
-        id: skill,
-        type: "skill",
-        project: project.id,
-        color: 0xcccccc,
-      };
-      nodes.push(node);
+      // Check if this skill node already exists
+      const existingNode = nodes.find(n => n.id === skill && n.type === "skill");
+      if (!existingNode) {
+        const node: GraphNode = {
+          id: skill,
+          type: "skill",
+          project: project.id,
+          color: 0xcccccc,
+        };
+        nodes.push(node);
+      }
       links.push({ source: project.id, target: skill });
     });
   });
 
-  // Link major projects together.
+  // Link major projects together (except those in the same category)
   majorProjects.forEach((project1, i) => {
     majorProjects.slice(i + 1).forEach((project2) => {
-      links.push({ source: project1.id, target: project2.id });
+      // Don't link projects that are in the same category
+      if (project1.category !== project2.category || !project1.category) {
+        links.push({ source: project1.id, target: project2.id });
+      }
     });
   });
 
-  // Some cross-links between skill nodes.
+  // Some cross-links between skill nodes
   const skillNodes = nodes.filter((n) => n.type === "skill");
   for (let i = 0; i < skillNodes.length; i += 5) {
     const randomSkillIndex = Math.floor(Math.random() * skillNodes.length);
@@ -224,6 +272,14 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
       const lowerQuery = query.toLowerCase();
       if (!lowerQuery) return null;
 
+      // First check for category matches
+      const categoryMatch = categories.find(cat => 
+        cat.id.toLowerCase().includes(lowerQuery) || 
+        cat.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+      );
+      if (categoryMatch) return categoryMatch.id;
+
+      // Then check for project or skill matches
       const matchingNodes = graphData.nodes.filter((node) => {
         const project = majorProjects.find((p) => p.id === node.id);
         const matches =
@@ -251,7 +307,7 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
     const redirectIfHighlighted = () => {
       if (highlightedNodeId) {
         const projectNode = graphData.nodes.find(
-          (node) => node.id === highlightedNodeId && node.type === "major"
+          (node) => node.id === highlightedNodeId && (node.type === "major" || node.type === "category")
         );
         if (projectNode && projectNode.link) {
           window.location.href = projectNode.link;
@@ -363,8 +419,12 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
               if (nodeData) {
                 let targetColorInt: number;
                 if (highlightedNodeId) {
-                  targetColorInt =
-                    nodeId === highlightedNodeId ? 0xffffff : 0x444444;
+                  // If a category is highlighted, also highlight its projects
+                  const isHighlighted = nodeId === highlightedNodeId || 
+                    (nodeData.type === "major" && 
+                     majorProjects.find(p => p.id === nodeId)?.category === highlightedNodeId);
+                  
+                  targetColorInt = isHighlighted ? 0xffffff : 0x444444;
                 } else {
                   targetColorInt = nodeData.color;
                 }
@@ -391,7 +451,16 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
           : 0x444444
         : node.color;
 
-      const sphereRadius = node.type === "major" ? 15 : 5;
+      // Determine sphere size based on node type
+      let sphereRadius;
+      if (node.type === "category") {
+        sphereRadius = 20; // Larger for category nodes
+      } else if (node.type === "major") {
+        sphereRadius = 15; // Medium for major project nodes
+      } else {
+        sphereRadius = 5; // Small for skill nodes
+      }
+
       const geometry = new THREE.SphereGeometry(sphereRadius, 16, 16);
       const material = new THREE.MeshBasicMaterial({
         color: new THREE.Color(initialColor),
@@ -401,7 +470,24 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
       group.add(sphere);
 
       let sprite: THREE.Sprite;
-      if (node.type === "major") {
+      if (node.type === "category") {
+        // Category label
+        sprite = makeTextSprite(`${node.id}`, {
+          fontsize: 28,
+          fontface: "Arial",
+          textColor: highlightedNodeId
+            ? node.id === highlightedNodeId
+              ? "rgba(255,255,255,1)"
+              : "rgba(150,150,150,1)"
+            : "rgba(255,255,255,1)",
+          borderThickness: 2,
+          borderColor: { r: 50, g: 50, b: 50, a: 1 },
+          backgroundColor: { r: 0, g: 0, b: 0, a: 0.0 },
+          scaleFactor: 0.6,
+        });
+        sprite.position.set(0, sphereRadius + 20, 0);
+      } else if (node.type === "major") {
+        // Project label
         sprite = makeTextSprite(node.id, {
           fontsize: 24,
           fontface: "Arial",
@@ -417,6 +503,7 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
         });
         sprite.position.set(0, sphereRadius + 15, 0);
       } else {
+        // Skill label
         sprite = makeTextSprite(`${node.id} (Skill)`, {
           fontsize: 12,
           fontface: "Arial",
@@ -450,9 +537,10 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
         <ForceGraph3D
           ref={graphRef}
           graphData={graphData}
-          nodeLabel={(node: GraphNode) =>
-            node.type === "major" ? `Click to view ${node.id}` : node.id
-          }
+          nodeLabel={(node: GraphNode) => {
+            if (node.type === "category") return `${node.id} - Click to explore`;
+            return node.type === "major" ? `Click to view ${node.id}` : node.id;
+          }}
           nodeThreeObject={nodeThreeObject}
           linkWidth={2}
           linkColor={() => "#666666"}
@@ -466,7 +554,7 @@ const PortfolioGraph = forwardRef<PortfolioGraphRef, PortfolioGraphProps>(
             if (event) {
               event.stopPropagation();
             }
-            if (node.type === "major" && node.link) {
+            if ((node.type === "major" || node.type === "category") && node.link) {
               window.location.href = node.link;
             }
           }}
