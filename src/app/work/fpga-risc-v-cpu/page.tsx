@@ -1,10 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Column, Heading, Text, Button } from "@/once-ui/components";
+import { Column, Heading, Text, Button, Dialog } from "@/once-ui/components";
 import styles from "../work.module.scss";
 
 export default function FpgaRiscvCpu() {
   const [open, setOpen] = useState(false);
+  const [showReportDialog, setShowReportDialog] = useState(false);
 
   // Detect if screen is mobile
   const [isMobile, setIsMobile] = useState(false);
@@ -39,7 +40,7 @@ export default function FpgaRiscvCpu() {
         {/* Download report button */}
         <div style={{ width: "100%" }}>
           <Button
-            href="/images/halovision.pdf"
+            onClick={() => setShowReportDialog(true)}
             variant="secondary"
             size="m"
             arrowIcon
@@ -122,6 +123,25 @@ export default function FpgaRiscvCpu() {
           </Column>
         )}
       </Column>
+
+      {/* Report Dialog */}
+      <Dialog
+        isOpen={showReportDialog}
+        onClose={() => setShowReportDialog(false)}
+        title="Report in Progress"
+        width="500px"
+      >
+        <Column gap="m" padding="m">
+          <Text variant="body-default-l">
+            I'm still working on this report. Feel free to email me at kahu.hutton@gmail.com to ask for any current updates or additional information about this project.
+          </Text>
+          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
+            <Button variant="primary" onClick={() => setShowReportDialog(false)}>
+              Close
+            </Button>
+          </div>
+        </Column>
+      </Dialog>
     </Column>
   );
 }
