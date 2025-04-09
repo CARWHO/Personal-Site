@@ -214,7 +214,7 @@ export default function FpgaProjects() {
           </Text>
           
           <Text variant="body-default-m" style={{ marginBottom: "24px", lineHeight: "1.6" }}>
-            Researching efficient RISC-V (picorv32) CPU implementations on FPGAs with Dr. Romain Arnal, optimizing both performance and energy efficiency.
+            Researching efficient RISC-V (picorv32) CPU implementations on FPGAs with Dr. Romain Arnal, tuned for high speed data transfer.
           </Text>
           
           <Flex gap="m" style={{ marginTop: "auto" }}>
@@ -249,7 +249,7 @@ export default function FpgaProjects() {
 
           {openRiscvCpu && (
             <Column gap="m" style={{ marginTop: "24px" }}>
-              <Heading variant="display-strong-s">Key Achievements (so far)</Heading>
+              <Heading variant="display-strong-s">Key Objectives</Heading>
               <Text variant="body-default-l">
                 <ul
                   style={{
@@ -260,16 +260,15 @@ export default function FpgaProjects() {
                   }}
                 >
                   <li>
-                    <strong>Developed a Custom RISCV SoC on FPGA:</strong> Engineered a complete system on an Avnet Zuboard 1CG by integrating the PicoRV32 core with custom memory, UART, and peripheral interfaces.
+                    <strong>Develop a Custom RISCV SoC on FPGA:</strong> Engineer a complete system on an Avnet Zuboard 1CG by integrating the PicoRV32 core with custom memory, UART, and peripheral interfaces.
                   </li>
                   <li>
                     <strong>Firmware Compilation & Memory Initialization:</strong> Compiled test firmware using the SiFive RISCV toolchain and configured on-chip block RAM to automatically load the firmware via a memory initialization file.
                   </li>
                   <li>
-                    <strong>End-to-End Design Flow:</strong> Created and adapted FPGA constraints and top-level Verilog modules, successfully synthesized, implemented, and generated a bitstream for hardware programming.
+                    <strong>System Verification & Debugging:</strong> Demonstrate working UART output on real hardware, establish a robust platform for further RISCV system development and testing.
                   </li>
-                  <li>
-                    <strong>System Verification & Debugging:</strong> Demonstrated working UART output on real hardware, establishing a robust platform for further RISCV system development and testing.
+                  <li> <strong>Optimized High-Speed Data Transfer Architecture:</strong> Designed and integrated a custom DMA controller with a high-throughput data bus, drastically reducing latency and enabling rapid communication between the PicoRV32 core and peripheral interfaces for real-time processing. 
                   </li>
                 </ul>
               </Text>

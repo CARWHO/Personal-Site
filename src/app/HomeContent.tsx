@@ -108,7 +108,7 @@ export default function HomeContent() {
                 onSubmit={handleSearchSubmit}
               />
               <Text style={{ fontSize: "14px", opacity: 0.6 }} onBackground="neutral-weak">
-                Try searching: Satellite • Embedded • API • AI
+                Try searching: FPGA • Satellite • Embedded • API • AI
               </Text>
             </Column>
           </RevealFx>

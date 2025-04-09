@@ -99,13 +99,13 @@ const about = {
     description: (
       <>
         <p>
-          My latest venture was an internship at Dawn Aerospace, where I worked in
-          the software team, developing satellite communication software and
-          contributing to spacecraft life-cycle testing.
+        I am researching efficient RISC‑V (PicoRV32) CPU implementations on FPGAs with Dr. Romain Arnal, tuned for high speed data transfer.
         </p>
         <p>
-          I also founded KORA, an innovative AI-powered education platform funded by Google Cloud that streamlines content
-          creation, grading, and learning management for institutes and students.
+          Building on this technical foundation, I completed an internship at Dawn Aerospace, where I contributed to developing satellite communication software and supported spacecraft life-cycle testing—gaining valuable insights into advanced aerospace systems.
+        </p>
+        <p>
+          In addition, I founded KORA, an innovative AI-powered education platform funded by Google Cloud. 
         </p>
       </>
     ),
