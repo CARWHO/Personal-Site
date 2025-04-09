@@ -34,6 +34,16 @@ const theme = createTheme({
   },
 });
 
+// Custom work sections including the new Reaction Timer project
+const workSections = [
+  ...work.sections,
+  {
+    company: "Reaction Timer",
+    summary: "Designed a reaction timer in VHDL on a Nexys-4 DDR FPGA board, implementing a finite state machine architecture for precise timing measurements.",
+    fullReportLink: "/work/reaction-timer"
+  }
+];
+
 export default function WorkContent() {
   return (
     <ThemeProvider theme={theme}>
@@ -61,7 +71,7 @@ export default function WorkContent() {
 
         {/* Projects List */}
         <Column gap="xl">
-          {work.sections.map((section, index) => (
+          {workSections.map((section, index) => (
             // Use a horizontal flex so the number stays on the left,
             // while the details remain on the right. We center them
             // as a group by default.
