@@ -41,6 +41,11 @@ const workSections = [
     company: "Reaction Timer",
     summary: "Designed a reaction timer in VHDL on a Nexys-4 DDR FPGA board, implementing a finite state machine architecture for precise timing measurements.",
     fullReportLink: "/work/reaction-timer"
+  },
+  {
+    company: "FPGA RISC-V CPU",
+    summary: "Researching efficient RISC-V (picorv32) CPU implementations on FPGAs with Dr. Romain Arnal, optimizing both performance and energy efficiency.",
+    fullReportLink: "/work/fpga-risc-v-cpu"
   }
 ];
 
