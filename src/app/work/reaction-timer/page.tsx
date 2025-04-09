@@ -41,7 +41,7 @@ export default function ReactionTimer() {
       {isMobile ? (
         // MOBILE STYLES: ensure it doesn't get cut off
         <img
-          src="/images/cfdimagetop.png"
+          src="/images/FPGA.jpeg"
           alt="FPGA Reaction Timer"
           style={{
             width: "90%",
@@ -54,7 +54,7 @@ export default function ReactionTimer() {
       ) : (
         // DESKTOP STYLES: matched with HaloVision
         <img
-          src="/images/cfdimagetop.png"
+          src="/images/FPGA.jpeg"
           alt="FPGA Reaction Timer"
           style={{
             width: "50%",
