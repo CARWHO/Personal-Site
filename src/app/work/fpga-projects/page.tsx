@@ -1,13 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Column, Heading, Text, Button, Dialog, Flex, Grid } from "@/once-ui/components";
+import { Column, Heading, Text, Button, Flex } from "@/once-ui/components";
 import styles from "../work.module.scss";
 
 export default function FpgaProjects() {
   const [openReactionTimer, setOpenReactionTimer] = useState(false);
   const [openRiscvCpu, setOpenRiscvCpu] = useState(false);
-  const [showReportDialog, setShowReportDialog] = useState(false);
-  const [currentProject, setCurrentProject] = useState("");
 
   // Detect if screen is mobile
   const [isMobile, setIsMobile] = useState(false);
@@ -17,11 +15,6 @@ export default function FpgaProjects() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const handleReportClick = (project) => {
-    setCurrentProject(project);
-    setShowReportDialog(true);
-  };
 
   return (
     <Column gap="xl" style={{ alignItems: "center" }}>
@@ -129,14 +122,16 @@ export default function FpgaProjects() {
             </Button>
             
             <Button
-              onClick={() => handleReportClick("Reaction Timer")}
               variant="secondary"
               size="s"
               arrowIcon
               style={{
                 borderRadius: "8px",
                 transition: "background-color 0.3s ease",
+                opacity: 0.5,
+                cursor: "not-allowed",
               }}
+              disabled
             >
               Download Report
             </Button>
@@ -237,14 +232,16 @@ export default function FpgaProjects() {
             </Button>
             
             <Button
-              onClick={() => handleReportClick("RISC-V CPU")}
               variant="secondary"
               size="s"
               arrowIcon
               style={{
                 borderRadius: "8px",
                 transition: "background-color 0.3s ease",
+                opacity: 0.5,
+                cursor: "not-allowed",
               }}
+              disabled
             >
               Download Report
             </Button>
@@ -280,29 +277,6 @@ export default function FpgaProjects() {
           )}
         </Column>
       </div>
-
-      {/* Simple Report Dialog */}
-      <Dialog
-        isOpen={showReportDialog}
-        onClose={() => setShowReportDialog(false)}
-        title={`${currentProject} Report`}
-        width="500px"
-      >
-        <Column gap="m" padding="m">
-          <Text variant="body-default-l">
-            I'm currently finalizing the detailed report for this project. Feel free to email me at{" "}
-            <a href="mailto:kahuhutton.business@gmail.com">
-              kahuhutton.business@gmail.com
-            </a>{" "}
-            to request current progress or specific information about this project.
-          </Text>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
-            <Button variant="primary" onClick={() => setShowReportDialog(false)}>
-              Close
-            </Button>
-          </div>
-        </Column>
-      </Dialog>
 
       {/* CSS for hover effects */}
       <style jsx global>{`
