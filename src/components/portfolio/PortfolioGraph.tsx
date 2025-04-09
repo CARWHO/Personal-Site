@@ -92,6 +92,21 @@ const majorProjects = [
       "AutoCAD",
     ],
   },
+  {
+    id: "Reaction Timer",
+    color: 0xffffff,
+    tags: ["FPGA", "Hardware", "Digital Design"],
+    skills: [
+      "VHDL Programming",
+      "Finite State Machine Design",
+      "Digital Logic Design",
+      "Hardware Description Languages",
+      "FPGA Development",
+      "Arithmetic Logic Unit (ALU) Design",
+      "User Interface Design",
+      "Vivado Simulation",
+    ],
+  },
 ];
 
 const generateGraphData = () => {
