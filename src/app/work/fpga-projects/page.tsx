@@ -54,12 +54,14 @@ export default function FpgaProjects() {
       </Column>
 
       {/* Projects Grid */}
-      <Grid
-        columns={isMobile ? "1" : "2"}
-        gap="xl"
+      <div
         style={{
           width: "100%",
           maxWidth: "1200px",
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+          gap: "32px",
+          alignItems: "flex-start" // This is key - don't align items stretch
         }}
       >
         {/* Project 1: Reaction Timer */}
@@ -71,9 +73,9 @@ export default function FpgaProjects() {
             backgroundColor: "rgba(20, 20, 30, 0.6)",
             backdropFilter: "blur(10px)",
             boxShadow: "0 10px 30px rgba(0, 0, 0, 0.25)",
-            height: "100%",
             transition: "transform 0.3s ease, box-shadow 0.3s ease",
             border: "1px solid rgba(100, 100, 255, 0.1)",
+            height: "auto", // Allow natural height
           }}
           className="project-card"
         >
@@ -179,9 +181,9 @@ export default function FpgaProjects() {
             backgroundColor: "rgba(20, 20, 30, 0.6)",
             backdropFilter: "blur(10px)",
             boxShadow: "0 10px 30px rgba(0, 0, 0, 0.25)",
-            height: "100%",
             transition: "transform 0.3s ease, box-shadow 0.3s ease",
             border: "1px solid rgba(100, 100, 255, 0.1)",
+            height: "auto", // Allow natural height
           }}
           className="project-card"
         >
@@ -277,138 +279,29 @@ export default function FpgaProjects() {
             </Column>
           )}
         </Column>
-      </Grid>
+      </div>
 
-      {/* Report Dialog - Redesigned */}
+      {/* Simple Report Dialog */}
       <Dialog
         isOpen={showReportDialog}
         onClose={() => setShowReportDialog(false)}
-        title=""
-        style={{ width: 500, borderRadius: "16px", overflow: "hidden" }}
+        title={`${currentProject} Report`}
+        width="500px"
       >
-        <div style={{ position: "relative" }}>
-          {/* Header with gradient background */}
-          <div
-            style={{
-              background: "linear-gradient(135deg, #3a3d9d 0%, #2c2f7c 100%)",
-              padding: "24px",
-              borderTopLeftRadius: "16px",
-              borderTopRightRadius: "16px",
-              position: "relative",
-            }}
-          >
-            <Button
-              onClick={() => setShowReportDialog(false)}
-              style={{
-                position: "absolute",
-                top: "16px",
-                right: "16px",
-                background: "rgba(255,255,255,0.2)",
-                borderRadius: "50%",
-                width: "32px",
-                height: "32px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              ✕
+        <Column gap="m" padding="m">
+          <Text variant="body-default-l">
+            I'm currently finalizing the detailed report for this project. Feel free to email me at{" "}
+            <a href="mailto:kahuhutton.business@gmail.com">
+              kahuhutton.business@gmail.com
+            </a>{" "}
+            to request current progress or specific information about this project.
+          </Text>
+          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
+            <Button variant="primary" onClick={() => setShowReportDialog(false)}>
+              Close
             </Button>
-            <Heading variant="display-strong-m" style={{ color: "#fff", marginBottom: "8px" }}>
-              {currentProject} Report
-            </Heading>
-            <Text variant="body-default-m" style={{ color: "rgba(255,255,255,0.8)" }}>
-              Development in progress
-            </Text>
           </div>
-
-          {/* Dialog content */}
-          <Column gap="m" padding="l" style={{ background: "#1a1a2e" }}>
-            <Text variant="body-default-l" style={{ lineHeight: "1.6" }}>
-              I'm currently finalizing the detailed report for this project. The report will include:
-            </Text>
-            
-            <ul style={{ listStyle: "none", padding: 0, margin: "16px 0" }}>
-              <li style={{ display: "flex", alignItems: "center", marginBottom: "12px" }}>
-                <div style={{ 
-                  width: "24px", 
-                  height: "24px", 
-                  borderRadius: "50%", 
-                  backgroundColor: "rgba(99, 102, 241, 0.2)", 
-                  display: "flex", 
-                  alignItems: "center", 
-                  justifyContent: "center",
-                  marginRight: "12px"
-                }}>
-                  <span style={{ color: "#6366f1" }}>✓</span>
-                </div>
-                <Text variant="body-default-m">Complete technical specifications</Text>
-              </li>
-              <li style={{ display: "flex", alignItems: "center", marginBottom: "12px" }}>
-                <div style={{ 
-                  width: "24px", 
-                  height: "24px", 
-                  borderRadius: "50%", 
-                  backgroundColor: "rgba(99, 102, 241, 0.2)", 
-                  display: "flex", 
-                  alignItems: "center", 
-                  justifyContent: "center",
-                  marginRight: "12px"
-                }}>
-                  <span style={{ color: "#6366f1" }}>✓</span>
-                </div>
-                <Text variant="body-default-m">Design methodology and implementation details</Text>
-              </li>
-              <li style={{ display: "flex", alignItems: "center", marginBottom: "12px" }}>
-                <div style={{ 
-                  width: "24px", 
-                  height: "24px", 
-                  borderRadius: "50%", 
-                  backgroundColor: "rgba(99, 102, 241, 0.2)", 
-                  display: "flex", 
-                  alignItems: "center", 
-                  justifyContent: "center",
-                  marginRight: "12px"
-                }}>
-                  <span style={{ color: "#6366f1" }}>✓</span>
-                </div>
-                <Text variant="body-default-m">Performance benchmarks and analysis</Text>
-              </li>
-            </ul>
-            
-            <Text variant="body-default-m" style={{ marginTop: "8px" }}>
-              Feel free to email me at{" "}
-              <a 
-                href="mailto:kahuhutton.business@gmail.com" 
-                style={{ 
-                  color: "#6366f1", 
-                  textDecoration: "none",
-                  borderBottom: "1px solid #6366f1"
-                }}
-              >
-                kahuhutton.business@gmail.com
-              </a>{" "}
-              to request current progress or specific information about this project.
-            </Text>
-            
-            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "24px" }}>
-              <Button 
-                variant="primary" 
-                onClick={() => setShowReportDialog(false)}
-                style={{
-                  background: "linear-gradient(135deg, #3a3d9d 0%, #2c2f7c 100%)",
-                  borderRadius: "8px",
-                  padding: "10px 20px",
-                  border: "none",
-                }}
-              >
-                Close
-              </Button>
-            </div>
-          </Column>
-        </div>
+        </Column>
       </Dialog>
 
       {/* CSS for hover effects */}
