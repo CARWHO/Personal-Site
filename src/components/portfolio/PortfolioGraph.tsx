@@ -29,6 +29,13 @@ interface GraphLink {
   target: string;
 }
 
+interface Category {
+  id: string;
+  color: number;
+  link?: string;
+  tags: string[];
+}
+
 const lightenColor = (color: number, percent: number): number => {
   const r = (color >> 16) & 0xff;
   const g = (color >> 8) & 0xff;
@@ -118,7 +125,7 @@ const majorProjects = [
 ];
 
 // Categories for grouping projects - no longer needed as we've combined the FPGA projects
-const categories = [];
+const categories: Category[] = [];
 
 const generateGraphData = () => {
   const nodes: GraphNode[] = [];
