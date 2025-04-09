@@ -30,7 +30,11 @@ export default function FpgaRiscvCpu() {
         <Heading variant="display-strong-l" style={{ marginBottom: "16px" }}>
           FPGA RISC-V CPU
         </Heading>
-        <Text variant="heading-default-m" onBackground="neutral-weak" style={{ alignSelf: "flex-start" }}>
+        <Text
+          variant="heading-default-m"
+          onBackground="neutral-weak"
+          style={{ alignSelf: "flex-start" }}
+        >
           Project Lead, March 2025 - Present
         </Text>
         <Text variant="body-default-l" style={{ marginTop: "16px" }}>
@@ -129,7 +133,7 @@ export default function FpgaRiscvCpu() {
         isOpen={showReportDialog}
         onClose={() => setShowReportDialog(false)}
         title="Report in Progress"
-        width={75} // Reduced by 25% from 100
+        style={{ width: 600 }} // Force dialog width to 240px
       >
         <Column gap="m" padding="m">
           <Text variant="body-default-l">
