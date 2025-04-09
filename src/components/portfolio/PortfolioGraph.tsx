@@ -36,6 +36,15 @@ interface Category {
   tags: string[];
 }
 
+interface Project {
+  id: string;
+  color: number;
+  tags: string[];
+  skills: string[];
+  link?: string;
+  category?: string;
+}
+
 const lightenColor = (color: number, percent: number): number => {
   const r = (color >> 16) & 0xff;
   const g = (color >> 8) & 0xff;
@@ -46,7 +55,7 @@ const lightenColor = (color: number, percent: number): number => {
   return (newR << 16) + (newG << 8) + newB;
 };
 
-const majorProjects = [
+const majorProjects: Project[] = [
   {
     id: "Halo Vision",
     color: 0xffffff,
