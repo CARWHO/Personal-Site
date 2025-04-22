@@ -38,12 +38,12 @@ export default function HaloVision() {
           hands-free updates.
         </Text>
 
-        <Flex gap="s" style={{ marginTop: "24px" }}>
+        <Flex direction="column" gap="s" style={{ marginTop: "24px", alignItems: "flex-start" }}>
           <Button href="/images/halovision.pdf" variant="secondary" size="m" arrowIcon>
             <Text variant="heading-strong-l">Download Full Report</Text>
           </Button>
-          <Button href="/images/CFDReport.pdf" variant="secondary" size="m" arrowIcon>
-            <Text variant="heading-strong-l">Download CFD Report</Text>
+          <Button href="/images/CFDReport.pdf" variant="tertiary" size="m" arrowIcon>
+            <Text variant="body-default-m">Download CFD Report</Text> {/* Adjusted text variant for tertiary button */}
           </Button>
         </Flex>
       </Column>
