@@ -44,14 +44,6 @@ export default function Kora() {
 
       {/* Title + Logo Section */}
       <Column
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          style={{ maxWidth: "100%", borderRadius: "8px" }} // Ensure responsiveness and add rounded corners
-        ></iframe>
-      </div>
-
-      {/* Title + Logo Section (unchanged) */}
-      <Column
         horizontal="space-between"
         style={{ flexDirection: "row", alignItems: "center" }}
         gap="m"
