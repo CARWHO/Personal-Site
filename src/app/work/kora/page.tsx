@@ -121,6 +121,10 @@ export default function Kora() {
           <a href="https://blog.kora.ac" target="_blank" rel="noopener noreferrer" style={linkStyle}>
             blog.kora.ac
           </a>
+          &nbsp;|&nbsp;
+          <a href="https://www.linkedin.com/company/kora-edu" target="_blank" rel="noopener noreferrer" style={linkStyle}>
+            LinkedIn
+          </a>
         </Text>
       </Section>
 
