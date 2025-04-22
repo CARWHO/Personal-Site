@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Column, Heading, Text, Button } from "@/once-ui/components";
+import { Column, Heading, Text, Button, Flex } from "@/once-ui/components";
 import styles from "../work.module.scss";
 
 export default function HaloVision() {
@@ -38,15 +38,14 @@ export default function HaloVision() {
           hands-free updates.
         </Text>
 
-        <Button
-          href="/images/halovision.pdf"
-          variant="secondary"
-          size="m"
-          arrowIcon
-          style={{ marginTop: "24px" }}
-        >
-          <Text variant="heading-strong-l">Download Full Report</Text>
-        </Button>
+        <Flex gap="s" style={{ marginTop: "24px" }}>
+          <Button href="/images/halovision.pdf" variant="secondary" size="m" arrowIcon>
+            <Text variant="heading-strong-l">Download Full Report</Text>
+          </Button>
+          <Button href="/images/CFDReport.pdf" variant="secondary" size="m" arrowIcon>
+            <Text variant="heading-strong-l">Download CFD Report</Text>
+          </Button>
+        </Flex>
       </Column>
 
       {/* Image placed below the text */}
