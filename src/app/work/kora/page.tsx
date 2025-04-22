@@ -201,6 +201,20 @@ export default function About() {
             </Column>
           )}
 
+          {/* YouTube Video Embed */}
+          <Column fillWidth marginBottom="xl">
+            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', background: '#000' }}>
+              <iframe
+                src="https://www.youtube.com/embed/LEGDE9n_7P4"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+              ></iframe>
+            </div>
+          </Column>
+
           {about.work.display && (
             <>
               <Heading as="h2" id={about.work.title} variant="display-strong-s" marginBottom="m">
