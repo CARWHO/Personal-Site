@@ -99,13 +99,25 @@ const about = {
     description: (
       <>
         <p>
-        I am researching efficient RISC‑V (PicoRV32) CPU implementations on FPGAs with Dr. Romain Arnal, tuned for high speed data transfer.
+          I am researching efficient RISC‑V (PicoRV32) CPU implementations on{" "}
+          <a href="https://www.kahuhutton.com/work/fpga-projects" target="_blank" rel="noopener noreferrer">
+            FPGAs
+          </a>{" "}
+          with Dr. Romain Arnal, tuned for high speed data transfer.
         </p>
         <p>
-          Building on this technical foundation, I completed an internship at Dawn Aerospace, where I contributed to developing satellite communication software and supported spacecraft life-cycle testing—gaining valuable insights into advanced aerospace systems.
+          Building on this technical foundation, I completed an internship at{" "}
+          <a href="https://www.kahuhutton.com/work/dawn-aerospace" target="_blank" rel="noopener noreferrer">
+            Dawn Aerospace
+          </a>
+          , where I contributed to developing satellite communication software and supported spacecraft life-cycle testing—gaining valuable insights into advanced aerospace systems.
         </p>
         <p>
-          In addition, I founded KORA, an innovative AI-powered education platform funded by Google Cloud. 
+          In addition, I founded{" "}
+          <a href="https://www.kahuhutton.com/work/kora" target="_blank" rel="noopener noreferrer">
+            KORA
+          </a>
+          , an innovative AI-powered education platform funded by Google Cloud.
         </p>
       </>
     ),
