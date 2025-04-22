@@ -1,188 +1,297 @@
-"use client";
+import {
+  Avatar,
+  Button,
+  Column,
+  Flex,
+  Heading,
+  Icon,
+  IconButton,
+  SmartImage,
+  Tag,
+  Text,
+} from "@/once-ui/components";
+import { Fragment } from "react";
+import { baseURL } from "@/app/resources";
+import TableOfContents from "@/components/about/TableOfContents";
+import styles from "@/components/about/about.module.scss";
+import { person, about, social } from "@/app/resources/content";
 
-import { Column, Heading, Text } from "@/once-ui/components";
+export async function generateMetadata() {
+  const title = about.title;
+  const description = about.description;
+  const ogImage = "/images/avatar.jpg";
 
-export default function Kora() {
-  // Accent colour for links (lighter blue)
-  const linkStyle = {
-    textDecoration: "none",
-    fontWeight: "bold",
-    color: "#66B3FF",
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url: `https://${baseURL}/about`,
+      images: [
+        {
+          url: ogImage,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
   };
+}
 
-  /**
-   * Generic section wrapper ‑ keeps padding consistent and
-   * adds a subtle divider between major blocks so the page
-   * feels more structured.
-   */
-  const Section = ({ children }) => (
-    <Column gap="m" style={{ paddingBlock: "1.5rem", borderBottom: "1px solid #2A2A2A" }}>
-      {children}
-    </Column>
-  );
-
-  /**
-   * Re‑usable team member card – scales nicely on smaller
-   * screens using CSS Grid instead of stacking everything
-   * in a long column.
-   */
-  const TeamMember = ({ photo, name, role }) => (
-    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-      <img
-        src={photo}
-        alt={name}
-        style={{ width: "72px", height: "72px", borderRadius: "50%", flexShrink: 0 }}
-      />
-      <div>
-        <Heading variant="heading-default-m">{name}</Heading>
-        <Text variant="body-default-m" onBackground="neutral-weak">
-          {role}
-        </Text>
-      </div>
-    </div>
-  );
-
+export default function About() {
+  const structure = [
+    {
+      title: about.intro.title,
+      display: about.intro.display,
+      items: [],
+    },
+    {
+      title: about.work.title,
+      display: about.work.display,
+      items: about.work.experiences.map((experience) => experience.company),
+    },
+    {
+      title: about.studies.title,
+      display: about.studies.display,
+      items: about.studies.institutions.map((institution) => institution.name),
+    }
+  ];
   return (
-    <Column
-      maxWidth="l"
-      gap="xl"
-      padding="xl"
-      style={{ margin: "0 auto" }}
-    >
-      {/* ----------------------------- Video ----------------------------- */}
-      <div
-        style={{
-          position: "relative",
-          width: "100%",
-          paddingTop: "56.25%", // 16:9
-          borderRadius: "12px",
-          overflow: "hidden",
-          boxShadow: "0 2px 8px rgba(0,0,0,.35)",
+    <Column maxWidth="m">
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: person.name,
+            jobTitle: person.role,
+            description: about.intro.description,
+            url: `https://${baseURL}/about`,
+            image: `${baseURL}/images/${person.avatar}`,
+            sameAs: social
+              .filter((item) => item.link && !item.link.startsWith("mailto:")) // Filter out empty links and email links
+              .map((item) => item.link),
+            worksFor: {
+              "@type": "Organization",
+              name: about.work.experiences[0].company || "",
+            },
+          }),
         }}
-      >
-        <iframe
-          src="https://www.youtube.com/embed/6oEbYZ52Qeo"
-          title="KORA – LKYGBPC Submission Video"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      </div>
-
-      {/* ------------------------- Header / Logo ------------------------- */}
-      <Section>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "1rem",
-          }}
+      />
+      {about.tableOfContent.display && (
+        <Column
+          left="0"
+          style={{ top: "50%", transform: "translateY(-50%)" }}
+          position="fixed"
+          paddingLeft="24"
+          gap="32"
+          hide="s"
         >
-          <div>
-            <Heading variant="display-strong-l">KORA</Heading>
-            <Text variant="heading-default-m" onBackground="neutral-weak">
-              Founder &amp; Developer
+          <TableOfContents structure={structure} about={about} />
+        </Column>
+      )}
+      <Flex fillWidth mobileDirection="column" horizontal="center">
+        {about.avatar.display && (
+          <Column
+            className={styles.avatar}
+            minWidth="160"
+            paddingX="l"
+            paddingBottom="xl"
+            gap="m"
+            flex={3}
+            horizontal="center"
+          >
+            <Avatar src={person.avatar} size="xl" />
+            {person.interests?.length > 0 && (
+              <Flex wrap gap="8" horizontal="center" fitWidth>
+                {person.interests.map((interest, index) => (
+                  <Tag key={index} size="l">
+                    {interest}
+                  </Tag>
+                ))}
+              </Flex>
+            )}
+          </Column>
+        )}
+        <Column className={styles.blockAlign} flex={9} maxWidth={40}>
+          <Column
+            id={about.intro.title}
+            fillWidth
+            minHeight="160"
+            vertical="center"
+            marginBottom="32"
+          >
+            {about.calendar.display && (
+              <Flex
+                fitWidth
+                border="brand-alpha-medium"
+                className={styles.blockAlign}
+                style={{
+                  backdropFilter: "blur(var(--static-space-1))",
+                }}
+                background="brand-alpha-weak"
+                radius="full"
+                padding="4"
+                gap="8"
+                marginBottom="m"
+                vertical="center"
+              >
+                <Icon paddingLeft="12" name="calendar" onBackground="brand-weak" />
+                <Flex paddingX="8">Schedule a call</Flex>
+                <IconButton
+                  href={`https://calendar.google.com/calendar/u/0/r/eventedit?text=Meeting+with+${encodeURIComponent(person.name)}&details=Feel+free+to+add+stuff+here+you+want+to+talk+about,+or+just+leave+it+blank!&add=${encodeURIComponent(person.email)}&location=Google+Meet+(details+will+be+provided)&sprop=&sprop=name:&add=&sf=true&output=xml`}
+                  data-border="rounded"
+                  variant="secondary"
+                  icon="chevronRight"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              </Flex>
+            )}
+            <Heading className={styles.textAlign} variant="display-strong-xl">
+              {person.name}
+            </Heading>
+            <Text
+              className={styles.textAlign}
+              variant="display-default-xs"
+              onBackground="neutral-weak"
+            >
+              {person.role}
             </Text>
-          </div>
-          <img
-            src="/images/KoraSymbol23.svg"
-            alt="KORA logo"
-            style={{ width: "120px", height: "auto" }}
-          />
-        </div>
-      </Section>
+            {social.length > 0 && (
+              <Flex className={styles.blockAlign} paddingTop="20" paddingBottom="8" gap="8" wrap horizontal="center" fitWidth>
+                {social.map(
+                  (item) =>
+                    item.link && (
+                        <Fragment key={item.name}>
+                            <Button
+                                className="s-flex-hide"
+                                href={item.link}
+                                prefixIcon={item.icon}
+                                label={item.name}
+                                size="s"
+                                variant="secondary"
+                            />
+                            <IconButton
+                                className="s-flex-show"
+                                size="l"
+                                href={item.link}
+                                icon={item.icon}
+                                variant="secondary"
+                            />
+                        </Fragment>
+                    ),
+                )}
+              </Flex>
+            )}
+          </Column>
 
-      {/* --------------------------- Description -------------------------- */}
-      <Section>
-        <Text variant="body-default-l">
-          KORA is an AI‑powered platform revolutionising education with its smart LMS
-          plugin. Leveraging Retrieval‑Augmented Generation (RAG), KORA delivers
-          laser‑precise, up‑to‑date content by tapping directly into university
-          databases.
-        </Text>
-        <Text variant="body-default-l">
-          Backed by Google Cloud, we harness advanced cloud technologies to build a
-          robust and scalable platform.
-        </Text>
-        <Text variant="body-default-l">
-          Explore more:&nbsp;
-          <a href="https://kora.ac" target="_blank" rel="noopener noreferrer" style={linkStyle}>
-            kora.ac
-          </a>
-          &nbsp;|&nbsp;
-          <a href="https://blog.kora.ac" target="_blank" rel="noopener noreferrer" style={linkStyle}>
-            blog.kora.ac
-          </a>
-          &nbsp;|&nbsp;
-          <a href="https://www.linkedin.com/company/kora-edu" target="_blank" rel="noopener noreferrer" style={linkStyle}>
-            LinkedIn
-          </a>
-        </Text>
-      </Section>
+          {about.intro.display && (
+            <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="xl">
+              {about.intro.description}
+            </Column>
+          )}
 
-      {/* ---------------------- My Contributions ------------------------- */}
-      <Section>
-        <Heading variant="display-strong-s">My Contributions</Heading>
-        <ul style={{ listStyle: "square", paddingLeft: "1.25rem", lineHeight: 1.6 }}>
-          <li>
-            <strong>Developed full‑stack web app:</strong> built with React &amp; Next.js
-            and containerised with Docker; integrated secure, cloud‑hosted databases
-            for reliability and scale.
-          </li>
-          <li>
-            <strong>Led a cross‑functional team</strong> to design, deploy and maintain a
-            stand‑alone LMS plugin powered by RAG.
-          </li>
-          <li>
-            <strong>Implemented automated cloud deployment</strong> pipelines to
-            minimise downtime and accelerate iteration.
-          </li>
-          <li>
-            <strong>Owned the full product lifecycle:</strong> from concept and UI/UX to
-            user feedback loops – ensuring alignment with business goals.
-          </li>
-          <li>
-            <strong>Maintained close stakeholder communication</strong> to rapidly
-            iterate on features based on real‑world usage.
-          </li>
-        </ul>
-      </Section>
+          {about.work.display && (
+            <>
+              <Heading as="h2" id={about.work.title} variant="display-strong-s" marginBottom="m">
+                {about.work.title}
+              </Heading>
+              <Column fillWidth gap="l" marginBottom="40">
+                {about.work.experiences.map((experience, index) => (
+                  <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
+                    <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="4">
+                      <Button 
+                        href={experience.company === "Accent Productions" ? "/work/cfd-engineering" : `/work/${experience.company.toLowerCase().replace(/\s+/g, '-')}`}
+                        variant="secondary"
+                        size="m"
+                        arrowIcon
+                      >
+                        <Text id={experience.company} variant="heading-strong-l">
+                          {experience.company}
+                        </Text>
+                      </Button>
+                      <Text variant="heading-default-xs" onBackground="neutral-weak">
+                        {experience.timeframe}
+                      </Text>
+                    </Flex>
+                    <Text variant="body-default-s" onBackground="brand-weak" marginBottom="m">
+                      {experience.role}
+                    </Text>
+                    <Column as="ul" gap="0">
+                      {experience.achievements.map((achievement: JSX.Element, index: number) => (
+                        <Text
+                          as="li"
+                          variant="body-default-m"
+                          key={`${experience.company}-${index}`}
+                        >
+                          {achievement}
+                        </Text>
+                      ))}
+                    </Column>
+                    {experience.images.length > 0 && (
+                      <Flex fillWidth paddingTop="m" paddingLeft="40" wrap>
+                        {experience.images.map((image, index) => (
+                          <Flex
+                            key={index}
+                            border="neutral-medium"
+                            radius="m"
+                            //@ts-ignore
+                            minWidth={image.width}
+                            //@ts-ignore
+                            height={image.height}
+                          >
+                            <SmartImage
+                              enlarge
+                              radius="m"
+                              //@ts-ignore
+                              sizes={image.width.toString()}
+                              //@ts-ignore
+                              alt={image.alt}
+                              //@ts-ignore
+                              src={image.src}
+                            />
+                          </Flex>
+                        ))}
+                      </Flex>
+                    )}
+                  </Column>
+                ))}
+              </Column>
+            </>
+          )}
 
-      {/* -------------------------- Team Section -------------------------- */}
-      <Section>
-        <Heading variant="display-strong-m">Meet the Team</Heading>
-        <div
-          style={{
-            display: "grid",
-            gap: "1.5rem",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          }}
-        >
-          <TeamMember
-            photo="/images/kahu.jpg"
-            name="Kahu Hutton (Me)"
-            role="Founder & Web‑app Developer"
-          />
-          <TeamMember
-            photo="/images/joel.jpg"
-            name="Joel Bannister"
-            role="Co‑founder, Backend & Dev‑ops Engineer"
-          />
-          <TeamMember
-            photo="/images/lev.jpg"
-            name="Lev Petersen"
-            role="Co‑founder, LMS Plugin Lead Developer"
-          />
-        </div>
-      </Section>
+          {about.studies.display && (
+            <>
+              <Heading as="h2" id={about.studies.title} variant="display-strong-s" marginBottom="m">
+                {about.studies.title}
+              </Heading>
+              <Column fillWidth gap="l" marginBottom="40">
+                {about.studies.institutions.map((institution, index) => (
+                  <Column key={`${institution.name}-${index}`} fillWidth gap="4">
+                    <Text id={institution.name} variant="heading-strong-l">
+                      {institution.name}
+                    </Text>
+                    <Text variant="heading-default-xs" onBackground="neutral-weak">
+                      {institution.description}
+                    </Text>
+                  </Column>
+                ))}
+              </Column>
+            </>
+          )}
+
+        </Column>
+      </Flex>
     </Column>
   );
 }
