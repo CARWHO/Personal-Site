@@ -57,7 +57,7 @@ const home = {
   headline: <>Kahu Hutton</>,
   subline: (
     <>
-      {/* Inline <style> so we don't have to edit any external CSS file */}
+      {/* Inline <style> so we don't have to edit any external CSSs file */}
       <style>{`
         @media (max-width: 768px) {
           .mobile-smaller {
