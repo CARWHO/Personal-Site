@@ -22,6 +22,27 @@ export default function Kora() {
 
   return (
     <Column maxWidth="m" gap="xl" padding="xl">
+      {/* YouTube Video Section */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          marginBottom: "2rem", // Add space below the video
+        }}
+      >
+        <iframe
+          width="560" // Standard width, can be adjusted
+          height="315" // Standard 16:9 aspect ratio height
+          src="https://www.youtube.com/embed/6oEbYZ52Qeo"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          style={{ maxWidth: "100%", borderRadius: "8px" }} // Ensure responsiveness and add rounded corners
+        ></iframe>
+      </div>
+
       {/* Title + Logo Section (unchanged) */}
       <Column
         horizontal="space-between"
@@ -279,28 +300,6 @@ export default function Kora() {
           </Column>
         </div>
       )}
-
-      {/* YouTube Video Section */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          width: "100%",
-          marginTop: "2rem", // Add some space above the video
-          marginBottom: "2rem", // Add some space below the video
-        }}
-      >
-        <iframe
-          width="560" // Standard width, can be adjusted
-          height="315" // Standard 16:9 aspect ratio height
-          src="https://www.youtube.com/embed/6oEbYZ52Qeo"
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          style={{ maxWidth: "100%", borderRadius: "8px" }} // Ensure responsiveness and add rounded corners
-        ></iframe>
-      </div>
 
       {/* My Contributions Section - Always visible */}
       <Column gap="l">
