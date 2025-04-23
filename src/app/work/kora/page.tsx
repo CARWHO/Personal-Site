@@ -186,7 +186,7 @@ export default function Kora() {
 
       {/* ----------------------------- Demo Video ----------------------------- */}
       <Section>
-        <Heading variant="display-strong-m">Demo Video</Heading>
+        <Heading variant="display-strong-m">Web App Demo Video</Heading>
         <div
           style={{
             position: "relative",
