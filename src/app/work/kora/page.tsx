@@ -183,6 +183,35 @@ export default function Kora() {
           />
         </div>
       </Section>
+
+      {/* ----------------------------- Demo Video ----------------------------- */}
+      <Section>
+        <Heading variant="display-strong-m">Demo Video</Heading>
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            paddingTop: "56.25%", // 16:9
+            borderRadius: "12px",
+            overflow: "hidden",
+            boxShadow: "0 2px 8px rgba(0,0,0,.35)",
+          }}
+        >
+          <iframe
+            src="https://www.youtube.com/embed/LEGDE9n_7P4" // Updated video ID
+            title="KORA Demo Video" // Updated title
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        </div>
+      </Section>
     </Column>
   );
 }
