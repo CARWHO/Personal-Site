@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { Fade, Flex, Line, ToggleButton } from "@/once-ui/components";
+import { Button, Fade, Flex, Line, ToggleButton } from "@/once-ui/components";
 import styles from "@/components/Header.module.scss";
 
 import { routes, display } from "@/app/resources";
@@ -145,18 +145,24 @@ export const Header = () => {
               )}
               <Line vert maxHeight="24" />
               {/* Resume Download Button */}
-              <ToggleButton
+              <Button
+                as="a" // Render as an anchor tag
+                variant="ghost" // Maintain visual consistency
                 className="s-flex-hide"
-                prefixIcon="download" // Assuming 'download' icon exists
+                prefixIcon="download"
                 href="/images/Resume.pdf"
-                download="Resume.pdf" // Suggests filename for download
-                label="Resume"
-              />
-              <ToggleButton
+                download="Resume.pdf" // Valid for anchor tags
+              >
+                Resume
+              </Button>
+              <Button
+                as="a" // Render as an anchor tag
+                variant="ghost" // Maintain visual consistency
                 className="s-flex-show"
-                prefixIcon="download" // Assuming 'download' icon exists
+                prefixIcon="download"
                 href="/images/Resume.pdf"
-                download="Resume.pdf" // Suggests filename for download
+                download="Resume.pdf" // Valid for anchor tags
+                aria-label="Download Resume" // Add aria-label for accessibility on icon-only button
               />
             </Flex>
           </Flex>
