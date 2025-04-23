@@ -143,6 +143,21 @@ export const Header = () => {
                   />
                 </>
               )}
+              <Line vert maxHeight="24" />
+              {/* Resume Download Button */}
+              <ToggleButton
+                className="s-flex-hide"
+                prefixIcon="download" // Assuming 'download' icon exists
+                href="/images/Resume.pdf"
+                download="Resume.pdf" // Suggests filename for download
+                label="Resume"
+              />
+              <ToggleButton
+                className="s-flex-show"
+                prefixIcon="download" // Assuming 'download' icon exists
+                href="/images/Resume.pdf"
+                download="Resume.pdf" // Suggests filename for download
+              />
             </Flex>
           </Flex>
         </Flex>
