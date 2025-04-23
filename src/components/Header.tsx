@@ -147,7 +147,7 @@ export const Header = () => {
               {/* Resume Download Button */}
               <Button
                 as="a" // Render as an anchor tag
-                variant="ghost" // Maintain visual consistency
+                variant="tertiary" // Use a valid variant, tertiary might be visually similar
                 className="s-flex-hide"
                 prefixIcon="download"
                 href="/images/Resume.pdf"
@@ -157,7 +157,7 @@ export const Header = () => {
               </Button>
               <Button
                 as="a" // Render as an anchor tag
-                variant="ghost" // Maintain visual consistency
+                variant="tertiary" // Use a valid variant, tertiary might be visually similar
                 className="s-flex-show"
                 prefixIcon="download"
                 href="/images/Resume.pdf"
