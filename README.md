@@ -6,7 +6,7 @@ A personal blog and portfolio built with Next.js, TypeScript, Tailwind CSS, and 
 
 ## 🌐 Live Demo
 
-[personalsite-woad.vercel.app](https://personalsite-woad.vercel.app)
+[kahuhutton.com](https://kahuhutton.com)
 
 ---
 
@@ -16,41 +16,6 @@ A personal blog and portfolio built with Next.js, TypeScript, Tailwind CSS, and 
 - **TypeScript**: Full type safety
 - **Tailwind CSS**: Utility-first styling
 - **Markdown/MDX**: Write blog posts in Markdown
-- **Dark/Light Mode**: System & manual preference toggle
-- **SEO & Open Graph**: Meta tags for better social sharing
-- **Biome Formatting**: Consistent code style
-- **CI/CD**: GitHub Actions & Vercel integration
-- **Env Variables**: `.env.example` template provided
-
----
-
-## 🚀 Getting Started
-
-1. **Clone**
-   ```bash
-   git clone https://github.com/CARWHO/Personal-Site.git
-   cd Personal-Site
-   ```
-2. **Install** dependencies
-   ```bash
-   pnpm install
-   ```
-3. **Run** locally
-   ```bash
-   pnpm dev
-   ```
-4. Open [http://localhost:3000](http://localhost:3000)
-
----
-
-## 📦 Build & Deploy
-
-```bash
-pnpm build
-pnpm start
-```
-
-Pushes to `main` trigger automatic deployments on Vercel.
 
 ---
 
