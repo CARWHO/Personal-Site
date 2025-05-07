@@ -120,7 +120,20 @@ export default function FpgaProjects() {
             >
               {openReactionTimer ? "Hide Details" : "Show Details"}
             </Button>
-            
+            <Button
+              href="https://github.com/CARWHO/FPGA-Reaction-Timer"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="secondary"
+              size="s"
+              arrowIcon
+              style={{
+                borderRadius: "8px",
+                transition: "background-color 0.3s ease",
+              }}
+            >
+              View on GitHub
+            </Button>
             <Button
               variant="secondary"
               size="s"
@@ -230,7 +243,20 @@ export default function FpgaProjects() {
             >
               {openRiscvCpu ? "Hide Details" : "Show Details"}
             </Button>
-            
+            <Button
+              href="https://github.com/CARWHO/KPU"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="secondary"
+              size="s"
+              arrowIcon
+              style={{
+                borderRadius: "8px",
+                transition: "background-color 0.3s ease",
+              }}
+            >
+              View on GitHub
+            </Button>
             <Button
               variant="secondary"
               size="s"
