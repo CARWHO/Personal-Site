@@ -30,20 +30,19 @@ export default function HaloVision() {
           December 2023 - August 2024
         </Text>
         <Text variant="body-default-l" style={{ marginTop: "16px" }}>
-          HaloVision is a heads-up display system designed to improve motorcycle safety
-          by providing turn-by-turn navigation and indicator notifications on a
-          helmet-mounted display. Inspired by personal experiences with motorcycle
-          safety, HaloVision evolved from a simple indicator broadcaster into a full
-          display system with custom-designed PCBs and a mobile app for real-time,
-          hands-free updates.
+          HaloVision is an open-source heads-up display (HUD) system designed to enhance motorcycle safety and navigation.
+          It provides turn-by-turn directions and indicator notifications directly on a helmet-mounted display.
+          The project is fully open-source, with all hardware (custom PCBs), software (mobile app and firmware),
+          CAD models for enclosures and mounts, and detailed assembly instructions available on GitHub.
+          This allows anyone to build, modify, and contribute to the HaloVision system.
         </Text>
 
         <Flex direction="column" gap="s" style={{ marginTop: "24px", alignItems: "flex-start" }}>
           <Button href="/images/halovision.pdf" variant="secondary" size="m" arrowIcon>
             <Text variant="heading-strong-l">Download Full Report</Text>
           </Button>
-          <Button href="/images/CFDReport.pdf" variant="tertiary" size="m" arrowIcon>
-            <Text variant="body-default-m">Download CFD Report</Text> {/* Adjusted text variant for tertiary button */}
+          <Button href="https://github.com/CARWHO/Halo-Vision" target="_blank" rel="noopener noreferrer" variant="secondary" size="m" arrowIcon>
+            <Text variant="heading-strong-l">View on GitHub</Text>
           </Button>
         </Flex>
       </Column>
@@ -116,6 +115,10 @@ export default function HaloVision() {
                   and user safety. Collaborated with Dr. Finn McIntyre, Ph.D. in fluid
                   mechanics, to validate CFD results, utilizing the University of
                   Canterbury’s wind tunnel for comparison.
+                  <br />
+                  <Button href="/images/CFDReport.pdf" variant="tertiary" size="s" arrowIcon style={{ marginTop: "8px" }}>
+                    <Text variant="body-default-m">Download CFD Report</Text>
+                  </Button>
                 </li>
                 <li>
                   <strong>Collaboration:</strong> Worked alongside app developers,
