@@ -93,61 +93,65 @@ export default function HaloVision() {
             <Text variant="display-strong-s" style={{ marginBottom: "16px" }}>
               Key Highlights:
             </Text>
-            <Text variant="body-default-l">
-              <ul
+            <Flex direction={isMobile ? "column" : "row"} gap="l" style={{ alignItems: "flex-start", marginTop: "16px" }}>
+              <div style={{ flex: 1.5 }}> {/* Text content takes more space */}
+                <Text variant="body-default-l">
+                  <ul
+                    style={{
+                      listStyleType: "disc",
+                      margin: "0", // Adjusted margin
+                      paddingLeft: "20px",
+                    }}
+                  >
+                    <li>
+                      <strong>Custom PCBs:</strong> Designed custom PCBs for optimal power
+                      efficiency and compactness.
+                    </li>
+                    <li>
+                      <strong>Mounts &amp; Enclosures:</strong> Developed helmet mounts for
+                      varied riding speeds, balancing aerodynamics and ease of use.
+                    </li>
+                    <li>
+                      <strong>Safety Testing with CFD:</strong> Conducted simulations to
+                      analyze aerodynamic forces, refining the mount design for stability
+                      and user safety. Collaborated with Dr. Finn McIntyre, Ph.D. in fluid
+                      mechanics, to validate CFD results, utilizing the University of
+                      Canterbury’s wind tunnel for comparison.
+                      <br />
+                      <Button href="/images/CFDReport.pdf" variant="secondary" size="m" arrowIcon style={{ marginTop: "8px" }}>
+                        <Text variant="heading-strong-l">Download CFD Report</Text>
+                      </Button>
+                    </li>
+                    <li>
+                      <strong>Fully Open Source:</strong> All project files, including hardware schematics (PCBs),
+                      firmware, mobile application source code, CAD models for enclosures and mounts,
+                      and comprehensive assembly instructions, are publicly available on GitHub,
+                      encouraging community contributions and modifications.
+                    </li>
+                    <li>
+                      <strong>Collaboration:</strong> Worked alongside app developers,
+                      engineers, and industry professionals to bring HaloVision from concept
+                      to prototype.
+                    </li>
+                  </ul>
+                </Text>
+              </div>
+              <img
+                src="/images/halovision.png"
+                alt="HaloVision System Diagram"
                 style={{
-                  listStyleType: "disc",
-                  margin: "0 auto",
-                  paddingLeft: "20px",
+                  flex: 1, // Image takes available space, adjust ratio with text
+                  width: isMobile ? "100%" : undefined, // Use flex-basis effectively
+                  maxWidth: isMobile ? "100%" : "400px",
+                  borderRadius: "12px",
+                  objectFit: "contain",
+                  alignSelf: "flex-start",
+                  marginTop: isMobile ? "24px" : "0",
+                  // clipPath removed to ensure borderRadius is visible and effective
                 }}
-              >
-                <li>
-                  <strong>Custom PCBs:</strong> Designed custom PCBs for optimal power
-                  efficiency and compactness.
-                </li>
-                <li>
-                  <strong>Mounts &amp; Enclosures:</strong> Developed helmet mounts for
-                  varied riding speeds, balancing aerodynamics and ease of use.
-                </li>
-                <li>
-                  <strong>Safety Testing with CFD:</strong> Conducted simulations to
-                  analyze aerodynamic forces, refining the mount design for stability
-                  and user safety. Collaborated with Dr. Finn McIntyre, Ph.D. in fluid
-                  mechanics, to validate CFD results, utilizing the University of
-                  Canterbury’s wind tunnel for comparison.
-                  <br />
-                  <Button href="/images/CFDReport.pdf" variant="secondary" size="m" arrowIcon style={{ marginTop: "8px" }}>
-                    <Text variant="heading-strong-l">Download CFD Report</Text>
-                  </Button>
-                </li>
-                <li>
-                  <strong>Fully Open Source:</strong> All project files, including hardware schematics (PCBs),
-                  firmware, mobile application source code, CAD models for enclosures and mounts,
-                  and comprehensive assembly instructions, are publicly available on GitHub,
-                  encouraging community contributions and modifications.
-                </li>
-                <li>
-                  <strong>Collaboration:</strong> Worked alongside app developers,
-                  engineers, and industry professionals to bring HaloVision from concept
-                  to prototype.
-                </li>
-              </ul>
-            </Text>
+              />
+            </Flex>
           </Column>
-          {/* Image for details section */}
-          <img
-            src="/images/halovision.png"
-            alt="HaloVision System Diagram"
-            style={{
-              width: "100%",
-              maxWidth: "440px", // 50% smaller (480px * 0.5)
-              borderRadius: "12px",
-              objectFit: "contain",
-              alignSelf: "center",
-              marginTop: "-70px", // Added margin for spacing above
-              clipPath: "inset(10% 0 10% 0)", // Crop 10% from top and bottom
-            }}
-          />
         </Column>
       )}
     </Column>
