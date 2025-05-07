@@ -140,11 +140,11 @@ export default function HaloVision() {
             alt="HaloVision System Diagram"
             style={{
               width: "100%",
-              maxWidth: "240px", // 50% smaller (480px * 0.5)
+              maxWidth: "440px", // 50% smaller (480px * 0.5)
               borderRadius: "12px",
               objectFit: "contain",
               alignSelf: "center",
-              marginTop: "24px", // Added margin for spacing above
+              marginTop: "-70px", // Added margin for spacing above
               clipPath: "inset(10% 0 10% 0)", // Crop 10% from top and bottom
             }}
           />
