@@ -147,7 +147,7 @@ export default function HaloVision() {
                   objectFit: "contain",
                   alignSelf: "flex-start",
                   marginTop: isMobile ? "24px" : "0",
-                  clipPath: "inset(5% 0 5% 0)", // Crop 5% from top and bottom
+                  // clipPath: "inset(5% 0 5% 0)", // Removed to allow borderRadius to show
                 }}
               />
             </Flex>
