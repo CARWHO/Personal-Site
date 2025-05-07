@@ -116,9 +116,15 @@ export default function HaloVision() {
                   mechanics, to validate CFD results, utilizing the University of
                   Canterbury’s wind tunnel for comparison.
                   <br />
-                  <Button href="/images/CFDReport.pdf" variant="tertiary" size="s" arrowIcon style={{ marginTop: "8px" }}>
-                    <Text variant="body-default-m">Download CFD Report</Text>
+                  <Button href="/images/CFDReport.pdf" variant="secondary" size="m" arrowIcon style={{ marginTop: "8px" }}>
+                    <Text variant="heading-strong-l">Download CFD Report</Text>
                   </Button>
+                </li>
+                <li>
+                  <strong>Fully Open Source:</strong> All project files, including hardware schematics (PCBs),
+                  firmware, mobile application source code, CAD models for enclosures and mounts,
+                  and comprehensive assembly instructions, are publicly available on GitHub,
+                  encouraging community contributions and modifications.
                 </li>
                 <li>
                   <strong>Collaboration:</strong> Worked alongside app developers,
