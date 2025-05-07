@@ -88,20 +88,6 @@ export default function HaloVision() {
       {/* Accordion content - only rendered when open */}
       {open && (
         <Column gap="xl" style={{ width: "100%", maxWidth: "1000px" }}>
-          {/* Image for details section */}
-          <img
-            src="/images/halovision.png"
-            alt="HaloVision System Diagram"
-            style={{
-              width: "100%",
-              maxWidth: "480px", // 20% smaller (600px * 0.8)
-              borderRadius: "12px",
-              objectFit: "contain",
-              alignSelf: "center",
-              marginBottom: "24px", // Added margin for spacing
-              clipPath: "inset(10% 0 10% 0)", // Crop 10% from top and bottom
-            }}
-          />
           {/* Key Highlights Section */}
           <Column style={{ width: "100%" }}>
             <Text variant="display-strong-s" style={{ marginBottom: "16px" }}>
@@ -148,6 +134,20 @@ export default function HaloVision() {
               </ul>
             </Text>
           </Column>
+          {/* Image for details section */}
+          <img
+            src="/images/halovision.png"
+            alt="HaloVision System Diagram"
+            style={{
+              width: "100%",
+              maxWidth: "240px", // 50% smaller (480px * 0.5)
+              borderRadius: "12px",
+              objectFit: "contain",
+              alignSelf: "center",
+              marginTop: "24px", // Added margin for spacing above
+              clipPath: "inset(10% 0 10% 0)", // Crop 10% from top and bottom
+            }}
+          />
         </Column>
       )}
     </Column>
