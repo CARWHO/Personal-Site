@@ -88,6 +88,19 @@ export default function HaloVision() {
       {/* Accordion content - only rendered when open */}
       {open && (
         <Column gap="xl" style={{ width: "100%", maxWidth: "1000px" }}>
+          {/* Image for details section */}
+          <img
+            src="/images/halovision.png"
+            alt="HaloVision System Diagram"
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              borderRadius: "12px",
+              objectFit: "contain",
+              alignSelf: "center",
+              marginBottom: "24px", // Added margin for spacing
+            }}
+          />
           {/* Key Highlights Section */}
           <Column style={{ width: "100%" }}>
             <Text variant="display-strong-s" style={{ marginBottom: "16px" }}>
