@@ -94,11 +94,12 @@ export default function HaloVision() {
             alt="HaloVision System Diagram"
             style={{
               width: "100%",
-              maxWidth: "600px",
+              maxWidth: "480px", // 20% smaller (600px * 0.8)
               borderRadius: "12px",
               objectFit: "contain",
               alignSelf: "center",
               marginBottom: "24px", // Added margin for spacing
+              clipPath: "inset(10% 0 10% 0)", // Crop 10% from top and bottom
             }}
           />
           {/* Key Highlights Section */}
